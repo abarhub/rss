@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="listeApp">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="js/liste.js"></script>
+</head>
+<body>
+<h2>Liste</h2>
+<div ng-controller="RssListController as rssList">
+    <div ng-repeat="rss in rssList.liste1">
+        <div >{{rss.url}}</div><div >{{rss.url}}</div>
+        <div >{{rss.title}}</div>
+        <div >{{rss.description}}</div>
+        <div >{{rss.language}}</div>
+        <div >{{rss.lastBuildDate}}</div>
+        <div >{{rss.pubDate}}</div>
+    </div>
+</div>
+</body>
+</html>

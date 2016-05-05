@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/org.rss-parent.iml" filepath="$PROJECT_DIR$/org.rss-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rssbeans/org.rss.bean.iml" filepath="$PROJECT_DIR$/rssbeans/org.rss.bean.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rssdb/rss.db.iml" filepath="$PROJECT_DIR$/rssdb/rss.db.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rssread/rss.read.iml" filepath="$PROJECT_DIR$/rssread/rss.read.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rssregistry/rss.registry.iml" filepath="$PROJECT_DIR$/rssregistry/rss.registry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rssui/rss.ui.iml" filepath="$PROJECT_DIR$/rssui/rss.ui.iml" />
+    </modules>
+  </component>
+</project>

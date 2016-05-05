@@ -1,0 +1,78 @@
+<!doctype html>
+<html ng-app="todoApp" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="js/liste3.js"></script>
+    <!--<link rel="stylesheet" href="css/todo.css">-->
+</head>
+<body>
+<h2>Todo</h2>
+<div ng-controller="TodoListController as todoList">
+    <span>{{todoList.remaining()}} of {{todoList.todos.length}} remaining</span>
+    [ <a href="" ng-click="todoList.archive()">archive</a> ]
+    <ul class="unstyled">
+        <li ng-repeat="todo in todoList.todos">
+            <input type="checkbox" ng-model="todo.done">
+            <span class="done-{{todo.done}}">{{todo.text}}</span>
+        </li>
+    </ul>
+    <form ng-submit="todoList.addTodo()">
+        <input type="text" ng-model="todoList.todoText"  size="30"
+               placeholder="add new todo here">
+        <input class="btn-primary" type="submit" value="add">
+    </form>
+    <hr>
+
+    <span>liste de {{todoList.liste1.length}}</span>
+    <ul class="unstyled">
+        <li ng-repeat="rss1 in todoList.liste1">
+            url : <span >{{rss1.url}}</span>
+            Titre : <span >{{rss1.title}}</span>
+        </li>
+    </ul>
+    <form ng-submit="todoList.updateList()">
+
+        <input class="btn-primary" type="submit" value="update">
+    </form>
+
+    <hr>
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <span>Liste Rss de {{todoList.liste1.length}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                liste_url
+                <ul class="unstyled">
+                    <li ng-repeat="rss1 in todoList.liste1">
+                        url : <span >{{rss1.url}}</span>
+                        Titre : <span >{{rss1.title}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-8">
+                liste_messages
+                <ul class="unstyled">
+                    <li ng-repeat="rss2 in todoList.liste1">
+                        <span>rss2 {{rss2.length}} {{rss2.listeItem.length}}</span>
+                        <li ng-repeat="rss3 in rss2.listeItem">
+
+                            Titre : <span >{{rss3.title}}</span>
+                            Description : <span >{{rss3.description}}</span>
+                        </li>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

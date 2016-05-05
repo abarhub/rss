@@ -1,0 +1,92 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+
+<parent>
+	<groupId>org.rss</groupId>
+	<artifactId>org.rss-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+</parent>
+
+
+<name>rss.bean</name>
+
+<groupId>org.rss</groupId>
+  <artifactId>org.rss.bean</artifactId>
+  <version>1.03-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+<properties>
+    <!-- Specify Java Compiler Version -->
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+
+    <!-- Spring - ->
+    <spring-boot.version>1.2.1.RELEASE</spring-boot.version>
+
+    <!- - Sonar - ->
+    <sonar-maven-plugin.version>2.5</sonar-maven-plugin.version>
+    <sonar.language>java</sonar.language>
+    <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+    <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+
+    <!- - Plugin - ->
+    <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
+    <jacoco-maven-plugin.version>0.7.3.201502191951</jacoco-maven-plugin.version>-->
+
+	<java.version>1.8</java.version>
+	<log4j2.version>2.4.1</log4j2.version>
+	<guava.version>18.0</guava.version>
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+</properties>
+
+<build>
+    <!--<pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/*IT.java</include>
+                        <include>**/*Story.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </pluginManagement>-->
+
+    <!--<plugins>
+        <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${jacoco-maven-plugin.version}</version>
+            <configuration>
+                <destFile>${project.basedir}/../target/jacoco.exec</destFile>
+            </configuration>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>${sonar-maven-plugin.version}</version>
+        </plugin>
+
+    </plugins>-->
+</build>
+
+</project>

@@ -1,0 +1,207 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.rss</groupId>
+  <artifactId>org.rss.read</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>rss.read</name>
+  <url>http://maven.apache.org</url>
+
+    
+	<parent>
+		<groupId>org.rss</groupId>
+		<artifactId>org.rss-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+
+  <!--<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <spring.version>4.2.2.RELEASE</spring.version>
+      <slf4j.version>1.7.12</slf4j.version>
+      <log4j2.version>2.4.1</log4j2.version>
+      <apache_http_client.version>4.1</apache_http_client.version>
+      <apache_http_client2.version>4.4.1</apache_http_client2.version>
+      <guava.version>18.0</guava.version>
+      <rss_bean.version>1.02-SNAPSHOT</rss_bean.version>
+      <java.version>1.8</java.version>
+  </properties>-->
+
+  <dependencies>
+
+      <!-- spring -->
+
+      <!--<dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-core</artifactId>
+          <version>${spring.version}</version>
+          <exclusions>
+              <exclusion>
+                  <groupId>commons-logging</groupId>
+                  <artifactId>commons-logging</artifactId>
+              </exclusion>
+          </exclusions>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+          <version>${spring.version}</version>
+      </dependency>-->
+
+
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter</artifactId>
+          <exclusions>
+              <exclusion>
+                  <groupId>org.springframework.boot</groupId>
+                  <artifactId>spring-boot-starter-logging</artifactId>
+              </exclusion>
+          </exclusions>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-web</artifactId>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-actuator</artifactId>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-tomcat</artifactId>
+          <!--<scope>provided</scope>-->
+      </dependency>
+
+
+      <!--<dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-jersey</artifactId>
+      </dependency>-->
+
+      <!-- slf4j -->
+
+
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jul-to-slf4j</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>log4j-over-slf4j</artifactId>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-log4j2</artifactId>
+      </dependency>
+
+      <!-- log4j 2 -->
+
+
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-api</artifactId>
+          <version>${log4j2.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-core</artifactId>
+          <version>${log4j2.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+          <version>${log4j2.version}</version>
+      </dependency>
+
+
+      <!-- http async client -->
+
+      <dependency>
+          <groupId>org.apache.httpcomponents</groupId>
+          <artifactId>httpasyncclient</artifactId>
+          <version>${apache_http_client.version}</version>
+          <exclusions>
+              <exclusion>
+                  <groupId>commons-logging</groupId>
+                  <artifactId>commons-logging</artifactId>
+              </exclusion>
+          </exclusions>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.httpcomponents</groupId>
+          <artifactId>httpclient</artifactId>
+          <version>${apache_http_client2.version}</version>
+      </dependency>
+
+
+      <!-- guava -->
+
+      <dependency>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+          <version>${guava.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.rss</groupId>
+          <artifactId>org.rss.bean</artifactId>
+          <version>${rss_bean.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.rss</groupId>
+          <artifactId>org.rss.registry</artifactId>
+          <version>${rss_registry.version}</version>
+      </dependency>
+
+      <!-- junit -->
+
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-test</artifactId>
+          <scope>test</scope>
+      </dependency>
+    <!--<dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>-->
+
+  </dependencies>
+
+  <build>
+    <!--<plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    </plugins>-->
+
+      <plugins>
+          <plugin>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-maven-plugin</artifactId>
+          </plugin>
+      </plugins>
+
+  </build>
+
+</project>

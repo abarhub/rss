@@ -1,0 +1,71 @@
+<!doctype html>
+<html ng-app="todoApp" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.min.js"></script>
+    <script src="js/liste5.js"></script>
+    <!--<link rel="stylesheet" href="css/todo.css">-->
+</head>
+<body>
+<div ng-controller="TodoListController as todoList" class="container">
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <span>Liste Rss de {{todoList.liste1.length}}</span>
+                <form ng-submit="todoList.updateList()">
+
+                    <input class="btn-primary" type="submit" value="update">
+                </form>
+                <form ng-submit="todoList.updateListFlux()">
+
+                    <input class="btn-primary" type="submit" value="update2">
+                </form>
+                <form ng-submit="todoList.addUrl()">
+                    <input type="text" name="url" ng-model="todoList.urlAAjouter">
+                    <input class="btn-primary" type="submit" value="add">
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                liste_url
+                <ul class="unstyled">
+                    <li ng-repeat="rss1 in todoList.liste_url">
+                        <div nb-click="todoList.updateMsg(rss1.id)">
+                        url : <span nb-click="todoList.updateMsg(rss1.id)">{{rss1.url}}</span>
+                        Titre : <span >{{rss1.title}}</span>
+                        id : <span >{{rss1.id}}</span>
+                        </div>
+                        <form ng-submit="todoList.updateMsg(rss1.id)">
+                            <input class="btn-primary" type="submit" value="update3">
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-8">
+                liste_messages
+                <ul class="unstyled">
+                    <li ng-repeat="rss2 in todoList.liste_item_select">
+                        Titre : <span >{{rss2.title}}</span>
+                        Description : <p ng-bind-html="rss2.description"></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+</div>
+</body>
+</html>

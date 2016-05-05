@@ -1,0 +1,99 @@
+package org.rss.beans.flux;
+
+import java.util.List;
+
+/**
+ * Created by Alain on 28/10/2015.
+ */
+public final class RssChannel {
+
+	private String id;
+	private String url;
+	private List<RssItem> listeItem;
+	private String title;
+	private String description;
+	private String language;
+	private DateTimeZone lastBuildDate;
+	private DateTimeZone pubDate;
+
+	public RssChannel() {
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public List<RssItem> getListeItem() {
+		return listeItem;
+	}
+
+	public void setListeItem(List<RssItem> listeItem) {
+		this.listeItem = listeItem;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public DateTimeZone getLastBuildDate() {
+		return lastBuildDate;
+	}
+
+	public void setLastBuildDate(DateTimeZone lastBuildDate) {
+		this.lastBuildDate = lastBuildDate;
+	}
+
+	public DateTimeZone getPubDate() {
+		return pubDate;
+	}
+
+	public void setPubDate(DateTimeZone pubDate) {
+		this.pubDate = pubDate;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "RssChannel{" +
+				"id='" + id + '\'' +
+				", url='" + url + '\'' +
+				", listeItem=" + listeItem +
+				", title='" + title + '\'' +
+				", description='" + description + '\'' +
+				", language='" + language + '\'' +
+				", lastBuildDate=" + lastBuildDate +
+				", pubDate=" + pubDate +
+				'}';
+	}
+}

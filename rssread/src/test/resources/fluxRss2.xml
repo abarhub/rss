@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- http://www.actusnews.com/rss/ -->
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title><![CDATA[ActusnewsWire : Diffuseur d'informations réglementées]]></title>
+        <link>http://www.actusnews.com/</link>
+        <description><![CDATA[Les communiqués des 15 derniers jours sur Actusnews.com.]]></description>
+        <language>fr</language>
+        <copyright><![CDATA[© 2004-2016 Actusnews.com]]></copyright>
+        <managingEditor>info@actusnews.com (Equipe commerciale)</managingEditor>
+        <webMaster>webmaster@actusnews.com (Equipe des Webmaster)</webMaster>
+        <pubDate>Mon, 09 May 2016 00:00:01 +0200</pubDate>
+        <lastBuildDate>Mon, 09 May 2016 22:06:49 +0200</lastBuildDate>
+        <generator>Generateur RSS Actusnews Version 1.2, par Jean-Philippe Higelin</generator>
+        <atom:link href="http://www.actusnews.com/rss/" rel="self" type="application/rss+xml" />
+        <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+        <cloud domain="www.actusnews.com" port="80" path="/RPC2" registerProcedure="pingMe" protocol="soap" />
+        <ttl>20</ttl>
+        <image>
+            <url>http://www.actusnews.com/actualites/actusnews_small.gif</url>
+            <title><![CDATA[ActusnewsWire : Diffuseur d'informations réglementées]]></title>
+            <link>http://www.actusnews.com/</link>
+            <description><![CDATA[Diffuseur de communiquées de presse sur internet]]></description>
+            <height>48</height>
+            <width>100</width>
+        </image>
+
+        <item>
+            <title><![CDATA[SELECTIRENTE : Chiffre d'affaires et activité du 1er trimestre 2016]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44181-Communique-CA-et-activite-1T16.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44181</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44181-Communique-CA-et-activite-1T16.pdf</guid>
+            <pubDate>Mon, 09 May 2016 20:00:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[ITS GROUP : Mise à disposition du rapport financier annuel 2015]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44180-CP-ITS-MAD-RFA-2015.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44180</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44180-CP-ITS-MAD-RFA-2015.pdf</guid>
+            <pubDate>Mon, 09 May 2016 19:10:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[ASK : Mise à disposition de la documentation préparatoire à l'assemblée générale mixte du 19 mai 2016]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44164-ASK_MAD_DOCSAG_19052016.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44164</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44164-ASK_MAD_DOCSAG_19052016.pdf</guid>
+            <pubDate>Mon, 09 May 2016 19:00:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[ATEME : 2016 FIRST-QUARTER REVENUES: +12% ; POSITIVE OUTLOOK CONFIRMED]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44161-ATEME_CA-T1-2016_09052016_VDEF_EN.docx.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44161</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44161-ATEME_CA-T1-2016_09052016_VDEF_EN.docx.pdf</guid>
+            <pubDate>Mon, 09 May 2016 18:00:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[MEDIA 6 : Publication mensuelle relative au nombre d'actions composant le capital et du nombre total de droits de vote]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44162-Publication-mensuelle-du-nombre-actions-et-droits-de-vote-Avril-2016.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44162</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44162-Publication-mensuelle-du-nombre-actions-et-droits-de-vote-Avril-2016.pdf</guid>
+            <pubDate>Mon, 09 May 2016 18:00:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[COHERIS : COHERIS : Chiffre d'affaires 1er trimestre 2016]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44168-cp-coheris-090516.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44168</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44168-cp-coheris-090516.pdf</guid>
+            <pubDate>Mon, 09 May 2016 18:00:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[UNION FIN.FRANCE : 1ER TRIMESTRE 2016 : UN PNB DE 47,5 M EUR .]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44165-CP-T1-2016-_VDef_2.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44165</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44165-CP-T1-2016-_VDef_2.pdf</guid>
+            <pubDate>Mon, 09 May 2016 18:00:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[BASTIDE : ACCÉLÉRATION DE LA CROISSANCE ORGANIQUE AU 3ÈME TRIMESTRE ET CONFIRMATION DES PERSPECTIVES DE CROISSANCE]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44169-bastide_mai2016.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44169</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44169-bastide_mai2016.pdf</guid>
+            <pubDate>Mon, 09 May 2016 18:00:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[INNOVEOX : Innoveox signe une commande de 5 millions d'euros en Chine]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44171-INNOVEOX-LUKANG-09052016.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44171</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44171-INNOVEOX-LUKANG-09052016.pdf</guid>
+            <pubDate>Mon, 09 May 2016 18:00:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[PRISMAFLEX INTERNATIONAL : Chiffre d'affaires annuel 2015/2016 à 50,2 M EUR]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44172-cp-prismaflex-090516.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44172</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44172-cp-prismaflex-090516.pdf</guid>
+            <pubDate>Mon, 09 May 2016 18:00:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[PRISMAFLEX INTERNATIONAL : EUR 50.20 million total sales for the financial year 2015/2016]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44173-cp-prismaflex_090516.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44173</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44173-cp-prismaflex_090516.pdf</guid>
+            <pubDate>Mon, 09 May 2016 18:00:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[DMS : DMS annonce le déploiement de sa solution Biomod 3S au sein du groupe de radiologie lyonnais Norimagerie]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44174-DMS_CP_NORIMAGERIE_09052016_VF.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44174</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44174-DMS_CP_NORIMAGERIE_09052016_VF.pdf</guid>
+            <pubDate>Mon, 09 May 2016 17:50:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[GEA : Information mensuelle relative au nombre total de droits de vote et d'actions composant le capital social de GEA au 30/04/2016]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44163-DDV-au-30042016.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44163</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44163-DDV-au-30042016.pdf</guid>
+            <pubDate>Mon, 09 May 2016 17:45:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[ASK : Le groupe Keolis choisit ASK pour la fourniture de sa nouvelle carte KorriGo Services]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44170-ASK_CP_KEOLIS_09052016_VFF.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44170</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44170-ASK_CP_KEOLIS_09052016_VFF.pdf</guid>
+            <pubDate>Mon, 09 May 2016 17:45:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[ECONOCOM : Rachat d'actions propres]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44175-cp-econocom-090516.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44175</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44175-cp-econocom-090516.pdf</guid>
+            <pubDate>Mon, 09 May 2016 17:45:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[DALET : Information relative au nombre total de droits de vote et d'actions composant le capital social]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44166-CP-DALET-DECLARATION-DDV-VDEF-30-04-16.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44166</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44166-CP-DALET-DECLARATION-DDV-VDEF-30-04-16.pdf</guid>
+            <pubDate>Mon, 09 May 2016 16:00:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[SABETON : Information trimestrielle au 31 mars 2016]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44167-cp-sabeton-020516.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44167</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44167-cp-sabeton-020516.pdf</guid>
+            <pubDate>Mon, 09 May 2016 15:30:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[BASTIDE : communiqué de mise à disposition du Document de référence (exercice clos au 30 juin 2015)]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44160-communique-doc-de-ref-2016.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44160</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44160-communique-doc-de-ref-2016.pdf</guid>
+            <pubDate>Mon, 09 May 2016 09:00:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[MEDIA 6 : Chiffre d'affaires au 31 mars 2016 : 32,9 M EUR]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44156-Media-6-Communique-presse-CA-2T-2016-_VF_-160509.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44156</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44156-Media-6-Communique-presse-CA-2T-2016-_VF_-160509.pdf</guid>
+            <pubDate>Mon, 09 May 2016 08:00:00 +0200</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[SOLUCOM : Déclaration au titre de l'article 223-16 du règlement général de l'AMF]]></title>
+            <description><![CDATA[
+						<center>------------------------</center><div class="act_pdf">Communiqu&eacute; int&eacute;gral et original au format PDF :
+			<br />
+			<a href="http://www.actusnews.com/download2.php?FILE=ACTUS-0-44158-Solucom_Declaration-AMF_060516-FR.pdf" target="_blank">T&eacute;l&eacute;charger le PDF</a></div><center>
+			&copy; Copyright Actusnews Wire<br />
+			Recevez gratuitement par email les prochains communiqu&eacute;s de la soci&eacute;t&eacute; en vous inscrivant sur <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a> <br />
+			Receive by email the next press releases of the company by registering on <a href="http://www.actusnews.com/" target="_blank">www.actusnews.com</a>, it's free
+			</center><hr />
+		]]></description>
+
+            <category>Actusnews</category>
+            <link>http://www.actusnews.com/communique.php?ID=ACTUS-0-44158</link>
+            <guid>http://www.actusnews.com/download2.php?FILE=ACTUS-0-44158-Solucom_Declaration-AMF_060516-FR.pdf</guid>
+            <pubDate>Fri, 06 May 2016 18:00:00 +0200</pubDate>
+        </item>
+
+    </channel>
+</rss>

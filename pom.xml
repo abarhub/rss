@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+<parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.3.4.RELEASE</version>
+</parent>
+
+
+<name>RSS :: Parent POM</name>
+
+<groupId>org.rss</groupId>
+<artifactId>org.rss-parent</artifactId>
+<version>0.0.1-SNAPSHOT</version>
+<packaging>pom</packaging>
+
+<properties>
+    <!-- Specify Java Compiler Version -->
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+
+    <!-- Spring - ->
+    <spring-boot.version>1.2.1.RELEASE</spring-boot.version>
+
+    <!- - Sonar - ->
+    <sonar-maven-plugin.version>2.5</sonar-maven-plugin.version>
+    <sonar.language>java</sonar.language>
+    <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+    <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+
+    <!- - Plugin - ->
+    <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
+    <jacoco-maven-plugin.version>0.7.3.201502191951</jacoco-maven-plugin.version>-->
+
+	<java.version>1.8</java.version>
+	<log4j2.version>2.4.1</log4j2.version>
+	<guava.version>18.0</guava.version>
+	<rss_bean.version>1.03-SNAPSHOT</rss_bean.version>
+    <spring.version>4.2.6.RELEASE</spring.version>
+    <slf4j.version>1.7.12</slf4j.version>
+    <log4j2.version>2.4.1</log4j2.version>
+    <apache_http_client.version>4.1</apache_http_client.version>
+    <apache_http_client2.version>4.4.1</apache_http_client2.version>
+    <rss_registry.version>1.01-SNAPSHOT</rss_registry.version>
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+</properties>
+
+<modules>
+    <module>rssbeans</module>
+    <module>rssdb</module>
+    <module>rssread</module>
+    <module>rssui</module>
+    <module>rssregistry</module>
+</modules>
+
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+
+<build>
+
+
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
+    </plugins>
+
+  
+    <!--<pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                    <includes>
+                        <include>**/*Test.java</include>
+                        <include>**/*IT.java</include>
+                        <include>**/*Story.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </pluginManagement>-->
+
+    <!--<plugins>
+        <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${jacoco-maven-plugin.version}</version>
+            <configuration>
+                <destFile>${project.basedir}/../target/jacoco.exec</destFile>
+            </configuration>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>${sonar-maven-plugin.version}</version>
+        </plugin>
+
+    </plugins>-->
+</build>
+
+</project>
