@@ -1,8 +1,12 @@
 package org.rss.registry.impl;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import org.rss.beans.flux.RssChannel;
 import org.rss.beans.param.RssListeUrl;
+import org.rss.registry.IRestDb;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -21,7 +25,9 @@ import java.util.Map;
  * Created by Alain on 08/05/2016.
  */
 @Service
-public class RestDb implements org.rss.registry.IRestDb {
+public class RestDb implements IRestDb {
+
+	private static final Logger logger = LoggerFactory.getLogger(RestDb.class);
 
 	private final String urlDbServeur="http://localhost:8083/";
 
@@ -30,17 +36,21 @@ public class RestDb implements org.rss.registry.IRestDb {
 		String url;
 		url=urlDbServeur+"api3/liste_rss";
 
-		RestTemplate restTemplate = getRestTemplate();
+		RestTemplate restTemplate = getRestTemplate("listeRssDetaille");
 
 		ResponseEntity<RssChannel[]> tmp = restTemplate.getForEntity(url, RssChannel[].class, Maps.newHashMap());
 
 		return tmp;
 	}
 
-	private RestTemplate getRestTemplate() {
+	private RestTemplate getRestTemplate(String url) {
+		Preconditions.checkNotNull(url);
+		Preconditions.checkState(!url.isEmpty());
+		Preconditions.checkState(!url.trim().isEmpty());
+
 		RestTemplate restTemplate=new RestTemplate();
 
-		ClientHttpRequestInterceptor ri = new LoggingRequestInterceptor();
+		ClientHttpRequestInterceptor ri = new LoggingRequestInterceptor("metier",url);
 		List<ClientHttpRequestInterceptor> ris = new ArrayList<ClientHttpRequestInterceptor>();
 		ris.add(ri);
 		restTemplate.setInterceptors(ris);
@@ -52,13 +62,10 @@ public class RestDb implements org.rss.registry.IRestDb {
 	@Override
 	public ResponseEntity<String> add_url(String nom, String url){
 		String url2;
-		RestTemplate restTemplate = getRestTemplate();
+		RestTemplate restTemplate = getRestTemplate("add_url");
 		url2=urlDbServeur+"api3/add_url?name="+nom+"&url="+url;
-		//url2="http://localhost:8083/api3/add_url";
 
 		Map<String, Object> param = Maps.newHashMap();
-		//param.put("name",nom);
-		//param.put("url",url);
 		ResponseEntity<String> tmp = restTemplate.postForEntity(url2, null,String.class, param);
 
 		return tmp;
@@ -69,37 +76,13 @@ public class RestDb implements org.rss.registry.IRestDb {
 	public ResponseEntity<String> addRss(RssChannel rss){
 
 		String url;
-		RestTemplate restTemplate = getRestTemplate();
+		RestTemplate restTemplate = getRestTemplate("addRss");
 		url=urlDbServeur+"api3/add_rss";
-		//url=getUrlDao(UrlDao.AddRss);
-		//url="http://192.168.1.11:8080/rss.db-0.0.1-SNAPSHOT/api/add_rss";
-		//url="http://192.168.1.11:8080/db/api/add_rss";
-		//restTemplate.s
-
-			/*MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-			map.add("name", "xx");
-			map.add("password", "xx");*/
-
-		//HttpMessageConverter formHttpMessageConverter = new FormHttpMessageConverter();
-		//HttpMessageConverter stringHttpMessageConverternew = new StringHttpMessageConverter();
-		//restTemplate.setMessageConverters(new HttpMessageConverter[]{formHttpMessageConverter, stringHttpMessageConverternew});
-		//restTemplate.setMessageConverters(new MappingJackson2HttpMessageConverter());
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<RssChannel> entity = new HttpEntity<RssChannel>(rss, headers);
 
-		/*ClientHttpRequestInterceptor ri = new LoggingRequestInterceptor();
-		List<ClientHttpRequestInterceptor> ris = new ArrayList<ClientHttpRequestInterceptor>();
-		ris.add(ri);*/
-		//rt.setInterceptors(ris);
-		//rt.setRequestFactory(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory());
-		//restTemplate.setInterceptors(ris);
-		//restTemplate.setRequestFactory(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
-
-		//logger.info("appel : "+url);
-		//restTemplate.put(url, rss);
-		//ResponseEntity<String> tmp = restTemplate.postForEntity(url, rss, String.class);
 		ResponseEntity<String> tmp = restTemplate.postForEntity(url, entity, String.class);
 
 		return tmp;
@@ -109,9 +92,8 @@ public class RestDb implements org.rss.registry.IRestDb {
 	@Override
 	public ResponseEntity<RssListeUrl> lectureParametres(){
 		String url;
-		RestTemplate restTemplate = getRestTemplate();
+		RestTemplate restTemplate = getRestTemplate("lectureParametres");
 
-		//url=getUrlDao(UrlDao.ListParam);
 		url=urlDbServeur+"api3/liste_url";
 
 		//logger.info("url param:"+url);
