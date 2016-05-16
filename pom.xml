@@ -7,7 +7,7 @@
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.3.4.RELEASE</version>
+    <version>1.3.5.RELEASE</version>
 </parent>
 
 
@@ -39,7 +39,7 @@
 
 	<java.version>1.8</java.version>
 	<log4j2.version>2.4.1</log4j2.version>
-	<guava.version>18.0</guava.version>
+	<guava.version>19.0</guava.version>
 	<rss_bean.version>1.03-SNAPSHOT</rss_bean.version>
     <spring.version>4.2.6.RELEASE</spring.version>
     <slf4j.version>1.7.12</slf4j.version>
@@ -47,6 +47,7 @@
     <apache_http_client.version>4.1</apache_http_client.version>
     <apache_http_client2.version>4.4.1</apache_http_client2.version>
     <rss_registry.version>1.01-SNAPSHOT</rss_registry.version>
+    <hibernate.version>5.1.0.Final</hibernate.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
