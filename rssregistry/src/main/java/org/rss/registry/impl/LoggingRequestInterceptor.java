@@ -1,7 +1,9 @@
 package org.rss.registry.impl;
 
 import com.google.common.base.Preconditions;
+import org.rss.beans.MDCKey;
 import org.rss.beans.OutilsGeneriques;
+import org.rss.beans.OutilsMDC;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -45,10 +47,8 @@ public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
 
 	private void log(HttpRequest request, byte[] body, ClientHttpResponse response) throws IOException {
 		try {
-			//MDC.put("server", nomServeur);
-			//MDC.put("getUrl", nomUrl);
-			OutilsGeneriques.addMdc("server", nomServeur);
-			OutilsGeneriques.addMdc("getUrl", nomUrl);
+			OutilsMDC.addMdc(MDCKey.SERVEUR, nomServeur);
+			OutilsMDC.addMdc(MDCKey.GET_URL, nomUrl);
 
 			String str = new String(body, StandardCharsets.UTF_8);
 			logger.info("appel rest : body = " + str);
@@ -58,10 +58,8 @@ public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
 			String str2 = read(response.getBody());
 			logger.info("appel rest : response = " + str2);
 		}finally{
-			//MDC.remove("server");
-			//MDC.remove("getUrl");
-			OutilsGeneriques.removeMdc("server");
-			OutilsGeneriques.removeMdc("getUrl");
+			OutilsMDC.removeMdc(MDCKey.SERVEUR);
+			OutilsMDC.removeMdc(MDCKey.GET_URL);
 		}
 	}
 

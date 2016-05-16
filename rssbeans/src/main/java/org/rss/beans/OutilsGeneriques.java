@@ -15,8 +15,6 @@ public final class OutilsGeneriques {
 
 	private static final Logger logger = LoggerFactory.getLogger(OutilsGeneriques.class);
 
-	private static final String CONTEXT_REGROUPE="CONTEXT";
-
 	private OutilsGeneriques(){
 		// constructeur vide
 	}
@@ -32,32 +30,4 @@ public final class OutilsGeneriques {
 		}
 	}
 
-	public static void addMdc(String key,String value){
-		checkNotEmpty(key,"Cle vide");
-		checkNotEmpty(value,"Valeur vide");
-		MDC.put(key,value);
-		recalculMdc();
-	}
-
-	private static void recalculMdc() {
-		Map<String, String> mdc2= Maps.newTreeMap();
-		Map<String, String> mdc = MDC.getCopyOfContextMap();
-		if(mdc!=null)
-		{
-			mdc2.putAll(mdc);
-		}
-		mdc2.remove(CONTEXT_REGROUPE);
-		String res="";
-		if(mdc2.isEmpty()) {
-			Joiner.MapJoiner joiner = Joiner.on(";").withKeyValueSeparator("=");
-			res = joiner.join(mdc2);
-		}
-		MDC.put(CONTEXT_REGROUPE,res);
-	}
-
-	public static void removeMdc(String key){
-		checkNotEmpty(key,"Cle vide");
-		MDC.remove(key);
-		recalculMdc();
-	}
 }
