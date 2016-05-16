@@ -42,9 +42,8 @@
                 liste_url<br/>
                 <div class="list-group">
                     <a href="#" class="list-group-item"
-                       ng-class="{active:theme == currentTheme}"
                        ng-repeat="rss1 in todoList.liste_url"
-                       ng-click="checkThemeContent(theme);currentTheme=theme;todoList.updateMsg(rss1.id)">
+                       ng-click="todoList.updateMsg(rss1.id)">
                         url : {{rss1.url}}
                         Titre : {{rss1.title}}
                         id : {{rss1.id}}
