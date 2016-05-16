@@ -11,6 +11,11 @@ function stringStartWith(s1,s2) {
     return false;
 }
 
+function logMsg(s){
+    console.log(s);
+    alert(s);
+}
+
 angular.module('todoApp', ['ngSanitize'])
         .controller('TodoListController', function($http) {
             var todoList = this;
@@ -59,74 +64,66 @@ angular.module('todoApp', ['ngSanitize'])
             };
 
             todoList.updateList=function() {
-                alert("Test1");
+                logMsg("Test1 updateList");
                 $http.get('/liste').then(function(value) {
-                    alert("Ok");
+                    logMsg("Ok");
                     var tmp=value.data;
-                    alert("res="+tmp);
+                    logMsg("res="+tmp);
                     todoList.liste1=tmp.liste_channel;
-                    alert("suite");
+                    logMsg("suite");
                     todoList.liste_url=tmp.liste_channel;
                     todoList.liste_item_select=tmp.liste_channel[0].listeItem;
-                    alert("Fin traitement");
+                    logMsg("Fin traitement");
                 }, function(reason) {
-                    alert("Error : "+reason);
+                    logMsg("Error : "+reason);
                 }, function(value) {
                     // notifyCallback
                 });
             }
 
             todoList.addUrl=function() {
-                alert("Test1");
+                //alert("Test1");
+                logMsg("Test1 addUrl");
                 var urlAAjouter=todoList.urlAAjouter;
                 if (typeof urlAAjouter !== 'undefined') {
                     if(stringStartWith(urlAAjouter,"http"))
                     {
-                        alert("URL a ajouter : " + urlAAjouter);
+                        logMsg("URL a ajouter : " + urlAAjouter);
                         todoList.urlAAjouter = "";
                         //$http.post('/api3/add_url',  { 'name' : 'test1', 'url' : urlAAjouter });
-                        $http.post('/add_url?name=test1&url=' + encodeURIComponent(urlAAjouter), false, function (reason) {
-                            alert("Error : " + reason);
-                        }, function (value) {
-                            alert("ok : " + value);
-                        });
+                        $http.post('/add_url?name=test1&url=' + encodeURIComponent(urlAAjouter))
+                                .then(function (value) {
+                                    logMsg("ok : " + value);
+                                    logMsg("appel updateListFlux ...");
+                                    todoList.updateListFlux();
+                                    logMsg("appel updateListFlux fin");
+                                },function (reason) {
+                                    logMsg("Error : " + reason);
+                                });
                     }
                     else
                     {
-                        alert("url invalide !");
+                        logMsg("url invalide !");
                     }
-                    /*$http.get('/liste').then(function(value) {
-                     alert("Ok");
-                     var tmp=value.data;
-                     alert("res="+tmp);
-                     todoList.liste1=tmp.liste_channel;
-                     alert("suite");
-                     todoList.liste_url=tmp.liste_channel;
-                     todoList.liste_item_select=tmp.liste_channel[0].listeItem;
-                     alert("Fin traitement");
-                     }, function(reason) {
-                     alert("Error : "+reason);
-                     }, function(value) {
-                     // notifyCallback
-                     });*/
                 }
+                logMsg("fin methode addUrl !");
             }
 
 
 
             todoList.updateListFlux=function() {
-                alert("Test1");
+                logMsg("Test1 updateListFlux");
                 $http.get('/listeUrl').then(function(value) {
-                    alert("Ok");
+                    logMsg("Ok");
                     var tmp=value.data;
-                    alert("res="+tmp);
+                    logMsg("res="+tmp);
                     //todoList.liste1=tmp.liste_channel;
-                    alert("suite");
+                    logMsg("suite");
                     todoList.liste_url=tmp.liste_channel;
                     //todoList.liste_item_select=tmp.liste_channel[0].listeItem;
-                    alert("Fin traitement");
+                    logMsg("Fin traitement");
                 }, function(reason) {
-                    alert("Error : "+reason);
+                    logMsg("Error : "+reason);
                 }, function(value) {
                     // notifyCallback
                 });
@@ -134,18 +131,18 @@ angular.module('todoApp', ['ngSanitize'])
 
 
             todoList.updateMsg=function(id) {
-                alert("Test2:"+id);
+                logMsg("Test2 updateMsg:"+id);
                 $http.get('/listeMessages?id='+id).then(function(value) {
-                    alert("Ok");
+                    logMsg("Ok");
                     var tmp=value.data;
-                    alert("res="+tmp);
+                    logMsg("res="+tmp);
                     //todoList.liste1=tmp.liste_channel;
-                    alert("suite");
+                    logMsg("suite");
                     //todoList.liste_url=tmp.liste_channel;
                     todoList.liste_item_select=tmp.listeItem;
-                    alert("Fin traitement");
+                    logMsg("Fin traitement");
                 }, function(reason) {
-                    alert("Error : "+reason);
+                    logMsg("Error : "+reason);
                 }, function(value) {
                     // notifyCallback
                 });
