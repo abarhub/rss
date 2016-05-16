@@ -39,19 +39,18 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                liste_url
-                <ul class="unstyled">
-                    <li ng-repeat="rss1 in todoList.liste_url">
-                        <div nb-click="todoList.updateMsg(rss1.id)">
-                        url : <span nb-click="todoList.updateMsg(rss1.id)">{{rss1.url}}</span>
-                        Titre : <span >{{rss1.title}}</span>
-                        id : <span >{{rss1.id}}</span>
-                        </div>
-                        <form ng-submit="todoList.updateMsg(rss1.id)">
-                            <input class="btn-primary" type="submit" value="update3">
-                        </form>
-                    </li>
-                </ul>
+                liste_url<br/>
+                <div class="list-group">
+                    <a href="#" class="list-group-item"
+                       ng-class="{active:theme == currentTheme}"
+                       ng-repeat="rss1 in todoList.liste_url"
+                       ng-click="checkThemeContent(theme);currentTheme=theme;todoList.updateMsg(rss1.id)">
+                        url : {{rss1.url}}
+                        Titre : {{rss1.title}}
+                        id : {{rss1.id}}
+                    </a>
+                </div>
+
             </div>
             <div class="col-md-8">
                 liste_messages
