@@ -156,7 +156,7 @@ public class TacheLecture {
 		String res="",url0;
 		Preconditions.checkNotNull(url);
 		url0=url.getUrl();
-		if(url0!=null&&url0.length()>0) {
+		if(url0!=null&&url0.length()>0&&url0.startsWith("http")) {
 			logger.info("Lecture RSS de " + url.getNom() + " : " + url0);
 			try {
 				logger.info("Lecture ...");

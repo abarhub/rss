@@ -2,7 +2,14 @@
  * Created by Alain on 01/11/2015.
  */
 
-
+function stringStartWith(s1,s2) {
+    if (typeof s1 !== 'undefined') {
+        if (typeof s2 !== 'undefined') {
+            return s1.lastIndexOf(s2, 0) === 0;
+        }
+    }
+    return false;
+}
 
 angular.module('todoApp', ['ngSanitize'])
         .controller('TodoListController', function($http) {
@@ -72,28 +79,37 @@ angular.module('todoApp', ['ngSanitize'])
             todoList.addUrl=function() {
                 alert("Test1");
                 var urlAAjouter=todoList.urlAAjouter;
-                alert("URL a ajouter : "+urlAAjouter);
-                todoList.urlAAjouter="";
-                //$http.post('/api3/add_url',  { 'name' : 'test1', 'url' : urlAAjouter });
-                $http.post('/add_url?name=test1&url='+encodeURIComponent(urlAAjouter),false, function(reason) {
-                    alert("Error : "+reason);
-                }, function(value) {
-                    alert("ok : "+value);
-                });
-                /*$http.get('/liste').then(function(value) {
-                    alert("Ok");
-                    var tmp=value.data;
-                    alert("res="+tmp);
-                    todoList.liste1=tmp.liste_channel;
-                    alert("suite");
-                    todoList.liste_url=tmp.liste_channel;
-                    todoList.liste_item_select=tmp.liste_channel[0].listeItem;
-                    alert("Fin traitement");
-                }, function(reason) {
-                    alert("Error : "+reason);
-                }, function(value) {
-                    // notifyCallback
-                });*/
+                if (typeof urlAAjouter !== 'undefined') {
+                    if(stringStartWith(urlAAjouter,"http"))
+                    {
+                        alert("URL a ajouter : " + urlAAjouter);
+                        todoList.urlAAjouter = "";
+                        //$http.post('/api3/add_url',  { 'name' : 'test1', 'url' : urlAAjouter });
+                        $http.post('/add_url?name=test1&url=' + encodeURIComponent(urlAAjouter), false, function (reason) {
+                            alert("Error : " + reason);
+                        }, function (value) {
+                            alert("ok : " + value);
+                        });
+                    }
+                    else
+                    {
+                        alert("url invalide !");
+                    }
+                    /*$http.get('/liste').then(function(value) {
+                     alert("Ok");
+                     var tmp=value.data;
+                     alert("res="+tmp);
+                     todoList.liste1=tmp.liste_channel;
+                     alert("suite");
+                     todoList.liste_url=tmp.liste_channel;
+                     todoList.liste_item_select=tmp.liste_channel[0].listeItem;
+                     alert("Fin traitement");
+                     }, function(reason) {
+                     alert("Error : "+reason);
+                     }, function(value) {
+                     // notifyCallback
+                     });*/
+                }
             }
 
 

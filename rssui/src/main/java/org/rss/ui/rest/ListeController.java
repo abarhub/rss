@@ -4,6 +4,7 @@ package org.rss.ui.rest;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.rss.beans.OutilsGeneriques;
 import org.rss.beans.flux.RssChannel;
 import org.rss.beans.flux.RssItem;
 import org.rss.beans.param.RssListeUrl;
@@ -22,9 +23,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
+
+import static org.rss.beans.OutilsGeneriques.vide;
 
 
 /**
@@ -245,7 +250,7 @@ public class ListeController {
 
 		if(liste_url!=null&&liste_url.length>0)
 		{
-			try {
+			/*try {
 				id0 = Integer.parseInt(id);
 				id0=id0-1;
 				if(id0<=0)
@@ -254,7 +259,9 @@ public class ListeController {
 			{
 				id0=0;
 			}
-			RssChannel tmp2=liste_url[id0];
+			RssChannel tmp2=liste_url[id0];*/
+			RssChannel tmp2=trouveFlux(liste_url,id);
+			if(tmp2!=null)
 			{
 				c = new ChannelUi();
 				c.setDescription(tmp2.getDescription());
@@ -286,6 +293,25 @@ public class ListeController {
 		}
 
 		return c;
+	}
+
+	private RssChannel trouveFlux(RssChannel[] liste_url, String id) {
+		if(vide(id))
+		{
+			return null;
+		}
+		else
+		{
+			Optional<RssChannel> opt = Arrays.stream(liste_url).findAny().filter(x -> !vide(x.getId()) && x.getId().equals(id));
+			if(opt.isPresent())
+			{
+				return opt.get();
+			}
+			else
+			{
+				return null;
+			}
+		}
 	}
 
 }

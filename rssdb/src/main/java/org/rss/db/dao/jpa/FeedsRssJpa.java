@@ -30,7 +30,7 @@ public class FeedsRssJpa extends FeedsGenericJpa {
 	@Column(nullable = false)
 	private String language;
 
-	@Column(nullable = false)
+	@Column//(nullable = false)
 	private Date lastBuildDate;
 
 	@Column//(nullable = false)
