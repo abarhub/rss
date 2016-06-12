@@ -302,7 +302,9 @@ public class ListeController {
 		}
 		else
 		{
-			Optional<RssChannel> opt = Arrays.stream(liste_url).findAny().filter(x -> !vide(x.getId()) && x.getId().equals(id));
+			Optional<RssChannel> opt = Arrays.stream(liste_url)
+					.filter(x -> !vide(x.getId()) && x.getId().equals(id))
+					.findAny();
 			if(opt.isPresent())
 			{
 				return opt.get();
