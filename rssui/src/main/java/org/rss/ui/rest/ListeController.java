@@ -16,9 +16,12 @@ import org.rss.ui.bean.ItemUi;
 import org.rss.ui.bean.ListChannelUi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -39,6 +42,7 @@ import static org.rss.beans.OutilsGeneriques.vide;
 public class ListeController {
 
 	public static final Logger logger = LoggerFactory.getLogger(ListeController.class);
+	public static final Marker markerTrace = MarkerFactory.getMarker("TRACE");
 
 	//private static final String template = "Hello, %s!";
 	//private final AtomicLong counter = new AtomicLong();
@@ -313,6 +317,23 @@ public class ListeController {
 			{
 				return null;
 			}
+		}
+	}
+
+	@RequestMapping(value = "/traces",method = RequestMethod.POST)
+	public void traceMessages(@RequestParam(value="niveauErreur",defaultValue = "",required = false) String niveauErreur,
+	                          @RequestParam(value="composant",defaultValue = "",required = false) String composant,
+	                          @RequestParam(value="message",defaultValue = "",required = false) String message) {
+		if(niveauErreur!=null){
+			if(niveauErreur.equals("Info")) {
+				logger.info(markerTrace, composant + " : " + message);
+			} else if(niveauErreur.equals("Erreur")) {
+				logger.error(markerTrace, composant + " : " + message);
+			} else {
+				logger.info(markerTrace, niveauErreur + " ; " + composant + " : " + message);
+			}
+		} else {
+			logger.info(markerTrace, niveauErreur + " ; " + composant + " : " + message);
 		}
 	}
 

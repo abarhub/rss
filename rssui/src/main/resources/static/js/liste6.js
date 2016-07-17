@@ -14,14 +14,62 @@ function stringStartWith(s1,s2) {
 function logMsg(s){
     console.log(s);
     alert(s);
+    /*var niveauErreur;
+    var composant;
+    var message;
+    niveauErreur='Erreur';
+    composant='UI';
+    message=s;
+    $http.post('/traces?'+
+            'niveauErreur='+encodeURIComponent(niveauErreur)+
+            '&composant=' + encodeURIComponent(composant)+
+            '&message=' + encodeURIComponent(message))
+            .then(function (value) {
+                console.log("trace ok");
+            }, function (reason) {
+                console.log("Error : " + reason);
+            });*/
+}
+
+function logMsgErr($http,s){
+    logMsg2($http,s,'Erreur');
+}
+
+function logMsgInfo($http,s){
+    logMsg2($http,s,'Info');
+}
+
+function logMsg2($http,s,niveau){
+    console.log(s);
+    alert(s);
+    if($http !== 'undefined'){
+        var niveauErreur;
+        var composant;
+        var message;
+        niveauErreur='Info';
+        if(niveau == 'undefined'){
+            niveauErreur=niveau;
+        }
+        composant='UI';
+        message=s;
+        $http.post('/traces?'+
+                'niveauErreur='+encodeURIComponent(niveauErreur)+
+                '&composant=' + encodeURIComponent(composant)+
+                '&message=' + encodeURIComponent(message))
+                .then(function (value) {
+                    console.log("trace ok");
+                }, function (reason) {
+                    console.log("Error : " + reason);
+                });
+    }
 }
 
 angular.module('todoApp', ['ngSanitize'])
         .controller('TodoListController', function($http) {
             var todoList = this;
-            todoList.todos = [
+            /*todoList.todos = [
                 {text:'learn angular', done:true},
-                {text:'build an angular app', done:false}];
+                {text:'build an angular app', done:false}];*/
 
             todoList.liste1 = [
                 {"url":"http://www.google.fr/0","listeItem":[{"title":"KKKKKK0-0","description":"GGGG0-0","link":"http://www.yahoo.fr/0","pubDate":"2001-01-03","guid":"HHHH0-0"},{"title":"KKKKKK0-1","description":"GGGG0-1","link":"http://www.yahoo.fr/1","pubDate":"2001-01-03","guid":"HHHH0-1"},{"title":"KKKKKK0-2","description":"GGGG0-2","link":"http://www.yahoo.fr/2","pubDate":"2001-01-03","guid":"HHHH0-2"}],"title":"BBBBBB0","description":"AAAA0","language":"en","lastBuildDate":"2001-01-01","pubDate":"2001-01-02"},
@@ -67,18 +115,18 @@ angular.module('todoApp', ['ngSanitize'])
             };*/
 
             todoList.updateList=function() {
-                logMsg("Test1 updateList");
+                logMsgInfo($http,"Test1 updateList");
                 $http.get('/liste').then(function(value) {
-                    logMsg("Ok");
+                    logMsgInfo($http,"Ok");
                     var tmp=value.data;
-                    logMsg("res="+tmp);
+                    logMsgInfo($http,"res="+tmp);
                     todoList.liste1=tmp.liste_channel;
-                    logMsg("suite");
+                    logMsgInfo($http,"suite");
                     todoList.liste_url=tmp.liste_channel;
                     todoList.liste_item_select=tmp.liste_channel[0].listeItem;
-                    logMsg("Fin traitement");
+                    logMsgInfo($http,"Fin traitement");
                 }, function(reason) {
-                    logMsg("Error : "+reason);
+                    logMsgErr($http,"Error : "+reason);
                 }, function(value) {
                     // notifyCallback
                 });
@@ -86,55 +134,55 @@ angular.module('todoApp', ['ngSanitize'])
 
             todoList.addUrl=function() {
                 //alert("Test1");
-                logMsg("Test1 addUrl");
+                logMsgInfo($http,"Test1 addUrl");
                 var urlAAjouter=todoList.urlAAjouter;
                 var nomAAjouter=todoList.nomAAjouter;
                 if (typeof urlAAjouter !== 'undefined') {
                     if(typeof nomAAjouter !== 'undefined') {
                         if (stringStartWith(urlAAjouter, "http")) {
                             if(nomAAjouter!='') {
-                                logMsg("URL a ajouter : " + urlAAjouter);
+                                logMsgInfo($http,"URL a ajouter : " + urlAAjouter);
                                 todoList.urlAAjouter = "";
                                 //$http.post('/api3/add_url',  { 'name' : 'test1', 'url' : urlAAjouter });
                                 $http.post('/add_url?name='+encodeURIComponent(nomAAjouter)+
                                         '&url=' + encodeURIComponent(urlAAjouter))
                                         .then(function (value) {
-                                            logMsg("ok : " + value);
-                                            logMsg("appel updateListFlux ...");
+                                            logMsgInfo($http,"ok : " + value);
+                                            logMsgInfo($http,"appel updateListFlux ...");
                                             todoList.updateListFlux();
-                                            logMsg("appel updateListFlux fin");
+                                            logMsgInfo($http,"appel updateListFlux fin");
                                         }, function (reason) {
-                                            logMsg("Error : " + reason);
+                                            logMsgErr($http,"Error : " + reason);
                                         });
                             } else {
-                                logMsg("nom vide !");
+                                logMsgErr($http,"nom vide !");
                             }
                         }
                         else {
-                            logMsg("url invalide !");
+                            logMsgErr($http,"url invalide !");
                         }
                     } else {
-                        logMsg("nom invalide !");
+                        logMsgErr($http,"nom invalide !");
                     }
                 }
-                logMsg("fin methode addUrl !");
+                logMsgInfo($http,"fin methode addUrl !");
             }
 
 
 
             todoList.updateListFlux=function() {
-                logMsg("Test1 updateListFlux");
+                logMsgInfo($http,"Test1 updateListFlux");
                 $http.get('/listeUrl').then(function(value) {
-                    logMsg("Ok");
+                    logMsgInfo($http,"Ok");
                     var tmp=value.data;
-                    logMsg("res="+tmp);
+                    logMsgInfo($http,"res="+tmp);
                     //todoList.liste1=tmp.liste_channel;
-                    logMsg("suite");
+                    logMsgInfo($http,"suite");
                     todoList.liste_url=tmp.liste_channel;
                     //todoList.liste_item_select=tmp.liste_channel[0].listeItem;
-                    logMsg("Fin traitement");
+                    logMsgInfo($http,"Fin traitement");
                 }, function(reason) {
-                    logMsg("Error : "+reason);
+                    logMsgErr($http,"Error : "+reason);
                 }, function(value) {
                     // notifyCallback
                 });
@@ -142,18 +190,18 @@ angular.module('todoApp', ['ngSanitize'])
 
 
             todoList.updateMsg=function(id) {
-                logMsg("Test2 updateMsg:"+id);
+                logMsgInfo($http,"Test2 updateMsg:"+id);
                 $http.get('/listeMessages?id='+id).then(function(value) {
-                    logMsg("Ok");
+                    logMsgInfo($http,"Ok");
                     var tmp=value.data;
-                    logMsg("res="+tmp);
+                    logMsgInfo($http,"res="+tmp);
                     //todoList.liste1=tmp.liste_channel;
-                    logMsg("suite");
+                    logMsgInfo($http,"suite");
                     //todoList.liste_url=tmp.liste_channel;
                     todoList.liste_item_select=tmp.listeItem;
-                    logMsg("Fin traitement");
+                    logMsgInfo($http,"Fin traitement");
                 }, function(reason) {
-                    logMsg("Error : "+reason);
+                    logMsgErr($http,"Error : "+reason);
                 }, function(value) {
                     // notifyCallback
                 });
