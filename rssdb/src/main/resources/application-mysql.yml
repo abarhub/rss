@@ -1,0 +1,13 @@
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+  datasource:
+    url: jdbc:mysql://localhost:3306/rss
+    username: rss
+    password: rss
+    driver-class-name: com.mysql.jdbc.Driver
+
+
