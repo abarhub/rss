@@ -93,27 +93,6 @@ angular.module('todoApp', ['ngSanitize'])
             todoList.urlAAjouter = undefined;
             todoList.nomAAjouter = undefined;
 
-            /*todoList.addTodo = function() {
-                todoList.todos.push({text:todoList.todoText, done:false});
-                todoList.todoText = '';
-            };
-
-            todoList.remaining = function() {
-                var count = 0;
-                angular.forEach(todoList.todos, function(todo) {
-                    count += todo.done ? 0 : 1;
-                });
-                return count;
-            };
-
-            todoList.archive = function() {
-                var oldTodos = todoList.todos;
-                todoList.todos = [];
-                angular.forEach(oldTodos, function(todo) {
-                    if (!todo.done) todoList.todos.push(todo);
-                });
-            };*/
-
             todoList.updateList=function() {
                 logMsgInfo($http,"Test1 updateList");
                 $http.get('/liste').then(function(value) {
@@ -143,6 +122,7 @@ angular.module('todoApp', ['ngSanitize'])
                             if(nomAAjouter!='') {
                                 logMsgInfo($http,"URL a ajouter : " + urlAAjouter);
                                 todoList.urlAAjouter = "";
+                                todoList.nomAAjouter = "";
                                 //$http.post('/api3/add_url',  { 'name' : 'test1', 'url' : urlAAjouter });
                                 $http.post('/add_url?name='+encodeURIComponent(nomAAjouter)+
                                         '&url=' + encodeURIComponent(urlAAjouter))

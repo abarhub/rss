@@ -215,6 +215,7 @@ public class ListeController {
 					c.setTitle(tmp2.getTitle());
 					c.setUrl(tmp2.getUrl());
 					c.setId(tmp2.getId());
+					c.setName(tmp2.getName());
 
 					liste_channel.add(c);
 				}

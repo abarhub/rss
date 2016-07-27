@@ -19,4 +19,8 @@ public interface IDAOUrl {
 	public void enregistre_rss(FeedsRssJpa rss);
 
 	public List<FeedsRssJpa> liste_rss();
+
+	public boolean isUrlExiste(String url);
+
+	public boolean isNomExiste(String nom);
 }

@@ -15,6 +15,7 @@ public final class RssChannel {
 	private String language;
 	private DateTimeZone lastBuildDate;
 	private DateTimeZone pubDate;
+	private String name;
 
 	public RssChannel() {
 	}
@@ -83,6 +84,14 @@ public final class RssChannel {
 		this.id = id;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
 		return "RssChannel{" +
@@ -94,6 +103,7 @@ public final class RssChannel {
 				", language='" + language + '\'' +
 				", lastBuildDate=" + lastBuildDate +
 				", pubDate=" + pubDate +
+				", name='" + name + '\'' +
 				'}';
 	}
 }
