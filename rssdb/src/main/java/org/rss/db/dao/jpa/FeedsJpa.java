@@ -9,7 +9,6 @@ public interface FeedsJpa {
 
 	public void setUrl(String url);
 
-
 	public Integer getId();
 
 	public void setId(Integer id);

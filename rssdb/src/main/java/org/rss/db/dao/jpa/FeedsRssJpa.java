@@ -7,33 +7,20 @@ import java.util.List;
 /**
  * Created by Alain on 01/11/2015.
  */
-@Entity//(name = "channel")
+@Entity
 @DiscriminatorValue("1")
-//@Table(name="FEEDS_RSS")
 public class FeedsRssJpa extends FeedsGenericJpa {
 
-
-
-	//@OneToMany(fetch = FetchType.EAGER,orphanRemoval = true)
-	/*@ElementCollection
-	@CollectionTable(
-			name="item",
-			joinColumns=@JoinColumn(name="OWNER_ID")
-	)*/
-	//@ManyToOne (cascade = CascadeType.ALL)
-	//@JoinColumn (name = "OWNER_ID")
 	@OneToMany(fetch = FetchType.EAGER,orphanRemoval = true,cascade = CascadeType.ALL)
 	private List<ItemRssJpa> listeItem;
-
-
 
 	@Column(nullable = false)
 	private String language;
 
-	@Column//(nullable = false)
+	@Column
 	private Date lastBuildDate;
 
-	@Column//(nullable = false)
+	@Column
 	private Date pubDate;
 
 	public FeedsRssJpa() {
