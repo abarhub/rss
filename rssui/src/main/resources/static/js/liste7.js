@@ -75,7 +75,7 @@ angular.module('todoApp', ['ngSanitize'])
             todoList.urlAAjouter = undefined;
             todoList.nomAAjouter = undefined;
 
-            todoList.updateList=function() {
+            /*todoList.updateList=function() {
                 logMsgInfo($http,"Test1 updateList");
                 $http.get('/liste').then(function(value) {
                     logMsgInfo($http,"Ok");
@@ -91,7 +91,7 @@ angular.module('todoApp', ['ngSanitize'])
                 }, function(value) {
                     // notifyCallback
                 });
-            }
+            }*/
 
             todoList.addUrl=function() {
                 logMsgInfo($http,"Test1 addUrl");

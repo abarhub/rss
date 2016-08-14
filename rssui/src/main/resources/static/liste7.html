@@ -23,10 +23,7 @@
         <div class="row">
             <div class="col-md-12 div_border">
                 <span>Liste Rss de {{todoList.liste1.length}}</span>
-                <!--<form ng-submit="todoList.updateList()">
 
-                    <input class="btn-primary" type="submit" value="update">
-                </form>-->
                 <form ng-submit="todoList.updateListFlux()">
 
                     <input class="btn-primary" type="submit" value="update">
@@ -58,9 +55,18 @@
                 liste_messages
                 <ul class="unstyled">
                     <li ng-repeat="rss2 in todoList.liste_item_select">
-                        <h3><span class="glyphicon glyphicon-certificate"> {{rss2.title}} </span></h3>
+                        <h3>
+                            <span class="glyphicon glyphicon-certificate"></span>
+                            <span class="glyphicon glyphicon-ok-circle"></span>
+                            {{rss2.title}}
+                        </h3>
                         Description :
                             <p ng-bind-html="rss2.description" ></p>
+                            <div ng-if="rss2.link">
+                                <a href="{{rss2.link}}">
+                                    <span class="glyphicon glyphicon-link"></span>
+                                    Lien </a>
+                            </div>
                         <br/>
                     </li>
                 </ul>
