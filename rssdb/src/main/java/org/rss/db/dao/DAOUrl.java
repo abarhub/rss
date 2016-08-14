@@ -40,13 +40,9 @@ public class DAOUrl implements IDAOUrl {
 
 	@Override
 	public List<UrlJpa> getListeUrl() {
-		List<UrlJpa> liste1 = null;// = repository.getListe();
+		List<UrlJpa> liste1;
 
-		if (false) {
-			liste1 = Lists.newArrayList(repository.findAll());
-		} else {
-			liste1 = repository.findAllUrl();
-		}
+		liste1 = repository.findAllUrl();
 
 		return liste1;
 	}
