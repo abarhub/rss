@@ -67,4 +67,32 @@ public class RssRepository {
 
 		return res!=null&&!res.isEmpty();
 	}
+
+
+	public boolean urlExiste(String url){
+		String req;
+		List<FeedsRssJpa> res;
+
+		Preconditions.checkNotNull(url);
+
+		req="select f from FeedsRssJpa f where f.url='"+url+"'";
+
+		res=em.createQuery(req,FeedsRssJpa.class).getResultList();
+
+		return res!=null&&!res.isEmpty();
+	}
+
+
+	public boolean nomExiste(String nom){
+		String req;
+		List<FeedsRssJpa> res;
+
+		Preconditions.checkNotNull(nom);
+
+		req="select f from FeedsRssJpa f where f.name='"+nom+"'";
+
+		res=em.createQuery(req,FeedsRssJpa.class).getResultList();
+
+		return res!=null&&!res.isEmpty();
+	}
 }

@@ -34,46 +34,49 @@ public class DAOUrl implements IDAOUrl {
 	}
 
 	@Override
-	public void save(UrlJpa url)
-	{
+	public void save(UrlJpa url) {
 		repository.save(url);
 	}
 
 	@Override
-	public List<UrlJpa> getListeUrl()
-	{
-		List<UrlJpa> liste1=null;// = repository.getListe();
+	public List<UrlJpa> getListeUrl() {
+		List<UrlJpa> liste1 = null;// = repository.getListe();
 
-		if(false) {
+		if (false) {
 			liste1 = Lists.newArrayList(repository.findAll());
-		}
-		else
-		{
-			liste1=repository.findAllUrl();
+		} else {
+			liste1 = repository.findAllUrl();
 		}
 
 		return liste1;
 	}
 
-	public void enregistre_rss(FeedsRssJpa rss)
-	{
+	public void enregistre_rss(FeedsRssJpa rss) {
 		Preconditions.checkNotNull(rss);
-		if(repo_rss.channelExiste(rss))
-		{
-			logger.info("rss '"+rss.getUrl()+"' existe deja");
-		}
-		else {
-			logger.info("Enregistrement rss '"+rss.getUrl()+"' ...");
+		if (repo_rss.channelExiste(rss)) {
+			logger.info("rss '" + rss.getUrl() + "' existe deja");
+		} else {
+			logger.info("Enregistrement rss '" + rss.getUrl() + "' ...");
 			repo_rss.addChannel(rss);
 			logger.info("Enregistrement rss Ok");
 		}
 	}
 
-	public List<FeedsRssJpa> liste_rss(){
+	public List<FeedsRssJpa> liste_rss() {
 		List<FeedsRssJpa> liste;
 
-		liste=repo_rss.listeChannel();
+		liste = repo_rss.listeChannel();
 
 		return liste;
+	}
+
+	public boolean isUrlExiste(String url) {
+		Preconditions.checkNotNull(url);
+		return repo_rss.urlExiste(url);
+	}
+
+	public boolean isNomExiste(String nom) {
+		Preconditions.checkNotNull(nom);
+		return repo_rss.nomExiste(nom);
 	}
 }

@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by Alain on 01/11/2015.
  */
-@Entity//(name = "item")
+@Entity
 @Table(name="FEEDS_ITEM")
 public class ItemRssJpa {
 
@@ -14,16 +14,16 @@ public class ItemRssJpa {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column//(nullable = false)
+	@Column
 	private String title;
 
 	@Column(nullable = false,length = 5000)
 	private String description;
 
-	@Column//(nullable = false)
+	@Column
 	private String link;
 
-	@Column//(nullable = false)
+	@Column
 	private Date pubDate;
 
 	@Column(nullable = false)

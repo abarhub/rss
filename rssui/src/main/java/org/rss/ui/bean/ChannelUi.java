@@ -17,6 +17,7 @@ public class ChannelUi {
 	private String language;
 	private String lastBuildDate;
 	private String pubDate;
+	private String name;
 
 	public ChannelUi() {
 	}
@@ -83,5 +84,13 @@ public class ChannelUi {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

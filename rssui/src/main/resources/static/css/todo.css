@@ -5,3 +5,6 @@
     color: grey;
 }
 
+.div_border {
+    outline: 1px solid black;
+}

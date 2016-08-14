@@ -5,7 +5,7 @@ import javax.persistence.*;
 /**
  * Created by Alain on 25/10/2015.
  */
-@Entity//(name = "url")
+@Entity
 @Table(name="PARAM_URL")
 public class UrlJpa {
 
@@ -19,9 +19,7 @@ public class UrlJpa {
 	@Column(nullable = false,length = 1000)
 	private String url;
 
-	//@OneToMany(fetch = FetchType.LAZY/*,orphanRemoval = true,cascade = CascadeType.ALL*/)
 	@ManyToOne(fetch = FetchType.LAZY,optional = true,targetEntity = FeedsGenericJpa.class)
-	//@Column(nullable = true)
 	private FeedsJpa liste_feeds;
 
 	public UrlJpa() {

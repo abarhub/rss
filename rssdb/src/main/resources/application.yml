@@ -1,0 +1,35 @@
+
+version: 1.0
+released: 2012-11-30
+
+app:
+  repertoire: C:\\projet\\multimodule_rss\\rssdb
+
+server:
+  port: ${port:8083}
+  address: localhost
+
+  tomcat:
+    accesslog:
+    # Directory in which log files are created. Can be relative to the tomcat base dir or absolute.
+      directory: ${app.repertoire}\\tomcat\\logs
+      # Enable access log.
+      enabled: true
+      # Format pattern for access logs.
+      pattern: common
+
+    basedir: ${app.repertoire}\\tomcat\\tomcat
+
+#logging.level.org.hibernate.SQL=debug
+#spring.jpa.hibernate.
+#spring.jpa.show-sql=true
+
+#endpoints.actuator.path=/actuator
+
+#spring.profiles.active=oracle
+
+spring.profiles.active: h2
+#spring.profiles.active: mysql
+
+
+

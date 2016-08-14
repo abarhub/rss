@@ -25,6 +25,9 @@ public abstract class FeedsGenericJpa implements FeedsJpa {
 	@Column(nullable = false,length = 5000)
 	private String description;
 
+	@Column(nullable = true,length = 5000)
+	private String name;
+
 	public String getUrl() {
 		return url;
 	}
@@ -58,4 +61,11 @@ public abstract class FeedsGenericJpa implements FeedsJpa {
 		this.description = description;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

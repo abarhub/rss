@@ -113,6 +113,12 @@ public class ServiceRestSpring {
 		{
 			res="Erreur:parametre url invalide !";
 		}
+		else if(nomExiste(nom)){
+			res="Erreur: Le nom '"+nom+"' existe déjà !";
+		}
+		else if(urlExiste(url)){
+			res="Erreur: L'URL '"+url+"' existe déjà !";
+		}
 		else {
 			//liste = Lists.newArrayList();
 			rss=new UrlJpa();
@@ -136,6 +142,14 @@ public class ServiceRestSpring {
 
 		return res;
 
+	}
+
+	private boolean urlExiste(String url) {
+		return dao_url.isUrlExiste(url);
+	}
+
+	private boolean nomExiste(String nom) {
+		return dao_url.isNomExiste(nom);
 	}
 
 	private boolean isEmpty(/*@RequestParam(value = "name")*/ String nom) {
@@ -168,6 +182,7 @@ public class ServiceRestSpring {
 				channel.setTitle(tmp.getTitle());
 				channel.setUrl(tmp.getUrl());
 				channel.setId(""+tmp.getId());
+				channel.setName(tmp.getName());
 
 				if(tmp.getListeItem()!=null&&!tmp.getListeItem().isEmpty())
 				{

@@ -4,6 +4,7 @@ package org.rss.ui.rest;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.rss.beans.OutilsGeneriques;
 import org.rss.beans.flux.RssChannel;
 import org.rss.beans.flux.RssItem;
 import org.rss.beans.param.RssListeUrl;
@@ -15,16 +16,23 @@ import org.rss.ui.bean.ItemUi;
 import org.rss.ui.bean.ListChannelUi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
+
+import static org.rss.beans.OutilsGeneriques.vide;
 
 
 /**
@@ -34,6 +42,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class ListeController {
 
 	public static final Logger logger = LoggerFactory.getLogger(ListeController.class);
+	public static final Marker markerTrace = MarkerFactory.getMarker("TRACE");
 
 	//private static final String template = "Hello, %s!";
 	//private final AtomicLong counter = new AtomicLong();
@@ -206,6 +215,7 @@ public class ListeController {
 					c.setTitle(tmp2.getTitle());
 					c.setUrl(tmp2.getUrl());
 					c.setId(tmp2.getId());
+					c.setName(tmp2.getName());
 
 					liste_channel.add(c);
 				}
@@ -245,7 +255,7 @@ public class ListeController {
 
 		if(liste_url!=null&&liste_url.length>0)
 		{
-			try {
+			/*try {
 				id0 = Integer.parseInt(id);
 				id0=id0-1;
 				if(id0<=0)
@@ -254,7 +264,9 @@ public class ListeController {
 			{
 				id0=0;
 			}
-			RssChannel tmp2=liste_url[id0];
+			RssChannel tmp2=liste_url[id0];*/
+			RssChannel tmp2=trouveFlux(liste_url,id);
+			if(tmp2!=null)
 			{
 				c = new ChannelUi();
 				c.setDescription(tmp2.getDescription());
@@ -286,6 +298,44 @@ public class ListeController {
 		}
 
 		return c;
+	}
+
+	private RssChannel trouveFlux(RssChannel[] liste_url, String id) {
+		if(vide(id))
+		{
+			return null;
+		}
+		else
+		{
+			Optional<RssChannel> opt = Arrays.stream(liste_url)
+					.filter(x -> !vide(x.getId()) && x.getId().equals(id))
+					.findAny();
+			if(opt.isPresent())
+			{
+				return opt.get();
+			}
+			else
+			{
+				return null;
+			}
+		}
+	}
+
+	@RequestMapping(value = "/traces",method = RequestMethod.POST)
+	public void traceMessages(@RequestParam(value="niveauErreur",defaultValue = "",required = false) String niveauErreur,
+	                          @RequestParam(value="composant",defaultValue = "",required = false) String composant,
+	                          @RequestParam(value="message",defaultValue = "",required = false) String message) {
+		if(niveauErreur!=null){
+			if(niveauErreur.equals("Info")) {
+				logger.info(markerTrace, composant + " : " + message);
+			} else if(niveauErreur.equals("Erreur")) {
+				logger.error(markerTrace, composant + " : " + message);
+			} else {
+				logger.info(markerTrace, niveauErreur + " ; " + composant + " : " + message);
+			}
+		} else {
+			logger.info(markerTrace, niveauErreur + " ; " + composant + " : " + message);
+		}
 	}
 
 }

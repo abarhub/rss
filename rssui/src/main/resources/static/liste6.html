@@ -13,7 +13,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.min.js"></script>
-    <script src="js/liste5.js"></script>
+    <script src="js/liste6.js"></script>
     <!--<link rel="stylesheet" href="css/todo.css">-->
 </head>
 <body>
@@ -21,18 +21,20 @@
 
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 div_border">
                 <span>Liste Rss de {{todoList.liste1.length}}</span>
-                <form ng-submit="todoList.updateList()">
+                <!--<form ng-submit="todoList.updateList()">
+
+                    <input class="btn-primary" type="submit" value="update">
+                </form>-->
+                <form ng-submit="todoList.updateListFlux()">
 
                     <input class="btn-primary" type="submit" value="update">
                 </form>
-                <form ng-submit="todoList.updateListFlux()">
-
-                    <input class="btn-primary" type="submit" value="update2">
-                </form>
                 <form ng-submit="todoList.addUrl()">
-                    <input type="text" name="url" ng-model="todoList.urlAAjouter">
+                    RSS à ajouter :
+                    Nom : <input type="text" name="url" ng-model="todoList.nomAAjouter">
+                    Url : <input type="text" name="url" ng-model="todoList.urlAAjouter">
                     <input class="btn-primary" type="submit" value="add">
                 </form>
             </div>
@@ -44,9 +46,10 @@
                     <a href="#" class="list-group-item"
                        ng-repeat="rss1 in todoList.liste_url"
                        ng-click="todoList.updateMsg(rss1.id)">
-                        url : {{rss1.url}}
-                        Titre : {{rss1.title}}
-                        id : {{rss1.id}}
+                        url : {{rss1.url}}<br/>
+                        Titre : {{rss1.title}}<br/>
+                        id : {{rss1.id}}<br/>
+                        nom : {{rss1.name}}<br/>
                     </a>
                 </div>
 
@@ -57,6 +60,7 @@
                     <li ng-repeat="rss2 in todoList.liste_item_select">
                         Titre : <span >{{rss2.title}}</span>
                         Description : <p ng-bind-html="rss2.description"></p>
+                        <br/>
                     </li>
                 </ul>
             </div>

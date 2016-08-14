@@ -1,0 +1,23 @@
+
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  datasource:
+    url: jdbc:h2:mem:rss;DB_CLOSE_ON_EXIT=FALSE
+    #platform: h2
+    username: sa
+    password:
+    #driver-class-name: com.mysql.jdbc.Driver
+    continue-on-error: true
+    initialize: false
+
+  h2:
+      console:
+        enabled: true
+        path: /console
+
+
