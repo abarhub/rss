@@ -16,6 +16,8 @@ import org.rss.db.dao.repository.UrlRssRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -95,12 +97,12 @@ public class ServiceRestSpring {
 	}
 
 	@RequestMapping("/api3/add_url")
-	public String add_url(@RequestParam(value="name") String nom,
-	                      @RequestParam(value="url") String url)
+	public ResponseEntity<String> addUrl(@RequestParam(value="name") String nom,
+	                                     @RequestParam(value="url") String url)
 	{
 		UrlJpa rss;
-		//List<RssUrl> liste;
 		String res;
+		HttpStatus statusCode;
 
 		logger.info("add_url debut");
 
@@ -108,19 +110,22 @@ public class ServiceRestSpring {
 		if(isEmpty(nom))
 		{
 			res="Erreur:parametre name invalide !";
+			statusCode= HttpStatus.BAD_REQUEST;
 		}
 		else if(isEmpty(url))
 		{
 			res="Erreur:parametre url invalide !";
+			statusCode= HttpStatus.BAD_REQUEST;
 		}
 		else if(nomExiste(nom)){
-			res="Erreur: Le nom '"+nom+"' existe dÈj‡ !";
+			res="Erreur: Le nom '"+nom+"' existe d√©j√† !";
+			statusCode= HttpStatus.BAD_REQUEST;
 		}
 		else if(urlExiste(url)){
-			res="Erreur: L'URL '"+url+"' existe dÈj‡ !";
+			res="Erreur: L'URL '"+url+"' existe d√©j√† !";
+			statusCode= HttpStatus.BAD_REQUEST;
 		}
 		else {
-			//liste = Lists.newArrayList();
 			rss=new UrlJpa();
 			rss.setNom(nom);
 			rss.setUrl(url);
@@ -133,14 +138,13 @@ public class ServiceRestSpring {
 			{
 				dao_url.save(rss);
 			}
-			//liste.add(rss);
 			res="OK";
-			//logger.info("add ok:"+rss.getId());
+			statusCode= HttpStatus.OK;
 		}
 
 		logger.info("add_url fin:"+res);
 
-		return res;
+		return new ResponseEntity<>(res, statusCode);
 
 	}
 
@@ -152,7 +156,7 @@ public class ServiceRestSpring {
 		return dao_url.isNomExiste(nom);
 	}
 
-	private boolean isEmpty(/*@RequestParam(value = "name")*/ String nom) {
+	private boolean isEmpty(String nom) {
 		return nom==null||nom.length()==0||nom.trim().length()==0;
 	}
 
