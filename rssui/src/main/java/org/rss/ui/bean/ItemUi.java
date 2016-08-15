@@ -10,7 +10,8 @@ public class ItemUi {
 	private String title;
 	private String description;
 	private String link;
-	private DateTimeZone pubDate;
+	private String pubDate;
+	private DateTimeZone pubDate2;
 	private String guid;
 
 	public ItemUi() {
@@ -40,11 +41,11 @@ public class ItemUi {
 		this.link = link;
 	}
 
-	public DateTimeZone getPubDate() {
+	public String getPubDate() {
 		return pubDate;
 	}
 
-	public void setPubDate(DateTimeZone pubDate) {
+	public void setPubDate(String pubDate) {
 		this.pubDate = pubDate;
 	}
 
@@ -54,5 +55,13 @@ public class ItemUi {
 
 	public void setGuid(String guid) {
 		this.guid = guid;
+	}
+
+	public DateTimeZone getPubDate2() {
+		return pubDate2;
+	}
+
+	public void setPubDate2(DateTimeZone pubDate2) {
+		this.pubDate2 = pubDate2;
 	}
 }

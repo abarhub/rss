@@ -45,6 +45,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -234,8 +235,19 @@ public class TacheLecture {
 			res=null;
 		}
 		else {
-			//format=new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
-			ZonedDateTime res0 = ZonedDateTime.parse(date, DateTimeFormatter.RFC_1123_DATE_TIME);
+			ZonedDateTime res0;
+			if(false) {
+				format = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+				try {
+					Date d = format.parse(date);
+					res0=ZonedDateTime.ofInstant(d.toInstant(),ZoneId.systemDefault());
+				} catch (ParseException e) {
+					logger.error(e.getLocalizedMessage(),e);
+					res0=null;
+				}
+			} else {
+				res0 = ZonedDateTime.parse(date, DateTimeFormatter.RFC_1123_DATE_TIME);
+			}
 
 			res = res0.toLocalDateTime();
 		}

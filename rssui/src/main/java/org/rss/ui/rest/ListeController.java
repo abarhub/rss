@@ -28,9 +28,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.nullsFirst;
 import static org.rss.beans.OutilsGeneriques.vide;
 
 
@@ -155,26 +158,8 @@ public class ListeController {
 
 	private void trie(List<ItemUi> listeItem) {
 		if(listeItem!=null&&!listeItem.isEmpty()){
-			listeItem.sort((x,y) -> {
-				DateTimeZone d1,d2;
-				d1=x.getPubDate();
-				d2=y.getPubDate();
-				Date d01,d02;
-				d01=null;
-				if(d1!=null)
-					d01=d1.getDate();
-				d02=null;
-				if(d2!=null)
-					d02=d2.getDate();
-				if(d01==null&&d02==null)
-					return 0;
-				else if(d01==null)
-					return 1;
-				else if(d02==null)
-					return -1;
-				else
-					return d01.compareTo(d02);
-			});
+			final Comparator<ItemUi> comparator = nullsFirst(comparing(ItemUi::getPubDate2)).reversed();
+			listeItem.sort(comparator);
 		}
 	}
 
@@ -207,13 +192,24 @@ public class ListeController {
 					}
 					item2.setLink(link);
 					item2.setTitle(item3.getTitle());
-					item2.setPubDate(item3.getPubDate());
+					item2.setPubDate(convDate(item3.getPubDate()));
+					item2.setPubDate2(item3.getPubDate());
 
 					c.getListeItem().add(item2);
 				}
 			}
 		}
 		return c;
+	}
+
+	private String convDate(DateTimeZone pubDate) {
+		if(pubDate==null||pubDate.getDate()==null){
+			return "";
+		} else {
+			SimpleDateFormat formatter;
+			formatter = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy", Locale.FRANCE);
+			return formatter.format(pubDate.getDate());
+		}
 	}
 
 	private ChannelUi getChannelUiTousFlux(RssChannel[] liste_url) {
@@ -249,7 +245,8 @@ public class ListeController {
 						}
 						item2.setLink(link);
 						item2.setTitle(item3.getTitle());
-						item2.setPubDate(item3.getPubDate());
+						item2.setPubDate(convDate(item3.getPubDate()));
+						item2.setPubDate2(item3.getPubDate());
 
 						c.getListeItem().add(item2);
 					}
@@ -260,12 +257,9 @@ public class ListeController {
 	}
 
 	private RssChannel trouveFlux(RssChannel[] liste_url, String id) {
-		if(vide(id))
-		{
+		if(vide(id)){
 			return null;
-		}
-		else
-		{
+		} else {
 			Optional<RssChannel> opt = Arrays.stream(liste_url)
 					.filter(x -> !vide(x.getId()) && x.getId().equals(id))
 					.findAny();
