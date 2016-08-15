@@ -57,7 +57,6 @@ public class ParseRss {
 		//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
 		doc.getDocumentElement().normalize();
 
-		//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 		root=doc.getDocumentElement().getNodeName();
 		if(root==null||!root.equals("rss"))
 		{
@@ -66,8 +65,6 @@ public class ParseRss {
 
 		if(!res.isError()) {
 			NodeList nList = doc.getElementsByTagName("channel");
-
-			//System.out.println("----------------------------");
 
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 
@@ -82,18 +79,11 @@ public class ParseRss {
 					res.addError("la balise channel xml est en plusieurs exemplaires !");
 				}
 				else {
-					//System.out.println("\nCurrent Element :" + nNode.getNodeName());
-
 
 					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
 						Element eElement = (Element) nNode;
 
-						/*System.out.println("Staff id : " + eElement.getAttribute("id"));
-						System.out.println("First Name : " + eElement.getElementsByTagName("firstname").item(0).getTextContent());
-						System.out.println("Last Name : " + eElement.getElementsByTagName("lastname").item(0).getTextContent());
-						System.out.println("Nick Name : " + eElement.getElementsByTagName("nickname").item(0).getTextContent());
-						System.out.println("Salary : " + eElement.getElementsByTagName("salary").item(0).getTextContent());*/
 						String titre,link,description,language,lastBuild,pubDate0;
 
 						titre=donneNode(eElement,"title");

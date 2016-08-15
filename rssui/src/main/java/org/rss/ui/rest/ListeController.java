@@ -5,6 +5,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.rss.beans.OutilsGeneriques;
+import org.rss.beans.flux.DateTimeZone;
 import org.rss.beans.flux.RssChannel;
 import org.rss.beans.flux.RssItem;
 import org.rss.beans.param.RssListeUrl;
@@ -27,10 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 
 import static org.rss.beans.OutilsGeneriques.vide;
@@ -45,6 +43,7 @@ public class ListeController {
 	public static final Logger logger = LoggerFactory.getLogger(ListeController.class);
 	public static final Marker markerTrace = MarkerFactory.getMarker("TRACE");
 
+	public static final String idTousFlux="-1";
 
 	@Autowired
 	private IRestDb restDb;
@@ -103,6 +102,19 @@ public class ListeController {
 
 					liste_channel.add(c);
 				}
+				if(!liste_channel.isEmpty()){
+					String titre="Tous les flux";
+					c = new ChannelUi();
+					c.setDescription(titre);
+					c.setLanguage("");
+					//c.setLastBuildDate(tmp2.);
+					c.setTitle(titre);
+					c.setUrl("");
+					c.setId(idTousFlux);
+					c.setName(titre);
+
+					liste_channel.add(c);
+				}
 			}
 
 		return res;
@@ -128,43 +140,122 @@ public class ListeController {
 
 		if(liste_url!=null&&liste_url.length>0)
 		{
-			RssChannel tmp2=trouveFlux(liste_url,id);
-			if(tmp2!=null)
-			{
-				c = new ChannelUi();
-				c.setDescription(tmp2.getDescription());
-				c.setLanguage(tmp2.getLanguage());
-				//c.setLastBuildDate(tmp2.);
-				c.setTitle(tmp2.getTitle());
-				c.setUrl(tmp2.getUrl());
+			if(tousLesFlux(id)){
+				c = getChannelUiTousFlux(liste_url);
+			} else {
+				c = getChannelUi(id, liste_url);
+			}
+			if(c!=null) {
+				trie(c.getListeItem());
+			}
+		}
 
-				if(tmp2.getListeItem()!=null&&!tmp2.getListeItem().isEmpty())
-				{
-					c.setListeItem(Lists.newArrayList());
+		return c;
+	}
 
-					for(RssItem item3:tmp2.getListeItem())
-					{
+	private void trie(List<ItemUi> listeItem) {
+		if(listeItem!=null&&!listeItem.isEmpty()){
+			listeItem.sort((x,y) -> {
+				DateTimeZone d1,d2;
+				d1=x.getPubDate();
+				d2=y.getPubDate();
+				Date d01,d02;
+				d01=null;
+				if(d1!=null)
+					d01=d1.getDate();
+				d02=null;
+				if(d2!=null)
+					d02=d2.getDate();
+				if(d01==null&&d02==null)
+					return 0;
+				else if(d01==null)
+					return 1;
+				else if(d02==null)
+					return -1;
+				else
+					return d01.compareTo(d02);
+			});
+		}
+	}
+
+	private ChannelUi getChannelUi(String id, RssChannel[] liste_url) {
+		ChannelUi c=null;
+		RssChannel tmp2 = trouveFlux(liste_url, id);
+		if (tmp2 != null) {
+			c = new ChannelUi();
+			c.setDescription(tmp2.getDescription());
+			c.setLanguage(tmp2.getLanguage());
+			//c.setLastBuildDate(tmp2.);
+			c.setTitle(tmp2.getTitle());
+			c.setUrl(tmp2.getUrl());
+
+			if (tmp2.getListeItem() != null && !tmp2.getListeItem().isEmpty()) {
+				c.setListeItem(Lists.newArrayList());
+
+				for (RssItem item3 : tmp2.getListeItem()) {
+					ItemUi item2;
+
+					item2 = new ItemUi();
+					item2.setDescription(item3.getDescription());
+					item2.setGuid(item3.getGuid());
+					String link = "";
+					if (!OutilsGeneriques.vide(item3.getLink())) {
+						link = item3.getLink();
+					} else if (!OutilsGeneriques.vide(item3.getGuid())
+							&& item3.getGuid().startsWith("http")) {
+						link = item3.getGuid();
+					}
+					item2.setLink(link);
+					item2.setTitle(item3.getTitle());
+					item2.setPubDate(item3.getPubDate());
+
+					c.getListeItem().add(item2);
+				}
+			}
+		}
+		return c;
+	}
+
+	private ChannelUi getChannelUiTousFlux(RssChannel[] liste_url) {
+		ChannelUi c=null;
+		if(liste_url!=null&&liste_url.length>0) {
+
+			for(RssChannel channel:liste_url){
+
+				if (channel.getListeItem() != null && !channel.getListeItem().isEmpty()) {
+					if(c==null) {
+						c = new ChannelUi();
+						c.setDescription("Tous Les Flux");
+						c.setLanguage("fr");
+						//c.setLastBuildDate(tmp2.);
+						c.setTitle("Tous Les Flux");
+						c.setUrl("");
+
+						c.setListeItem(Lists.newArrayList());
+					}
+
+					for (RssItem item3 : channel.getListeItem()) {
 						ItemUi item2;
 
-						item2=new ItemUi();
+						item2 = new ItemUi();
 						item2.setDescription(item3.getDescription());
 						item2.setGuid(item3.getGuid());
-						String link="";
-						if(!OutilsGeneriques.vide(item3.getLink())){
-							link=item3.getLink();
-						} else if(!OutilsGeneriques.vide(item3.getGuid())
-								&&item3.getGuid().startsWith("http")){
-							link=item3.getGuid();
+						String link = "";
+						if (!OutilsGeneriques.vide(item3.getLink())) {
+							link = item3.getLink();
+						} else if (!OutilsGeneriques.vide(item3.getGuid())
+								&& item3.getGuid().startsWith("http")) {
+							link = item3.getGuid();
 						}
 						item2.setLink(link);
 						item2.setTitle(item3.getTitle());
+						item2.setPubDate(item3.getPubDate());
 
 						c.getListeItem().add(item2);
 					}
 				}
 			}
 		}
-
 		return c;
 	}
 
@@ -187,6 +278,10 @@ public class ListeController {
 				return null;
 			}
 		}
+	}
+
+	private boolean tousLesFlux(String id){
+		return !vide(id)&&id.equals(idTousFlux);
 	}
 
 	@RequestMapping(value = "/traces",method = RequestMethod.POST)

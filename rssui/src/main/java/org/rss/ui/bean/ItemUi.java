@@ -1,5 +1,7 @@
 package org.rss.ui.bean;
 
+import org.rss.beans.flux.DateTimeZone;
+
 /**
  * Created by Alain on 01/11/2015.
  */
@@ -8,7 +10,7 @@ public class ItemUi {
 	private String title;
 	private String description;
 	private String link;
-	private String pubDate;
+	private DateTimeZone pubDate;
 	private String guid;
 
 	public ItemUi() {
@@ -38,11 +40,11 @@ public class ItemUi {
 		this.link = link;
 	}
 
-	public String getPubDate() {
+	public DateTimeZone getPubDate() {
 		return pubDate;
 	}
 
-	public void setPubDate(String pubDate) {
+	public void setPubDate(DateTimeZone pubDate) {
 		this.pubDate = pubDate;
 	}
 

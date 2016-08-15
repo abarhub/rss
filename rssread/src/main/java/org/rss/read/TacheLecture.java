@@ -108,17 +108,8 @@ public class TacheLecture {
 		}
 		else
 		{
-			/*if(false) {
-				if (nb2 == 1) {
-					lecture_rss();
-				}
-				nb2++;
-			}
-			else*/
-			{
-				lecture_param();
-				lecture_rss2();
-			}
+			lecture_param();
+			lecture_rss2();
 		}
 	}
 
@@ -224,7 +215,7 @@ public class TacheLecture {
 				item2.setDescription(item.getDescription());
 				item2.setGuid(item.getGuid());
 				item2.setLink(item.getLink());
-				item2.setPubDate(conv_date(item.getLink()));
+				item2.setPubDate(conv_date(item.getPubDate()));
 				item2.setTitle(item.getTitle());
 				rss.getListeItem().add(item2);
 			}

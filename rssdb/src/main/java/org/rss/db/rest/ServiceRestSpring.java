@@ -199,6 +199,7 @@ public class ServiceRestSpring {
 						item.setGuid(tmp2.getGuid());
 						item.setLink(tmp2.getLink());
 						item.setTitle(tmp2.getTitle());
+						item.setPubDate(new DateTimeZone(tmp2.getPubDate()));
 
 						liste2.add(item);
 					}
