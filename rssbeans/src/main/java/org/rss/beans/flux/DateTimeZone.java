@@ -9,6 +9,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Alain on 13/02/2016.
@@ -77,9 +78,10 @@ public class DateTimeZone implements Comparable<DateTimeZone> {
 		return date != null ? date.hashCode() : 0;
 	}
 
-	public String format(String pattern) {
-		Preconditions.checkNotNull(date);
-		return date.format(DateTimeFormatter.ofPattern(pattern));
+	public String format(String pattern, Locale locale) {
+		Preconditions.checkNotNull(pattern);
+		Preconditions.checkNotNull(locale);
+		return date.format(DateTimeFormatter.ofPattern(pattern,locale));
 	}
 
 	private ZonedDateTime convToUTC() {
@@ -101,5 +103,9 @@ public class DateTimeZone implements Comparable<DateTimeZone> {
 
 	public Date toDateUTC() {
 		return Date.from(convToUTC().toInstant());
+	}
+
+	public ZonedDateTime toZonedDateTimeUTC() {
+		return convToUTC();
 	}
 }

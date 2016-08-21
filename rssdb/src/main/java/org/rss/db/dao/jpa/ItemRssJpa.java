@@ -1,6 +1,7 @@
 package org.rss.db.dao.jpa;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 /**
@@ -24,7 +25,7 @@ public class ItemRssJpa {
 	private String link;
 
 	@Column
-	private Date pubDate;
+	private ZonedDateTime pubDate;
 
 	@Column(nullable = false)
 	private String guid;
@@ -56,11 +57,11 @@ public class ItemRssJpa {
 		this.link = link;
 	}
 
-	public Date getPubDate() {
+	public ZonedDateTime getPubDate() {
 		return pubDate;
 	}
 
-	public void setPubDate(Date pubDate) {
+	public void setPubDate(ZonedDateTime pubDate) {
 		this.pubDate = pubDate;
 	}
 

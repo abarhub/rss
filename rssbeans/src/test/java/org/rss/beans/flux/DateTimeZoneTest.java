@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.Locale;
 
 import static org.junit.Assert.*;
 
@@ -40,7 +41,7 @@ public class DateTimeZoneTest {
 		assertEquals(0,d3.compareTo(d4));
 		assertEquals(0,d4.compareTo(d3));
 
-		String affichage=d3.format("hh:mm:ss dd/MM/yyyy");
+		String affichage=d3.format("hh:mm:ss dd/MM/yyyy", Locale.FRANCE);
 		assertEquals("07:14:32 03/04/2005",affichage);
 		LOGGER.info("affichage="+affichage);
 
@@ -72,7 +73,7 @@ public class DateTimeZoneTest {
 		d4=new DateTimeZone(d3.toDateUTC());
 		assertEquals(d3.toUTC(),d4);
 
-		String affichage=d3.format("hh:mm:ss dd/MM/yyyy");
+		String affichage=d3.format("hh:mm:ss dd/MM/yyyy", Locale.FRANCE);
 		assertEquals("09:27:45 16/08/2004",affichage);
 		LOGGER.info("affichage="+affichage);
 

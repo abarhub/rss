@@ -7,7 +7,7 @@ import org.rss.beans.flux.RssItem;
 import org.rss.db.dao.jpa.FeedsRssJpa;
 import org.rss.db.dao.jpa.ItemRssJpa;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -16,7 +16,7 @@ import java.util.List;
 public final class Outils {
 
 
-	public static FeedsRssJpa conv_feeds(RssChannel rss) {
+	public FeedsRssJpa conv_feeds(RssChannel rss) {
 		FeedsRssJpa feeds;
 
 		feeds=new FeedsRssJpa();
@@ -51,11 +51,11 @@ public final class Outils {
 		return feeds;
 	}
 
-	public static Date conv(DateTimeZone d)
+	public ZonedDateTime conv(DateTimeZone d)
 	{
 		DateTimeZone tmp = d;
 		if(tmp!=null) {
-			return tmp.toDateUTC();
+			return tmp.toZonedDateTimeUTC();
 		}
 		else
 		{

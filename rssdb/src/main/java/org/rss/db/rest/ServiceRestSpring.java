@@ -39,6 +39,9 @@ public class ServiceRestSpring {
 	@Autowired
 	private IDAOUrl dao_url;
 
+	@Autowired
+	private Outils outils;
+
 	@RequestMapping("/api3/test1")
 	public String test1(@RequestParam(value="name", defaultValue="World") String name)
 	{
@@ -53,7 +56,7 @@ public class ServiceRestSpring {
 		LOGGER.info("list {}");
 		LOGGER.info("rss=" + rss);
 		LOGGER.info("enregistrement rss ...");
-		dao_url.enregistre_rss(Outils.conv_feeds(rss));
+		dao_url.enregistre_rss(outils.conv_feeds(rss));
 		LOGGER.info("enregistrement rss Ok");
 		return "Je suis un service";
 	}
