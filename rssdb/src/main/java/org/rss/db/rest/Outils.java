@@ -6,6 +6,7 @@ import org.rss.beans.flux.RssChannel;
 import org.rss.beans.flux.RssItem;
 import org.rss.db.dao.jpa.FeedsRssJpa;
 import org.rss.db.dao.jpa.ItemRssJpa;
+import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * Created by Alain on 13/02/2016.
  */
+@Service
 public final class Outils {
 
 

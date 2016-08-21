@@ -1,6 +1,10 @@
 package org.rss.beans.flux;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.base.Preconditions;
+import org.rss.beans.serializerDeserializer.CustomDateTimeZoneJsonDeserializer;
+import org.rss.beans.serializerDeserializer.CustomDateTimeZoneJsonSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +18,8 @@ import java.util.Locale;
 /**
  * Created by Alain on 13/02/2016.
  */
+@JsonSerialize(using=CustomDateTimeZoneJsonSerializer.class)
+@JsonDeserialize(using=CustomDateTimeZoneJsonDeserializer.class)
 public class DateTimeZone implements Comparable<DateTimeZone> {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(DateTimeZone.class);
@@ -107,5 +113,9 @@ public class DateTimeZone implements Comparable<DateTimeZone> {
 
 	public ZonedDateTime toZonedDateTimeUTC() {
 		return convToUTC();
+	}
+
+	public ZonedDateTime toDate() {
+		return date;
 	}
 }

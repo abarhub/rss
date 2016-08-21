@@ -41,7 +41,7 @@
 	<log4j2.version>2.4.1</log4j2.version>
 	<guava.version>19.0</guava.version>
 	<rss_bean.version>1.03-SNAPSHOT</rss_bean.version>
-    <spring.version>4.2.6.RELEASE</spring.version>
+    <spring.version>4.3.2.RELEASE</spring.version>
     <slf4j.version>1.7.12</slf4j.version>
     <log4j2.version>2.4.1</log4j2.version>
     <apache_http_client.version>4.1</apache_http_client.version>
@@ -63,10 +63,62 @@
 
 
   <dependencies>
-    <dependency>
+
+
+      <!-- slf4j -->
+
+
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jcl-over-slf4j</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>jul-to-slf4j</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>log4j-over-slf4j</artifactId>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-log4j2</artifactId>
+      </dependency>
+
+      <!-- log4j 2 -->
+
+
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-api</artifactId>
+          <version>${log4j2.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-core</artifactId>
+          <version>${log4j2.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.apache.logging.log4j</groupId>
+          <artifactId>log4j-slf4j-impl</artifactId>
+          <version>${log4j2.version}</version>
+      </dependency>
+
+      <!-- guava -->
+
+      <dependency>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+          <version>${guava.version}</version>
+      </dependency>
+
+      <!-- tests -->
+
+      <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.10</version>
+      <version>4.12</version>
       <scope>test</scope>
     </dependency>
       <dependency>
