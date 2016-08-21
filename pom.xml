@@ -47,7 +47,7 @@
     <apache_http_client.version>4.1</apache_http_client.version>
     <apache_http_client2.version>4.4.1</apache_http_client2.version>
     <rss_registry.version>1.01-SNAPSHOT</rss_registry.version>
-    <hibernate.version>5.1.0.Final</hibernate.version>
+    <hibernate.version>5.2.2.Final</hibernate.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
