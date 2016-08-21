@@ -29,7 +29,7 @@ import java.util.List;
 @RestController//("/api3")
 public class ServiceRestSpring {
 
-	public static final Logger logger = LoggerFactory.getLogger(ServiceRestSpring.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(ServiceRestSpring.class);
 
 	@Autowired
 	private UrlRssRepository repo;
@@ -49,12 +49,12 @@ public class ServiceRestSpring {
 	@RequestMapping(value = "/api3/add_rss",method = RequestMethod.POST)
 	public String add_rss(@RequestBody RssChannel rss)
 	{
-		logger.info("Call spring service");
-		logger.info("list {}");
-		logger.info("rss=" + rss);
-		logger.info("enregistrement rss ...");
+		LOGGER.info("Call spring service");
+		LOGGER.info("list {}");
+		LOGGER.info("rss=" + rss);
+		LOGGER.info("enregistrement rss ...");
 		dao_url.enregistre_rss(Outils.conv_feeds(rss));
-		logger.info("enregistrement rss Ok");
+		LOGGER.info("enregistrement rss Ok");
 		return "Je suis un service";
 	}
 
@@ -63,7 +63,7 @@ public class ServiceRestSpring {
 	public RssListeUrl liste_url()
 	{
 		RssListeUrl liste;
-		logger.info("liste_url debut");
+		LOGGER.info("liste_url debut");
 
 		liste=new RssListeUrl();
 
@@ -92,7 +92,7 @@ public class ServiceRestSpring {
 			}
 		}
 
-		logger.info("liste_url fin:"+liste);
+		LOGGER.info("liste_url fin:"+liste);
 		return liste;
 	}
 
@@ -104,7 +104,7 @@ public class ServiceRestSpring {
 		String res;
 		HttpStatus statusCode;
 
-		logger.info("add_url debut");
+		LOGGER.info("add_url debut");
 
 		res="";
 		if(isEmpty(nom))
@@ -130,7 +130,7 @@ public class ServiceRestSpring {
 			rss.setNom(nom);
 			rss.setUrl(url);
 
-			logger.info("add:"+rss);
+			LOGGER.info("add:"+rss);
 			if(false) {
 				repo.addUrl(rss);
 			}
@@ -142,7 +142,7 @@ public class ServiceRestSpring {
 			statusCode= HttpStatus.OK;
 		}
 
-		logger.info("add_url fin:"+res);
+		LOGGER.info("add_url fin:"+res);
 
 		return new ResponseEntity<>(res, statusCode);
 

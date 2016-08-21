@@ -15,7 +15,7 @@ import java.util.Date;
 @Component
 public class ScheduledTasks {
 
-	public static final Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(ScheduledTasks.class);
 
 	@Autowired
 	private TacheLecture tache0;

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GreetingController {
 
-	public static final Logger logger = LoggerFactory.getLogger(GreetingController.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(GreetingController.class);
 
 
 	private static final String template = "Hello, %s!";
@@ -26,7 +26,7 @@ public class GreetingController {
 	public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
 		long no;
 		no=counter.incrementAndGet();
-		logger.info("hello {} ({})",name,no);
+		LOGGER.info("hello {} ({})",name,no);
 		return new Greeting(no,
 				String.format(template, name));
 	}

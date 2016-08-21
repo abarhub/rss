@@ -55,7 +55,7 @@ public final class Outils {
 	{
 		DateTimeZone tmp = d;
 		if(tmp!=null) {
-			return tmp.getDate();
+			return tmp.toDateUTC();
 		}
 		else
 		{

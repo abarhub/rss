@@ -22,8 +22,7 @@ import java.util.concurrent.Future;
 @Service
 public class ReadHttp {
 
-	public static final Logger logger = LoggerFactory.getLogger(ReadHttp.class);
-
+	public static final Logger LOGGER = LoggerFactory.getLogger(ReadHttp.class);
 
 	public ReadHttp(){
 
@@ -35,7 +34,7 @@ public class ReadHttp {
 
 		res="";
 
-		logger.info("read : "+url);
+		LOGGER.info("read : "+url);
 
 		CloseableHttpAsyncClient httpclient = HttpAsyncClients.createDefault();
 		try {
@@ -43,10 +42,8 @@ public class ReadHttp {
 			HttpGet request = new HttpGet(url);
 			Future<HttpResponse> future = httpclient.execute(request, null);
 			HttpResponse response = future.get();
-			//System.out.println("Response: " + response.getStatusLine());
-			//System.out.println("Shutting down");
 			encoding= getEncoding(response);
-			logger.info("encoding : "+encoding);
+			LOGGER.info("encoding : "+encoding);
 			out=new StringWriter();
 			try(InputStream in=response.getEntity().getContent())
 			{

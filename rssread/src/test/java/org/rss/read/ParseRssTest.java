@@ -21,7 +21,6 @@ public class ParseRssTest {
 	public void read1() throws Exception {
 		ParseRss parse;
 		parse=new ParseRss();
-		//content= Files.toString("", Charset.forName("UTF-8"));
 		URL url = Resources.getResource("fluxRss1.xml");
 		String content = Resources.toString(url, Charsets.UTF_8);
 		assertNotNull(content);
@@ -39,11 +38,9 @@ public class ParseRssTest {
 	}
 
 	@Test
-	@Ignore("TODO: a corriger (fichier fluxRss2.xml)")
 	public void read2() throws Exception {
 		ParseRss parse;
 		parse=new ParseRss();
-		//content= Files.toString("", Charset.forName("UTF-8"));
 		URL url = Resources.getResource("fluxRss2.xml");
 		String content = Resources.toString(url, Charsets.UTF_8);
 		assertNotNull(content);

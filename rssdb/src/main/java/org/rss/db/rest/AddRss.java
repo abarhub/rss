@@ -26,7 +26,7 @@ import java.io.IOException;
 @RestController
 public class AddRss {
 
-	public static final Logger logger = LoggerFactory.getLogger(AddRss.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(AddRss.class);
 
 	@Autowired
 	UrlRssRepository repo;
@@ -44,8 +44,8 @@ public class AddRss {
 	@RequestMapping(value = "/add_rss",method = {RequestMethod.PUT,RequestMethod.POST,RequestMethod.GET,RequestMethod.PATCH}, consumes="application/json")
 	public String add_rss(/*@RequestParam(value="rss")*/ RssChannel rss) {
 		//RssListeUrl liste;
-		logger.info("list {}");
-		logger.info("rss="+rss);
+		LOGGER.info("list {}");
+		LOGGER.info("rss="+rss);
 
 		/*liste=new RssListeUrl();
 
@@ -78,9 +78,9 @@ public class AddRss {
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonInString;
 
-		//logger.info("liste {}");
-		logger.info("rss2="+rss2);
-		logger.info("rss0="+rss0);
+		//LOGGER.info("liste {}");
+		LOGGER.info("rss2="+rss2);
+		LOGGER.info("rss0="+rss0);
 
 		BaseEncoding hex = BaseEncoding.base16().upperCase();
 
@@ -92,9 +92,9 @@ public class AddRss {
 
 			rss = mapper.readValue(jsonInString, RssChannel.class);
 
-			logger.info("rss="+rss);
+			LOGGER.info("rss="+rss);
 		} catch (IOException e) {
-			logger.error("Error:"+e.getLocalizedMessage(),e);
+			LOGGER.error("Error:"+e.getLocalizedMessage(),e);
 		}
 
 
@@ -130,9 +130,9 @@ public class AddRss {
 		String jsonInString;
 		FeedsRssJpa channel;
 
-		//logger.info("liste {}");
-		//logger.info("rss2="+rss2);
-		logger.info("rss0="+rss0);
+		//LOGGER.info("liste {}");
+		//LOGGER.info("rss2="+rss2);
+		LOGGER.info("rss0="+rss0);
 
 		BaseEncoding hex = BaseEncoding.base16().upperCase();
 
@@ -144,7 +144,7 @@ public class AddRss {
 
 			rss = mapper.readValue(jsonInString, RssChannel.class);
 
-			logger.info("rss="+rss);
+			LOGGER.info("rss="+rss);
 
 			if(rss!=null) {
 				channel = conv(rss);
@@ -154,7 +154,7 @@ public class AddRss {
 			}
 
 		} catch (IOException e) {
-			logger.error("Error:"+e.getLocalizedMessage(),e);
+			LOGGER.error("Error:"+e.getLocalizedMessage(),e);
 		}
 
 

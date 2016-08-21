@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 public class ParamAppli {
 
-	public static final Logger logger = LoggerFactory.getLogger(ParamAppli.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(ParamAppli.class);
 
 	@Autowired
 	UrlRssRepository repo;
@@ -34,7 +34,7 @@ public class ParamAppli {
 
 	@RequestMapping("/ajoute_url")
 	public String ajoute_url(@RequestParam(value="name", defaultValue="World") String name) {
-		logger.info("ajout {}",name);
+		LOGGER.info("ajout {}",name);
 		return "Ok";
 	}
 
@@ -48,21 +48,21 @@ public class ParamAppli {
 	@RequestMapping("/ajoute_url3")
 	public String ajoute_url3(@RequestParam(value="name", defaultValue="World") String name,
 	                          @RequestParam(value="url", defaultValue="http://www.google.fr") String url0) {
-		logger.info("ajout3 {}",name);
+		LOGGER.info("ajout3 {}",name);
 
 		UrlJpa url;
 		url=new UrlJpa();
 		//url.setNom(name);
 		//url.setUrl(url0);
 		repo.addUrl(url);
-		logger.info("ajout3 {} ok",name);
+		LOGGER.info("ajout3 {} ok",name);
 		return "Ok";
 	}
 
 	@RequestMapping(value = "/liste_url",method = {RequestMethod.PUT,RequestMethod.POST,RequestMethod.GET,RequestMethod.PATCH}, consumes="application/json")
 	public RssListeUrl liste_url(@RequestParam(value="name", defaultValue="World") String name) {
 		RssListeUrl liste;
-		logger.info("liste {}");
+		LOGGER.info("liste {}");
 
 		liste=new RssListeUrl();
 

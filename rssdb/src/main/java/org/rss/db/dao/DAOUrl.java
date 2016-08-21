@@ -22,7 +22,7 @@ import java.util.List;
 @Repository
 public class DAOUrl implements IDAOUrl {
 
-	public static final Logger logger = LoggerFactory.getLogger(DAOUrl.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(DAOUrl.class);
 
 	@Autowired
 	private UrlRepository repository;
@@ -50,11 +50,11 @@ public class DAOUrl implements IDAOUrl {
 	public void enregistre_rss(FeedsRssJpa rss) {
 		Preconditions.checkNotNull(rss);
 		if (repo_rss.channelExiste(rss)) {
-			logger.info("rss '" + rss.getUrl() + "' existe deja");
+			LOGGER.info("rss '" + rss.getUrl() + "' existe deja");
 		} else {
-			logger.info("Enregistrement rss '" + rss.getUrl() + "' ...");
+			LOGGER.info("Enregistrement rss '" + rss.getUrl() + "' ...");
 			repo_rss.addChannel(rss);
-			logger.info("Enregistrement rss Ok");
+			LOGGER.info("Enregistrement rss Ok");
 		}
 	}
 

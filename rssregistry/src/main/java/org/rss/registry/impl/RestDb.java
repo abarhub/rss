@@ -27,7 +27,7 @@ import java.util.Map;
 @Service
 public class RestDb implements IRestDb {
 
-	private static final Logger logger = LoggerFactory.getLogger(RestDb.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RestDb.class);
 
 	private final String urlDbServeur="http://localhost:8083/";
 
@@ -96,7 +96,7 @@ public class RestDb implements IRestDb {
 
 		url=urlDbServeur+"api3/liste_url";
 
-		//logger.info("url param:"+url);
+		//LOGGER.info("url param:"+url);
 
 		ResponseEntity<RssListeUrl> res = restTemplate.getForEntity(url, RssListeUrl.class);
 

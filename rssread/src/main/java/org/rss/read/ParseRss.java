@@ -25,7 +25,7 @@ import javax.xml.parsers.ParserConfigurationException;
 @Service
 public class ParseRss {
 
-	public static final Logger logger = LoggerFactory.getLogger(ParseRss.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(ParseRss.class);
 
 	public ParseRss() {
 	}
@@ -38,7 +38,7 @@ public class ParseRss {
 		try {
 			parseRss(contenuRss,res);
 		} catch (ParserConfigurationException | IOException | SAXException e) {
-			logger.error("Error:"+e.getLocalizedMessage(),e);
+			LOGGER.error("Error:"+e.getLocalizedMessage(),e);
 			res.addError("Error:"+e.getLocalizedMessage());
 		}
 
@@ -128,7 +128,7 @@ public class ParseRss {
 
 								header.getListItem().add(item);
 
-								logger.info("ajout de "+item);
+								LOGGER.info("ajout de "+item);
 							}
 						}
 					}

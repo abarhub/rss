@@ -21,7 +21,7 @@ import java.util.List;
 @Transactional
 public class RssRepository {
 
-	public static final Logger logger = LoggerFactory.getLogger(RssRepository.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(RssRepository.class);
 
 	//@PersistenceUnit
 	//private EntityManagerFactory emf;
@@ -30,17 +30,17 @@ public class RssRepository {
 
 	public void addChannel(FeedsRssJpa channel){
 
-		logger.info("Enregistrement RSS debut");
+		LOGGER.info("Enregistrement RSS debut");
 
-		//logger.info("rss="+channel);
+		//LOGGER.info("rss="+channel);
 
 		//EntityManager tmp = emf.createEntityManager();
 
-		logger.info("em ok");
+		LOGGER.info("em ok");
 
 		em.persist(channel);
 
-		logger.info("Enregistrement RSS fin");
+		LOGGER.info("Enregistrement RSS fin");
 	}
 
 	public List<FeedsRssJpa> listeChannel(){

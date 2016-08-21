@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.*;
 
 
@@ -43,7 +44,7 @@ import static org.rss.beans.OutilsGeneriques.vide;
 @RestController
 public class ListeController {
 
-	public static final Logger logger = LoggerFactory.getLogger(ListeController.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(ListeController.class);
 	public static final Marker markerTrace = MarkerFactory.getMarker("TRACE");
 
 	public static final String idTousFlux="-1";
@@ -57,11 +58,11 @@ public class ListeController {
 	                     @RequestParam(value="url") String url) {
 		String res="";
 
-		logger.info("ajout url ...");
+		LOGGER.info("ajout url ...");
 
 		ResponseEntity<String> tmp =restDb.add_url(nom,url);
 
-		logger.info("fin url : "+tmp.getBody());
+		LOGGER.info("fin url : "+tmp.getBody());
 
 		return res;
 	}
@@ -203,12 +204,13 @@ public class ListeController {
 	}
 
 	private String convDate(DateTimeZone pubDate) {
-		if(pubDate==null||pubDate.getDate()==null){
+		if(pubDate==null){
 			return "";
 		} else {
-			SimpleDateFormat formatter;
-			formatter = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy", Locale.FRANCE);
-			return formatter.format(pubDate.getDate());
+			//SimpleDateFormat formatter;
+			//formatter = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy", Locale.FRANCE);
+			//return formatter.format(pubDate.getDate());
+			return pubDate.format("hh:mm:ss dd/MM/yyyy");
 		}
 	}
 
@@ -284,14 +286,14 @@ public class ListeController {
 	                          @RequestParam(value="message",defaultValue = "",required = false) String message) {
 		if(niveauErreur!=null){
 			if(niveauErreur.equals("Info")) {
-				logger.info(markerTrace, composant + " : " + message);
+				LOGGER.info(markerTrace, composant + " : " + message);
 			} else if(niveauErreur.equals("Erreur")) {
-				logger.error(markerTrace, composant + " : " + message);
+				LOGGER.error(markerTrace, composant + " : " + message);
 			} else {
-				logger.info(markerTrace, niveauErreur + " ; " + composant + " : " + message);
+				LOGGER.info(markerTrace, niveauErreur + " ; " + composant + " : " + message);
 			}
 		} else {
-			logger.info(markerTrace, niveauErreur + " ; " + composant + " : " + message);
+			LOGGER.info(markerTrace, niveauErreur + " ; " + composant + " : " + message);
 		}
 	}
 
