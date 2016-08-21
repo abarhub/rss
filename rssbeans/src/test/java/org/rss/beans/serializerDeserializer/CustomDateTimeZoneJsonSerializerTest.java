@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.rss.beans.OutilsGeneriques;
 import org.rss.beans.flux.DateTimeZone;
+import org.rss.beans.flux.RssChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -170,6 +171,68 @@ public class CustomDateTimeZoneJsonSerializerTest {
 
 		assertEquals(date,date2);
 		assertEquals(date.toString(),date2.toString());
+	}
+
+
+	@Test
+	public void serializeNull7() throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+
+		final DateTimeZone date=null;
+
+		Writer out=new StringWriter();
+		mapper.writeValue(out,date);
+
+		String res=out.toString();
+		assertEquals("null",res);
+
+		LOGGER.info("json="+res);
+
+		ObjectMapper mapper2 = new ObjectMapper();
+
+		DateTimeZone date2=mapper2.readValue(res,DateTimeZone.class);
+
+		assertNull(date2);
+
+		LOGGER.info("date="+date);
+		LOGGER.info("date2="+date2);
+
+		assertEquals(date,date2);
+	}
+
+	@Test
+	public void serializeObjet8() throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+
+		final RssChannel rssChannel;
+
+		rssChannel=new RssChannel();
+		rssChannel.setName("AAA");
+		rssChannel.setTitle("BBBB");
+		rssChannel.setLastBuildDate(new DateTimeZone(OutilsGeneriques.getDateUTC(2007,4,26,16,41,3)));
+		rssChannel.setPubDate(null);
+
+		final DateTimeZone date=null;
+
+		Writer out=new StringWriter();
+		mapper.writeValue(out,rssChannel);
+
+		String res=out.toString();
+		assertEquals("{\"title\":\"BBBB\",\"lastBuildDate\":{\"instant\":1177605663,\"offset\":0,\"zoneId\":\"UTC\"},\"name\":\"AAA\"}",res);
+
+		LOGGER.info("json="+res);
+
+		ObjectMapper mapper2 = new ObjectMapper();
+
+		RssChannel rssChannel2=mapper2.readValue(res,RssChannel.class);
+
+		assertNotNull(rssChannel2);
+
+		LOGGER.info("rssChannel="+rssChannel);
+		LOGGER.info("rssChannel2="+rssChannel2);
+
+		assertEquals(rssChannel.getLastBuildDate(),rssChannel2.getLastBuildDate());
+		assertNull(rssChannel2.getPubDate());
 	}
 
 }

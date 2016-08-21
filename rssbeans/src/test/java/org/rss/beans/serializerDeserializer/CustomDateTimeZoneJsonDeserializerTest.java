@@ -33,4 +33,32 @@ public class CustomDateTimeZoneJsonDeserializerTest {
 		LOGGER.info("res="+date);
 	}
 
+	@Test
+	public void deserialize2() throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+
+		DateTimeZone date;
+		String s="null";
+
+		date=mapper.readValue(s,DateTimeZone.class);
+
+		assertNull(date);
+
+		LOGGER.info("res="+date);
+	}
+
+	@Test
+	public void deserialize3() throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+
+		DateTimeZone date;
+		String s="{\"instant\":1177605663,\"offset\":0,\"zoneId\":\"UTC\"}";
+
+		date=mapper.readValue(s,DateTimeZone.class);
+
+		assertNotNull(date);
+
+		LOGGER.info("res="+date);
+	}
+
 }

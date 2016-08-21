@@ -1,10 +1,13 @@
 package org.rss.beans.flux;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 
 /**
  * Created by Alain on 28/10/2015.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public final class RssChannel {
 
 	private String id;
