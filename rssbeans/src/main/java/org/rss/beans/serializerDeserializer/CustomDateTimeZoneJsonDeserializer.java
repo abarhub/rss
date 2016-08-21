@@ -27,9 +27,17 @@ import java.time.*;
  */
 
 
-public class CustomDateTimeZoneJsonDeserializer extends JsonDeserializer<DateTimeZone> {
+public class CustomDateTimeZoneJsonDeserializer extends StdDeserializer<DateTimeZone> {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(CustomDateTimeZoneJsonDeserializer.class);
+
+	public CustomDateTimeZoneJsonDeserializer() {
+		this(DateTimeZone.class);
+	}
+
+	public CustomDateTimeZoneJsonDeserializer(Class<DateTimeZone> t) {
+		super(t);
+	}
 
 
 	@Override

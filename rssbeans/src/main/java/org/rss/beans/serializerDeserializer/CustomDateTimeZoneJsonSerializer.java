@@ -22,9 +22,17 @@ import java.time.*;
  * Created by Alain on 21/08/2016.
  */
 
-public class CustomDateTimeZoneJsonSerializer extends JsonSerializer<DateTimeZone> {
+public class CustomDateTimeZoneJsonSerializer extends StdSerializer<DateTimeZone> {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(CustomDateTimeZoneJsonSerializer.class);
+
+	public CustomDateTimeZoneJsonSerializer() {
+		this(DateTimeZone.class);
+	}
+
+	public CustomDateTimeZoneJsonSerializer(Class<DateTimeZone> t) {
+		super(t);
+	}
 
 	@Override
 	public void serialize(DateTimeZone d,

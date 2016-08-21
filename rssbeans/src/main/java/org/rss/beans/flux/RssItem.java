@@ -1,11 +1,14 @@
 package org.rss.beans.flux;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.time.LocalDateTime;
 
 /**
  * Created by Alain on 28/10/2015.
  */
-public final class RssItem {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class RssItem {
 
 	private String title;
 	private String description;

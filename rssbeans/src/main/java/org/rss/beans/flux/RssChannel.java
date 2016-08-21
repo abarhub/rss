@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Alain on 28/10/2015.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public final class RssChannel {
+public class RssChannel {
 
 	private String id;
 	private String url;
