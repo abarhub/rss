@@ -52,6 +52,7 @@ public class CustomDateTimeZoneJsonDeserializer extends StdDeserializer<DateTime
 		ZoneId zoneId2=null;
 		JsonToken currentToken = null;
 		DateTimeZone res=null;
+		boucle:
 		while ((currentToken = jp.nextValue()) != null) {
 			switch (currentToken) {
 				case VALUE_NUMBER_INT:
@@ -73,6 +74,8 @@ public class CustomDateTimeZoneJsonDeserializer extends StdDeserializer<DateTime
 						}
 					}
 					break;
+				case END_OBJECT:
+					break boucle;
 			}
 		}
 
