@@ -1,6 +1,7 @@
 package org.rss.beans;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import org.slf4j.MDC;
 
@@ -14,7 +15,7 @@ import static org.rss.beans.OutilsGeneriques.checkNotEmpty;
  */
 public final class OutilsMDC {
 
-	private static final String CONTEXT_REGROUPE = "CONTEXT";
+	public static final String CONTEXT_REGROUPE = "CONTEXT";
 
 	private OutilsMDC() {
 	}
@@ -35,7 +36,7 @@ public final class OutilsMDC {
 		}
 		mdc2.remove(CONTEXT_REGROUPE);
 		String res = "";
-		if (mdc2.isEmpty()) {
+		if (!mdc2.isEmpty()) {
 			Joiner.MapJoiner joiner = Joiner.on(";").withKeyValueSeparator("=");
 			res = joiner.join(mdc2);
 		}
@@ -46,5 +47,9 @@ public final class OutilsMDC {
 		checkNotNull(key, "Cle vide");
 		MDC.remove(key.getKeyName());
 		recalculMdc();
+	}
+
+	public static Map<String,String> getCopyMDC(){
+		return ImmutableMap.copyOf(MDC.getCopyOfContextMap());
 	}
 }
