@@ -134,6 +134,14 @@
           <artifactId>spring-boot-starter-test</artifactId>
       </dependency>
 
+      <!-- OpenPojo -->
+
+      <dependency>
+          <groupId>com.openpojo</groupId>
+          <artifactId>openpojo</artifactId>
+          <version>0.8.4</version>
+      </dependency>
+
   </dependencies>
 
 
