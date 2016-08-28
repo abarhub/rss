@@ -35,6 +35,8 @@ public class DAOUrl implements IDAOUrl {
 
 	@Override
 	public void save(UrlJpa url) {
+		Preconditions.checkNotNull(url);
+		LOGGER.info("Sauve url : "+url.getUrl());
 		repository.save(url);
 	}
 
