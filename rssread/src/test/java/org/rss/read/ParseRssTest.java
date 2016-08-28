@@ -1,14 +1,11 @@
 package org.rss.read;
 
 import com.google.common.base.Charsets;
-import com.google.common.io.Files;
 import com.google.common.io.Resources;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.rss.read.domrrs.ChannelRss;
 
 import java.net.URL;
-import java.nio.charset.Charset;
 
 import static org.junit.Assert.*;
 
@@ -21,7 +18,7 @@ public class ParseRssTest {
 	public void read1() throws Exception {
 		ParseRss parse;
 		parse=new ParseRss();
-		URL url = Resources.getResource("fluxRss1.xml");
+		URL url = Resources.getResource("exemples/fluxRss1.xml");
 		String content = Resources.toString(url, Charsets.UTF_8);
 		assertNotNull(content);
 		assertTrue(content.length()>0);
@@ -41,7 +38,7 @@ public class ParseRssTest {
 	public void read2() throws Exception {
 		ParseRss parse;
 		parse=new ParseRss();
-		URL url = Resources.getResource("fluxRss2.xml");
+		URL url = Resources.getResource("exemples/fluxRss2.xml");
 		String content = Resources.toString(url, Charsets.UTF_8);
 		assertNotNull(content);
 		assertTrue(content.length()>0);
