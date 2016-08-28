@@ -1,4 +1,4 @@
-package org.rss.read;
+package org.rss.read.services;
 
 import com.google.common.collect.Lists;
 import org.rss.beans.param.RssUrl;

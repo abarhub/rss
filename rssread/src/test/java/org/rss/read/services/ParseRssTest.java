@@ -1,9 +1,11 @@
-package org.rss.read;
+package org.rss.read.services;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import org.junit.Test;
+import org.rss.read.ResultatRss;
 import org.rss.read.domrrs.ChannelRss;
+import org.rss.read.services.ParseRss;
 
 import java.net.URL;
 

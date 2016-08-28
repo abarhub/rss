@@ -1,4 +1,4 @@
-package org.rss.read;
+package org.rss.read.services;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;

@@ -1,6 +1,7 @@
-package org.rss.read;
+package org.rss.read.services;
 
 import com.google.common.collect.Lists;
+import org.rss.read.ResultatRss;
 import org.rss.read.domrrs.ChannelRss;
 import org.rss.read.domrrs.ItemRss;
 import org.slf4j.Logger;

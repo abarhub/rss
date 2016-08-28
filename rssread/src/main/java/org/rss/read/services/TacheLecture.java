@@ -1,10 +1,11 @@
-package org.rss.read;
+package org.rss.read.services;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import org.rss.beans.flux.RssChannel;
 import org.rss.beans.param.RssListeUrl;
 import org.rss.beans.param.RssUrl;
+import org.rss.read.ResultatRss;
 import org.rss.read.domrrs.ChannelRss;
 import org.rss.registry.IRestDb;
 import org.slf4j.Logger;

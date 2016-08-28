@@ -1,4 +1,4 @@
-package org.rss.read;
+package org.rss.read.services;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;

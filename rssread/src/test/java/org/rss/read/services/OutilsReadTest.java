@@ -1,14 +1,11 @@
-package org.rss.read;
+package org.rss.read.services;
 
-import com.google.common.base.Preconditions;
 import org.junit.Test;
 import org.rss.beans.OutilsGeneriques;
 import org.rss.beans.flux.DateTimeZone;
+import org.rss.read.services.OutilsRead;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.time.*;
-import java.util.Date;
 
 import static org.junit.Assert.*;
 
