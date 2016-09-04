@@ -65,12 +65,6 @@
             </column>
         </createTable>
 
-        <createTable tableName="HIBERNATE_SEQUENCE">
-            <column name="next_val" type="int" >
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
         <createTable tableName="PARAM_URL">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
