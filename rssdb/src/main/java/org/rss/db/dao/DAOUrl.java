@@ -53,6 +53,7 @@ public class DAOUrl implements IDAOUrl {
 		Preconditions.checkNotNull(rss);
 		if (repo_rss.channelExiste(rss)) {
 			LOGGER.info("rss '" + rss.getUrl() + "' existe deja");
+			repo_rss.updateChannel(rss);
 		} else {
 			LOGGER.info("Enregistrement rss '" + rss.getUrl() + "' ...");
 			repo_rss.addChannel(rss);

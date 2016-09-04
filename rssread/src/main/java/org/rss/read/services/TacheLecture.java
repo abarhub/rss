@@ -2,6 +2,8 @@ package org.rss.read.services;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import org.rss.beans.flux.DateTimeZone;
 import org.rss.beans.flux.RssChannel;
 import org.rss.beans.param.RssListeUrl;
 import org.rss.beans.param.RssUrl;
@@ -45,7 +47,8 @@ public class TacheLecture {
 
 	//private int nb0;
 	//private int nb2;
-	private List<String> url_deja_traite=Lists.newArrayList();
+	//private List<String> url_deja_traite=Lists.newArrayList();
+	private Map<String,DateTimeZone> url_deja_traite= Maps.newHashMap();
 
 	public TacheLecture() {
 		//nb++;
@@ -89,11 +92,11 @@ public class TacheLecture {
 			{
 				final String url2;
 				url2=url.getUrl();
-				dejaTraite=url_deja_traite.stream().anyMatch(s -> s.equals(url2));
-				if(!dejaTraite) {
+				//dejaTraite=url_deja_traite.stream().anyMatch(s -> s.equals(url2));
+				//if(!dejaTraite) {
 					lecture_url(url);
-					url_deja_traite.add(url2);
-				}
+					//url_deja_traite.add(url2);
+				//}
 			}
 		}
 		LOGGER.info("fin lecture flus rss");
@@ -115,9 +118,29 @@ public class TacheLecture {
 				if (res2.isError()) {
 					LOGGER.info("Error:" + res2.getErrors());
 				} else {
-					Preconditions.checkNotNull(res2.getRes());
 					LOGGER.info("Parse OK");
-					envoie_flux02(res2.getRes());
+					ChannelRss channel = res2.getRes();
+					Preconditions.checkNotNull(channel);
+					boolean aEnvoyer=false;
+					DateTimeZone date=null;
+					date=outilsRead.convDate(channel.getLastBuildDate());
+					if(url_deja_traite.containsKey(url0)){
+						DateTimeZone dateDernierTraitement=url_deja_traite.get(url0);
+						if(dateDernierTraitement.compareTo(date)<0){
+							aEnvoyer=true;
+							LOGGER.info("envoie("+dateDernierTraitement+"<"+date+")");
+						} else {
+							LOGGER.info("pas envoie("+dateDernierTraitement+">="+date+")");
+						}
+					} else {
+						aEnvoyer=true;
+					}
+					if(aEnvoyer) {
+						LOGGER.info("Envoie ...");
+						Preconditions.checkNotNull(date);
+						url_deja_traite.put(url0,date);
+						envoie_flux(channel);
+					}
 				}
 			} catch (IOException | ExecutionException | InterruptedException e) {
 				LOGGER.error("Erreur:" + e.getLocalizedMessage(), e);
@@ -125,12 +148,12 @@ public class TacheLecture {
 		}
 	}
 
-	private void envoie_flux02(ChannelRss res) {
+	private void envoie_flux(ChannelRss res) {
 		RssChannel rss;
 
 		Preconditions.checkNotNull(res);
 
-		LOGGER.info("debut envoie_flux02 ...");
+		LOGGER.info("debut envoie_flux ...");
 
 		rss=outilsRead.convChannel(res);
 

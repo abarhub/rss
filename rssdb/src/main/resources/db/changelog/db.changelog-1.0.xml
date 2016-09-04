@@ -35,7 +35,7 @@
             </column>
         </createTable>
 
-        <createTable tableName="feeds_item">
+        <createTable tableName="FEEDS_ITEM">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -56,7 +56,7 @@
             </column>
         </createTable>
 
-        <createTable tableName="feeds_liste_item">
+        <createTable tableName="FEEDS_LISTE_ITEM">
             <column name="feeds_rss_jpa_id" type="int" >
                 <constraints nullable="false" foreignKeyName="fk_FEEDS2" references="FEEDS(id)"/>
             </column>
@@ -65,13 +65,13 @@
             </column>
         </createTable>
 
-        <createTable tableName="hibernate_sequence">
+        <createTable tableName="HIBERNATE_SEQUENCE">
             <column name="next_val" type="int" >
                 <constraints nullable="false"/>
             </column>
         </createTable>
 
-        <createTable tableName="param_url">
+        <createTable tableName="PARAM_URL">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>

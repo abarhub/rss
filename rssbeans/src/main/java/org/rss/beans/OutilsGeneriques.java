@@ -3,6 +3,7 @@ package org.rss.beans;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
+import org.rss.beans.flux.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -90,4 +91,66 @@ public final class OutilsGeneriques {
 		return getDate(annee,mois,jour,heure,minutes,secondes,"UTC",0);
 	}
 
+	public static boolean estSupEgal(DateTimeZone d1,DateTimeZone d2){
+		Preconditions.checkNotNull(d1);
+		Preconditions.checkNotNull(d2);
+		return d1.compareTo(d2)>=0;
+	}
+
+
+	public static boolean estSup(DateTimeZone d1,DateTimeZone d2){
+		Preconditions.checkNotNull(d1);
+		Preconditions.checkNotNull(d2);
+		return d1.compareTo(d2)>0;
+	}
+
+	public static boolean estInfEgal(DateTimeZone d1,DateTimeZone d2){
+		Preconditions.checkNotNull(d1);
+		Preconditions.checkNotNull(d2);
+		return d1.compareTo(d2)<=0;
+	}
+
+	public static boolean estInf(DateTimeZone d1,DateTimeZone d2){
+		Preconditions.checkNotNull(d1);
+		Preconditions.checkNotNull(d2);
+		return d1.compareTo(d2)<0;
+	}
+
+	public static boolean estEgal(DateTimeZone d1,DateTimeZone d2){
+		Preconditions.checkNotNull(d1);
+		Preconditions.checkNotNull(d2);
+		return d1.compareTo(d2)==0;
+	}
+
+
+	public static boolean estSupEgal(ZonedDateTime d1,ZonedDateTime d2){
+		Preconditions.checkNotNull(d1);
+		Preconditions.checkNotNull(d2);
+		return d1.compareTo(d2)>=0;
+	}
+
+
+	public static boolean estSup(ZonedDateTime d1,ZonedDateTime d2){
+		Preconditions.checkNotNull(d1);
+		Preconditions.checkNotNull(d2);
+		return d1.compareTo(d2)>0;
+	}
+
+	public static boolean estInfEgal(ZonedDateTime d1,ZonedDateTime d2){
+		Preconditions.checkNotNull(d1);
+		Preconditions.checkNotNull(d2);
+		return d1.compareTo(d2)<=0;
+	}
+
+	public static boolean estInf(ZonedDateTime d1,ZonedDateTime d2){
+		Preconditions.checkNotNull(d1);
+		Preconditions.checkNotNull(d2);
+		return d1.compareTo(d2)<0;
+	}
+
+	public static boolean estEgal(ZonedDateTime d1,ZonedDateTime d2){
+		Preconditions.checkNotNull(d1);
+		Preconditions.checkNotNull(d2);
+		return d1.compareTo(d2)==0;
+	}
 }

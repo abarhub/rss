@@ -35,6 +35,9 @@ spring.profiles.active: h2
 liquibase:
   enabled: true
   change-log: classpath:/db/changelog/db.changelog-master.xml
-  default-schema: rss
-  drop-first: true
+  #default-schema: rss
+  #default-schema: public
+  #drop-first: true
+
+
 
