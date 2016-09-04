@@ -56,4 +56,14 @@ public class UrlJpa {
 	public void setListe_feeds(FeedsJpa liste_feeds) {
 		this.liste_feeds = liste_feeds;
 	}
+
+	@Override
+	public String toString() {
+		return "UrlJpa{" +
+				"id=" + id +
+				", nom='" + nom + '\'' +
+				", url='" + url + '\'' +
+				", liste_feeds=" + liste_feeds +
+				'}';
+	}
 }

@@ -59,4 +59,13 @@ public class FeedsRssJpa extends FeedsGenericJpa {
 		this.pubDate = pubDate;
 	}
 
+	@Override
+	public String toString() {
+		return "FeedsRssJpa{" +
+				"listeItem=" + listeItem +
+				", language='" + language + '\'' +
+				", lastBuildDate=" + lastBuildDate +
+				", pubDate=" + pubDate +
+				'}';
+	}
 }

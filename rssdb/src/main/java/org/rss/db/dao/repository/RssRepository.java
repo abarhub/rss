@@ -102,7 +102,9 @@ public class RssRepository {
 
 	public void updateChannel(FeedsRssJpa rss) {
 		Preconditions.checkNotNull(rss);
-		Preconditions.checkNotNull(rss.getLastBuildDate());
+		//Preconditions.checkNotNull(rss.getLastBuildDate());
+
+		LOGGER.info("debut maj du flux "+rss.getUrl());
 
 		FeedsRssJpa rssPersiste;
 
@@ -111,27 +113,31 @@ public class RssRepository {
 		rssPersiste=em.createQuery(req,FeedsRssJpa.class).getSingleResult();
 
 		Preconditions.checkNotNull(rssPersiste);
-		if(OutilsGeneriques.estInf(rssPersiste.getLastBuildDate(),rss.getLastBuildDate())){
+		if(rssPersiste.getLastBuildDate()==null
+				||OutilsGeneriques.estInf(rssPersiste.getLastBuildDate(),rss.getLastBuildDate())){
 			if(!StringUtils.isEmpty(rss.getTitle())&&
 					!rss.getTitle().equals(rssPersiste.getTitle())) {
 				rssPersiste.setTitle(rss.getTitle());
 			}
-			rssPersiste.setLastBuildDate(rss.getLastBuildDate());
+			if(rss.getLastBuildDate()!=null) {
+				rssPersiste.setLastBuildDate(rss.getLastBuildDate());
+			}
 
 			if(rss.getListeItem()!=null&&!rss.getListeItem().isEmpty()) {
 				for (ItemRssJpa item:rss.getListeItem()){
 
-					Preconditions.checkNotNull(item.getLink());
-					Preconditions.checkNotNull(item.getPubDate());
+					Preconditions.checkNotNull(item.getLink(),"item="+item);
+					Preconditions.checkNotNull(item.getPubDate(),"item="+item);
 
 					if(rssPersiste.getListeItem()==null||rssPersiste.getListeItem().isEmpty()){
 						rssPersiste.setListeItem(Lists.newArrayList());
 						rssPersiste.getListeItem().add(item);
+						LOGGER.info("add du flux (vide):"+item);
 					} else {
 						boolean trouve=false;
 						for (ItemRssJpa item2 : rssPersiste.getListeItem()) {
 							if(item2.getLink()!=null&&item2.getPubDate()!=null){
-								if(item2.getLink().equals(item.getLink())){
+								if(item2.similaire(item)){
 									trouve=true;
 									if(OutilsGeneriques.estInf(item2.getPubDate(),item.getPubDate())){
 										item2.setTitle(item.getTitle());
@@ -139,12 +145,14 @@ public class RssRepository {
 										item2.setGuid(item.getGuid());
 										item2.setLink(item.getLink());
 										item2.setPubDate(item.getPubDate());
+										LOGGER.info("maj du flux:"+item2);
 									}
 									break;
 								}
 							}
 						}
 						if(!trouve){
+							LOGGER.info("add du flux:"+item);
 							rssPersiste.getListeItem().add(item);
 						}
 					}
@@ -153,5 +161,6 @@ public class RssRepository {
 
 			em.persist(rssPersiste);
 		}
+		LOGGER.info("fin maj du flux "+rss.getUrl());
 	}
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -84,8 +85,13 @@ public class OutilsRead {
 					res0=null;
 				}
 			} else {
-				res0 = ZonedDateTime.parse(date, DateTimeFormatter.RFC_1123_DATE_TIME);
-				res0=ZonedDateTime.of(res0.toLocalDateTime(),ZoneId.of("UTC"));
+				if(date.matches("\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d")){
+					LocalDateTime res3 = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+					res0 = ZonedDateTime.of(res3, ZoneId.of("UTC"));
+				} else {
+					res0 = ZonedDateTime.parse(date, DateTimeFormatter.RFC_1123_DATE_TIME);
+					res0 = ZonedDateTime.of(res0.toLocalDateTime(), ZoneId.of("UTC"));
+				}
 			}
 
 			res = res0;//.toLocalDateTime();

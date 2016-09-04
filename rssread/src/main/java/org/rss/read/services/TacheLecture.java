@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.*;
@@ -85,18 +86,11 @@ public class TacheLecture {
 
 	public void lecture_rss2() {
 
-		boolean dejaTraite;
 		LOGGER.info("debut lecture flus rss");
 		if(param.getListUrl()!=null&&!param.getListUrl().isEmpty()){
 			for(RssUrl url:param.getListUrl())
 			{
-				final String url2;
-				url2=url.getUrl();
-				//dejaTraite=url_deja_traite.stream().anyMatch(s -> s.equals(url2));
-				//if(!dejaTraite) {
-					lecture_url(url);
-					//url_deja_traite.add(url2);
-				//}
+				lecture_url(url);
 			}
 		}
 		LOGGER.info("fin lecture flus rss");
@@ -121,23 +115,29 @@ public class TacheLecture {
 					LOGGER.info("Parse OK");
 					ChannelRss channel = res2.getRes();
 					Preconditions.checkNotNull(channel);
+					Preconditions.checkNotNull(channel.getLastBuildDate());
 					boolean aEnvoyer=false;
 					DateTimeZone date=null;
-					date=outilsRead.convDate(channel.getLastBuildDate());
-					if(url_deja_traite.containsKey(url0)){
-						DateTimeZone dateDernierTraitement=url_deja_traite.get(url0);
-						if(dateDernierTraitement.compareTo(date)<0){
-							aEnvoyer=true;
-							LOGGER.info("envoie("+dateDernierTraitement+"<"+date+")");
+					if(StringUtils.isEmpty(channel.getLastBuildDate())){
+						aEnvoyer = true;
+					}else {
+						date = outilsRead.convDate(channel.getLastBuildDate());
+						//Preconditions.checkNotNull(date,"date="+channel.getLastBuildDate());
+						if (url_deja_traite.containsKey(url0)) {
+							DateTimeZone dateDernierTraitement = url_deja_traite.get(url0);
+							if (date==null||dateDernierTraitement.compareTo(date) < 0) {
+								aEnvoyer = true;
+								LOGGER.info("envoie(" + dateDernierTraitement + "<" + date + ")");
+							} else {
+								LOGGER.info("pas envoie(" + dateDernierTraitement + ">=" + date + ")");
+							}
 						} else {
-							LOGGER.info("pas envoie("+dateDernierTraitement+">="+date+")");
+							aEnvoyer = true;
 						}
-					} else {
-						aEnvoyer=true;
 					}
 					if(aEnvoyer) {
 						LOGGER.info("Envoie ...");
-						Preconditions.checkNotNull(date);
+						//Preconditions.checkNotNull(date);
 						url_deja_traite.put(url0,date);
 						envoie_flux(channel);
 					}

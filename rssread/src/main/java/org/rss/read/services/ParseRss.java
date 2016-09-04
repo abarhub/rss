@@ -40,6 +40,7 @@ public class ParseRss {
 			parseRss(contenuRss,res);
 		} catch (ParserConfigurationException | IOException | SAXException e) {
 			LOGGER.error("Error:"+e.getLocalizedMessage(),e);
+			//LOGGER.error("flux en erreur :"+contenuRss);
 			res.addError("Error:"+e.getLocalizedMessage());
 		}
 
@@ -113,19 +114,21 @@ public class ParseRss {
 
 								Element eElement2 = (Element) nNode2;
 
-								String desc, pubDate, guid;
+								String desc, pubDate, guid,lien;
 								ItemRss item;
 
 								desc = donneNode(eElement2, "description");
 								pubDate = donneNode(eElement2, "pubDate");
 								guid = donneNode(eElement2, "guid");
 								titre=donneNode(eElement2,"title");
+								lien=donneNode(eElement2,"link");
 
 								item = new ItemRss();
 								item.setDescription(desc);
 								item.setPubDate(pubDate);
 								item.setGuid(guid);
 								item.setTitle(titre);
+								item.setLink(lien);
 
 								header.getListItem().add(item);
 
