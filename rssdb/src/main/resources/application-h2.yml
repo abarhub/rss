@@ -3,11 +3,12 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      #ddl-auto: create-drop
+      ddl-auto: validate
     database-platform: org.hibernate.dialect.H2Dialect
 
   datasource:
-    url: jdbc:h2:mem:rss;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:rss;DB_CLOSE_ON_EXIT=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS rss
     #platform: h2
     username: sa
     password:
