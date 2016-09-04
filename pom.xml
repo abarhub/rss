@@ -51,6 +51,7 @@
     <mysql_driver.version>5.1.38</mysql_driver.version>
     <h2.version>1.4.192</h2.version>
     <liquidbase.version>3.5.1</liquidbase.version>
+    <liquidbase_lsf4j.version>2.0.0</liquidbase_lsf4j.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

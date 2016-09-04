@@ -114,6 +114,11 @@
 			<artifactId>liquibase-core</artifactId>
 			<version>${liquidbase.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.mattbertolini</groupId>
+			<artifactId>liquibase-slf4j</artifactId>
+			<version>${liquidbase_lsf4j.version}</version>
+		</dependency>
 
 	</dependencies>
 	
