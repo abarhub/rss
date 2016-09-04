@@ -26,7 +26,7 @@ function logMsgInfo($http,s){
 
 function logMsg2($http,s,niveau){
     console.log(s);
-    alert(s);
+    //alert(s);
     if($http !== 'undefined'){
         var niveauErreur;
         var composant;
@@ -50,8 +50,11 @@ function logMsg2($http,s,niveau){
 }
 
 angular.module('todoApp', ['ngSanitize'])
-        .controller('TodoListController', function($http) {
+        .controller('TodoListController', ['$scope', '$http', '$interval',
+                function($scope, $http, $interval) {
             var todoList = this;
+
+            var stopUpdateDisplay;
 
             todoList.liste1 = [
                 {"url":"http://www.google.fr/0","listeItem":[{"title":"KKKKKK0-0","description":"GGGG0-0","link":"http://www.yahoo.fr/0","pubDate":"2001-01-03","guid":"HHHH0-0"},{"title":"KKKKKK0-1","description":"GGGG0-1","link":"http://www.yahoo.fr/1","pubDate":"2001-01-03","guid":"HHHH0-1"},{"title":"KKKKKK0-2","description":"GGGG0-2","link":"http://www.yahoo.fr/2","pubDate":"2001-01-03","guid":"HHHH0-2"}],"title":"BBBBBB0","description":"AAAA0","language":"en","lastBuildDate":"2001-01-01","pubDate":"2001-01-02"},
@@ -166,6 +169,23 @@ angular.module('todoApp', ['ngSanitize'])
                     // notifyCallback
                 });
             }
-        });
+
+            todoList.updateAffichage=function() {
+                if ( angular.isDefined(stopUpdateDisplay) ){
+                    // arret de l'affichage recurrent
+                    logMsgInfo($http,"arret display");
+                    $interval.cancel(stopUpdateDisplay);
+                    stopUpdateDisplay = undefined;
+                } else {
+                    // demarrage de l'affichage recurrent
+                    logMsgInfo($http,"demarrage display");
+                    //stopUpdateDisplay = $interval(todoList.updateListFlux, 10*1000);
+                    stopUpdateDisplay = $interval(function() {
+                        todoList.updateListFlux();
+                    }, 10*1000);
+                }
+            }
+
+        }]);
 
 

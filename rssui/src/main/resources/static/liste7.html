@@ -21,7 +21,7 @@
 
 
         <div class="row">
-            <div class="col-md-12 div_border">
+            <div class="col-md-8 div_border">
                 <span>Liste Rss de {{todoList.liste1.length}}</span>
 
                 <form ng-submit="todoList.updateListFlux()">
@@ -34,6 +34,19 @@
                     Url : <input type="text" name="url" ng-model="todoList.urlAAjouter">
                     <input class="btn-primary" type="submit" value="add">
                 </form>
+                <button ng-click="todoList.updateAffichage()" >
+                    Maj Affichage
+                </button>
+            </div>
+            <div class="col-md-4">
+                <div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success2!</strong> Indicates a successful or positive action.
+                </div>
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Error2!</strong> Indicates a successful or positive action.
+                </div>
             </div>
         </div>
         <div class="row">
