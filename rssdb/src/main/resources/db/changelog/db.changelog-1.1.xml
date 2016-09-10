@@ -80,5 +80,38 @@
             <column name="desactive" value="false"/>
         </insert>
 
+
+        <createTable tableName="CATEGORIE">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="feeds_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_feeds3" references="feeds(id)"/>
+            </column>
+            <column name="user_jpa_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_user2" references="user(id)"/>
+            </column>
+        </createTable>
+
+
+        <createTable tableName="CATEGORIE_FEEDS">
+            <column name="categorie_jpa_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_categorie2" references="categorie(id)"/>
+            </column>
+            <column name="feeds_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_feeds4" references="feeds(id)"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="categorie_jpa_id, feeds_id"
+                       constraintName="pk_categorie_feeds"
+                       tableName="CATEGORIE_FEEDS"/>
+
     </changeSet>
 </databaseChangeLog>

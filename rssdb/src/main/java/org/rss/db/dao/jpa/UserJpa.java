@@ -1,6 +1,7 @@
 package org.rss.db.dao.jpa;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Alain on 10/09/2016.
@@ -30,6 +31,9 @@ public class UserJpa {
 
 	@Column(nullable = false)
 	private boolean desactive;
+
+	@OneToMany(fetch = FetchType.LAZY,mappedBy="userJpa")
+	private List<CategorieJpa> listeCategorie;
 
 	public Integer getId() {
 		return id;
@@ -87,6 +91,14 @@ public class UserJpa {
 		this.desactive = desactive;
 	}
 
+	public List<CategorieJpa> getListeCategorie() {
+		return listeCategorie;
+	}
+
+	public void setListeCategorie(List<CategorieJpa> listeCategorie) {
+		this.listeCategorie = listeCategorie;
+	}
+
 	@Override
 	public String toString() {
 		return "UserJpa{" +
@@ -97,6 +109,7 @@ public class UserJpa {
 				", prenom='" + prenom + '\'' +
 				", role=" + role +
 				", desactive=" + desactive +
+				", listeCategorie=" + listeCategorie +
 				'}';
 	}
 
