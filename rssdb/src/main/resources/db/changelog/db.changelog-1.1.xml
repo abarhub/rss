@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="authorName" id="changelog-1.1">
+
+        <createTable tableName="ROLE">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nom" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="admin" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="anonymous" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="USER">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="login" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nom" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="prenom" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="role_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_role2" references="role(id)"/>
+            </column>
+            <column name="desactive" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <insert tableName="ROLE">
+            <column name="nom" value="ADMIN"/>
+            <column name="description" value="ADMIN"/>
+            <column name="admin" value="true"/>
+            <column name="anonymous" value="false"/>
+        </insert>
+
+        <insert tableName="ROLE">
+            <column name="nom" value="ANONYMOUS"/>
+            <column name="description" value="ANONYMOUS"/>
+            <column name="admin" value="false"/>
+            <column name="anonymous" value="true"/>
+        </insert>
+
+        <insert tableName="USER">
+            <column name="login" value="ADMIN"/>
+            <column name="password" value="ADMIN"/>
+            <column name="nom" value="ADMIN"/>
+            <column name="prenom" value=""/>
+            <column name="role_id" valueComputed="(SELECT id from ROLE where nom='ADMIN')"/>
+            <column name="desactive" value="false"/>
+        </insert>
+
+        <insert tableName="USER">
+            <column name="login" value="ANONYMOUS"/>
+            <column name="password" value=""/>
+            <column name="nom" value="ANONYMOUS"/>
+            <column name="prenom" value=""/>
+            <column name="role_id" valueComputed="(SELECT id from ROLE where nom='ANONYMOUS')"/>
+            <column name="desactive" value="false"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>
