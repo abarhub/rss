@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Alain on 30/01/2016.
  */
-public interface IDAOUrl {
+public interface IUrlDao {
 
 	public void save(UrlJpa url);
 

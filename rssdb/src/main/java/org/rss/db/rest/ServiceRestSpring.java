@@ -1,7 +1,6 @@
 package org.rss.db.rest;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import org.rss.beans.flux.DateTimeZone;
 import org.rss.beans.flux.RssChannel;
@@ -20,7 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,7 +35,7 @@ public class ServiceRestSpring {
 	/*@Autowired
 	private UrlRepository repository;*/
 	@Autowired
-	private IDAOUrl dao_url;
+	private IUrlDao dao_url;
 
 	@Autowired
 	private Outils outils;

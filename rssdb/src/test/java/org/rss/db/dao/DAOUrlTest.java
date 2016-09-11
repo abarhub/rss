@@ -9,7 +9,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.rss.db.dao.jpa.UrlJpa;
 import org.rss.db.dao.repository.RssRepository;
 import org.rss.db.dao.repository.UrlRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class DAOUrlTest {
 	private RssRepository repo_rss;
 
 	@InjectMocks
-	private DAOUrl daoUrl;
+	private UrlDao daoUrl;
 
 	@Before
 	public void setUp() throws Exception {

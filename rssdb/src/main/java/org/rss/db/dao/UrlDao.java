@@ -1,14 +1,10 @@
 package org.rss.db.dao;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
-import org.rss.beans.flux.RssChannel;
-import org.rss.beans.param.RssUrl;
 import org.rss.db.dao.jpa.FeedsRssJpa;
 import org.rss.db.dao.jpa.UrlJpa;
 import org.rss.db.dao.repository.RssRepository;
 import org.rss.db.dao.repository.UrlRepository;
-import org.rss.db.rest.ServiceRestSpring;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +16,9 @@ import java.util.List;
  * Created by Alain on 30/01/2016.
  */
 @Repository
-public class DAOUrl implements IDAOUrl {
+public class UrlDao implements IUrlDao {
 
-	public static final Logger LOGGER = LoggerFactory.getLogger(DAOUrl.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(UrlDao.class);
 
 	@Autowired
 	private UrlRepository repository;
@@ -30,7 +26,7 @@ public class DAOUrl implements IDAOUrl {
 	@Autowired
 	private RssRepository repo_rss;
 
-	public DAOUrl() {
+	public UrlDao() {
 	}
 
 	@Override

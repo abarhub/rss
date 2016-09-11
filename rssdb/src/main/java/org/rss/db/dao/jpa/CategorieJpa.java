@@ -20,8 +20,8 @@ public class CategorieJpa {
 	@Column(nullable = false,length = 100)
 	private String description;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	private List<FeedsGenericJpa> feeds;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="categorieJpa")
+	private List<FeedsAttributJpa> feeds;
 
 	@ManyToOne
 	private UserJpa userJpa;
@@ -42,11 +42,11 @@ public class CategorieJpa {
 		this.name = name;
 	}
 
-	public List<FeedsGenericJpa> getFeeds() {
+	public List<FeedsAttributJpa> getFeeds() {
 		return feeds;
 	}
 
-	public void setFeeds(List<FeedsGenericJpa> feeds) {
+	public void setFeeds(List<FeedsAttributJpa> feeds) {
 		this.feeds = feeds;
 	}
 
