@@ -1,10 +1,7 @@
 package org.rss.db.dao;
 
-import com.google.common.base.Preconditions;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.rss.beans.OutilsGeneriques;
 import org.rss.db.dao.jpa.RoleJpa;
 import org.rss.db.dao.jpa.UserJpa;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,9 @@ public class UserDaoITest {
 
 	@Autowired
 	private IUserDao userDao;
+
+	@Autowired
+	private TestFixtureDao testFixture;
 
 	@Test
 	public void addRoleOK() throws Exception {
@@ -105,7 +105,7 @@ public class UserDaoITest {
 		userJpa.setNom("AAAA");
 		userJpa.setPrenom("BBBB");
 		userJpa.setPassword("DDDD");
-		userJpa.setRole(getRole("Role1"));
+		userJpa.setRole(testFixture.getRole("Role1"));
 		userDao.addUser(userJpa);
 
 		userJpa=userDao.findUserByLogin(login);
@@ -130,7 +130,7 @@ public class UserDaoITest {
 		userJpa.setNom("AAAA2");
 		userJpa.setPrenom("BBBB2");
 		userJpa.setPassword("DDDD2");
-		userJpa.setRole(getRole("Role2"));
+		userJpa.setRole(testFixture.getRole("Role2"));
 		userDao.addUser(userJpa);
 
 		userJpa=userDao.findUserByLogin(login);
@@ -152,7 +152,7 @@ public class UserDaoITest {
 		userJpa.setNom("AAAA2");
 		userJpa.setPrenom("BBBB2");
 		userJpa.setPassword("DDDD2");
-		userJpa.setRole(getRole("Role3"));
+		userJpa.setRole(testFixture.getRole("Role3"));
 		userDao.addUser(userJpa);
 
 		userJpa=new UserJpa();
@@ -161,7 +161,7 @@ public class UserDaoITest {
 		userJpa.setNom("AAAA4");
 		userJpa.setPrenom("BBBB5");
 		userJpa.setPassword("DDDD6");
-		userJpa.setRole(getRole("Role2"));
+		userJpa.setRole(testFixture.getRole("Role2"));
 		try {
 			userDao.addUser(userJpa);
 			fail("Error");
@@ -185,7 +185,7 @@ public class UserDaoITest {
 		userJpa.setNom("aaaa7");
 		userJpa.setPrenom("BBBB7");
 		userJpa.setPassword("DDDD7");
-		userJpa.setRole(getRole("Role4"));
+		userJpa.setRole(testFixture.getRole("Role4"));
 
 		userDao.addUser(userJpa);
 
@@ -197,11 +197,4 @@ public class UserDaoITest {
 		assertEquals("DDDD7",userJpa.getPassword());
 	}
 
-	private RoleJpa getRole(String nomRole) throws ErrorJpaException {
-		Preconditions.checkArgument(!OutilsGeneriques.vide(nomRole));
-		RoleJpa roleJpa=userDao.addRole(nomRole,"BBB");
-		assertNotNull(roleJpa);
-		assertNotNull(roleJpa.getId());
-		return roleJpa;
-	}
 }
