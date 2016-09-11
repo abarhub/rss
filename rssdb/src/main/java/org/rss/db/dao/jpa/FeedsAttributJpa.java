@@ -20,7 +20,7 @@ public class FeedsAttributJpa {
 	private boolean dejaLu;
 
 	@ManyToOne
-	private CategorieJpa categorieJpa;
+	private UserJpa userJpa;
 
 	public Integer getId() {
 		return id;
@@ -46,12 +46,12 @@ public class FeedsAttributJpa {
 		this.feedsJpa = feedsJpa;
 	}
 
-	public CategorieJpa getCategorieJpa() {
-		return categorieJpa;
+	public UserJpa getUserJpa() {
+		return userJpa;
 	}
 
-	public void setCategorieJpa(CategorieJpa categorieJpa) {
-		this.categorieJpa = categorieJpa;
+	public void setUserJpa(UserJpa userJpa) {
+		this.userJpa = userJpa;
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class FeedsAttributJpa {
 				"id=" + id +
 				", feedsJpa=" + feedsJpa +
 				", dejaLu=" + dejaLu +
-				", categorieJpa=" + categorieJpa +
+				", userJpa=" + userJpa +
 				'}';
 	}
 }

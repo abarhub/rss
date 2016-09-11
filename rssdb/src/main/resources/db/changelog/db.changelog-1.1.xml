@@ -96,13 +96,26 @@
             </column>
         </createTable>
 
+        <createTable tableName="CATEGORIE_FEEDS">
+            <column name="categorie_jpa_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_categorie2" references="categorie(id)"/>
+            </column>
+            <column name="feeds_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_feeds3" references="feeds(id)"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="categorie_jpa_id, feeds_id"
+                       constraintName="pk_categorie_feeds"
+                       tableName="CATEGORIE_FEEDS"/>
+
 
         <createTable tableName="FEEDS_ATTRIBUTS">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="categorie_jpa_id" type="int" >
-                <constraints nullable="false" foreignKeyName="fk_categorie2" references="categorie(id)"/>
+            <column name="user_jpa_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_user3" references="user(id)"/>
             </column>
             <column name="feeds_jpa_id" type="int" >
                 <constraints nullable="false" foreignKeyName="fk_feeds4" references="feeds(id)"/>
