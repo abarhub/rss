@@ -16,9 +16,9 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ReadHttpTestIntegration {
+public class ReadHttpITest {
 
-	public static final Logger LOGGER = LoggerFactory.getLogger(ReadHttpTestIntegration.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(ReadHttpITest.class);
 
 	@Autowired
 	private ReadHttp readHttp;

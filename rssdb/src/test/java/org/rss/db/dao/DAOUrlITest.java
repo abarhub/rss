@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.NONE)
 @Transactional
-public class DAOUrlTestIntegration {
+public class DAOUrlITest {
 
 	@Autowired
 	private UrlDao daoUrl;

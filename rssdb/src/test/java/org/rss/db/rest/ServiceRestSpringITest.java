@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @WebAppConfiguration
 @IntegrationTest("server.port:0")
 //@ActiveProfiles("h2")
-public class ServiceRestSpringTestIntegration {
+public class ServiceRestSpringITest {
 
 	@Autowired
 	private WebApplicationContext context;

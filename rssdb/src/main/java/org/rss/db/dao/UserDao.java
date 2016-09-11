@@ -36,9 +36,15 @@ public class UserDao implements IUserDao {
 		Preconditions.checkNotNull(userJpa);
 		Preconditions.checkArgument(userJpa.getId()==null);
 
+		if(userJpa.getRole()==null){
+			throw new ErrorJpaException("Cet utilisateur n'a pas de role");
+		}
+
 		if(findUserByLogin(userJpa.getLogin())!=null) {
 			throw new ErrorJpaException("Un autre utilisateur a ce login");
 		}
+
+
 		return userRepository.save(userJpa);
 	}
 
