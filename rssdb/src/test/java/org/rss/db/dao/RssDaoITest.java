@@ -4,6 +4,8 @@ import com.google.common.collect.Maps;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rss.db.dao.jpa.CategorieJpa;
+import org.rss.db.dao.jpa.FeedsGenericJpa;
+import org.rss.db.dao.jpa.FeedsRssJpa;
 import org.rss.db.dao.jpa.UserJpa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -89,6 +91,31 @@ public class RssDaoITest {
 			assertEquals(categorieJpa.getId(), categorieJpa2.getId());
 			assertEquals("categ"+i, categorieJpa2.getName());
 		}
+	}
+
+	@Test
+	public void addRssOK() throws Exception {
+		UserJpa user = testFixtureDao.getUser("User1");
+		CategorieJpa categorieJpa=testFixtureDao.getCategorie(user,"categ1");
+		assertNotNull(categorieJpa.getId());
+		assertTrue(categorieJpa.getId()>0);
+
+		FeedsRssJpa feedsGenericJpa;
+		feedsGenericJpa=new FeedsRssJpa();
+		feedsGenericJpa.setTitle("AAA");
+		feedsGenericJpa.setDescription("BBB");
+		feedsGenericJpa.setName("CCC");
+		feedsGenericJpa.setUrl("http://test");
+		feedsGenericJpa.setLanguage("Fr");
+
+		FeedsGenericJpa feedsGenericJpa2;
+		feedsGenericJpa2= (FeedsGenericJpa) rssDao.addRss(categorieJpa,feedsGenericJpa);
+		assertNotNull(feedsGenericJpa2);
+		assertNotNull(feedsGenericJpa2.getId());
+		assertEquals("AAA",feedsGenericJpa2.getTitle());
+		assertEquals("BBB",feedsGenericJpa2.getDescription());
+		assertEquals("CCC",feedsGenericJpa2.getName());
+		assertEquals("http://test",feedsGenericJpa2.getUrl());
 	}
 
 }

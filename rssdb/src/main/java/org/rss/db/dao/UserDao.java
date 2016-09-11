@@ -2,8 +2,10 @@ package org.rss.db.dao;
 
 import com.google.common.base.Preconditions;
 import org.rss.beans.OutilsGeneriques;
+import org.rss.db.dao.jpa.CategorieJpa;
 import org.rss.db.dao.jpa.RoleJpa;
 import org.rss.db.dao.jpa.UserJpa;
+import org.rss.db.dao.repository.CategorieRepository;
 import org.rss.db.dao.repository.RoleRepository;
 import org.rss.db.dao.repository.UserRepository;
 import org.slf4j.Logger;
@@ -32,6 +34,9 @@ public class UserDao implements IUserDao {
 	@Autowired
 	private RoleRepository roleRepository;
 
+	@Autowired
+	private CategorieRepository categorieRepository;
+
 	public UserJpa addUser(UserJpa userJpa) throws ErrorJpaException {
 		Preconditions.checkNotNull(userJpa);
 		Preconditions.checkArgument(userJpa.getId()==null);
@@ -44,8 +49,20 @@ public class UserDao implements IUserDao {
 			throw new ErrorJpaException("Un autre utilisateur a ce login");
 		}
 
+		UserJpa userJpa2=userRepository.save(userJpa);
 
-		return userRepository.save(userJpa);
+		Preconditions.checkNotNull(userJpa2);
+		Preconditions.checkNotNull(userJpa2.getId());
+
+		CategorieJpa categorieJpa;
+		categorieJpa=new CategorieJpa();
+		categorieJpa.setUserJpa(userJpa2);
+		categorieJpa.setName("TOUT");
+		categorieJpa.setDescription("TOUT");
+		categorieJpa.setTout(true);
+		categorieRepository.save(categorieJpa);
+
+		return userJpa2;
 	}
 
 	public UserJpa findUserByLogin(String login) throws ErrorJpaException {

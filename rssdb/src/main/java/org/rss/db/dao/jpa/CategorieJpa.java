@@ -26,6 +26,9 @@ public class CategorieJpa {
 	@ManyToOne
 	private UserJpa userJpa;
 
+	@Column(nullable = false)
+	private boolean tout;
+
 	public Integer getId() {
 		return id;
 	}
@@ -66,6 +69,14 @@ public class CategorieJpa {
 		this.userJpa = userJpa;
 	}
 
+	public boolean isTout() {
+		return tout;
+	}
+
+	public void setTout(boolean tout) {
+		this.tout = tout;
+	}
+
 	@Override
 	public String toString() {
 		return "CategorieJpa{" +
@@ -74,6 +85,7 @@ public class CategorieJpa {
 				", description='" + description + '\'' +
 				", feeds=" + feeds +
 				", userJpa=" + userJpa +
+				", tout=" + tout +
 				'}';
 	}
 }

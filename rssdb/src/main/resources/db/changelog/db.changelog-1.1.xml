@@ -94,6 +94,9 @@
             <column name="user_jpa_id" type="int" >
                 <constraints nullable="false" foreignKeyName="fk_user2" references="user(id)"/>
             </column>
+            <column name="tout" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <createTable tableName="CATEGORIE_FEEDS">
@@ -109,6 +112,19 @@
                        constraintName="pk_categorie_feeds"
                        tableName="CATEGORIE_FEEDS"/>
 
+        <insert tableName="CATEGORIE">
+            <column name="name" value="ALL"/>
+            <column name="description" value="ALL"/>
+            <column name="user_jpa_id" valueComputed="(SELECT id from USER where login='ADMIN')"/>
+            <column name="tout" value="true"/>
+        </insert>
+
+        <insert tableName="CATEGORIE">
+            <column name="name" value="ALL"/>
+            <column name="description" value="ALL"/>
+            <column name="user_jpa_id" valueComputed="(SELECT id from USER where login='ANONYMOUS')"/>
+            <column name="tout" value="true"/>
+        </insert>
 
         <createTable tableName="FEEDS_ATTRIBUTS">
             <column name="id" type="int" autoIncrement="true">
