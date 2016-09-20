@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * Created by Alain on 18/09/2016.
@@ -20,15 +21,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.csrf().disable()
 				.authorizeRequests()
 				//.antMatchers("/", "/home").permitAll()
+				.antMatchers("/index.html").permitAll()
 				.anyRequest().authenticated()
 				//.anyRequest().permitAll()
 				/*.and()
 				.formLogin()
 				.loginPage("/login")
-				//.permitAll()
+				//.permitAll()*/
 				.and()
 				.logout()
-				//.permitAll()*/
+					//.logoutUrl("/logout")
+					.deleteCookies("remove")
+					.invalidateHttpSession(true)
+					.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+					.logoutSuccessUrl("/index.html")
+					//.permitAll()
 				.and()
 				.httpBasic()
 				;
