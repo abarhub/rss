@@ -1,11 +1,13 @@
 package org.rss.ui.config;
 
+import org.rss.ui.security.ProperCookieClearingLogoutHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -14,6 +16,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+
+	//@Autowired
+	//private SessionRegistry sessionRegistry;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -29,15 +35,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginPage("/login")
 				//.permitAll()*/
 				.and()
+				.formLogin()
+					//.loginPage("/login")
+					.successForwardUrl("/index.html")
+				.and()
 				.logout()
 					//.logoutUrl("/logout")
-					.deleteCookies("remove")
+					//.deleteCookies("remove")
+					.deleteCookies("JSESSIONID")
 					.invalidateHttpSession(true)
+					.clearAuthentication(true)
+					.addLogoutHandler(new ProperCookieClearingLogoutHandler("JSESSIONID","USER"))
 					.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 					.logoutSuccessUrl("/index.html")
 					//.permitAll()
-				.and()
-				.httpBasic()
+				/*.and()
+				.sessionManagement()
+					.maximumSessions(1)
+					//.maxSessionsPreventsLogin(true)
+					//.expiredUrl("/accessDenied")
+					.sessionRegistry(sessionRegistry)*/
+				//.and()
+				//.httpBasic()
 				;
 	}
 
