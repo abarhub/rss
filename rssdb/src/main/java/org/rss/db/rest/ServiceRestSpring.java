@@ -41,6 +41,9 @@ public class ServiceRestSpring {
 	@Autowired
 	private Outils outils;
 
+	@Autowired
+	private IUserDao userDao;
+
 	@RequestMapping("/api3/test1")
 	public String test1(@RequestParam(value="name", defaultValue="World") String name)
 	{
@@ -221,10 +224,15 @@ public class ServiceRestSpring {
 	{
 		Boolean res;
 		LOGGER.info("tentative connexion login={} password={}",login,password);
-		if(StringUtils.isEmpty(login)||StringUtils.isEmpty(password)){
+		try {
+			if(!userDao.connectUser(login,password)){
+				res=false;
+			} else {
+				res=true;
+			}
+		} catch (ErrorJpaException e) {
+			LOGGER.info("tentative connexion error:"+e.getMessage(),e);
 			res=false;
-		} else {
-			res=true;
 		}
 		LOGGER.info("tentative connexion res={}",res);
 		return res;

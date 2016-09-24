@@ -153,4 +153,14 @@ public final class OutilsGeneriques {
 		Preconditions.checkNotNull(d2);
 		return d1.compareTo(d2)==0;
 	}
+
+	public static boolean equals(String s1,String s2){
+		if(vide(s1)&&vide(s2)){
+			return true;
+		} else if(vide(s1)||vide(s2)){
+			return false;
+		} else {
+			return s1.equals(s2);
+		}
+	}
 }

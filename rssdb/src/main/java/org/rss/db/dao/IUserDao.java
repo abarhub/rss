@@ -16,4 +16,5 @@ public interface IUserDao {
 
 	public RoleJpa findRoleByNom(String nom) throws ErrorJpaException;
 
+	public boolean connectUser(String login,String password) throws ErrorJpaException;
 }
