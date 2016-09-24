@@ -56,8 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				//.permitAll()*/
 				.and()
 				.formLogin()
-					.successHandler(loginLogoutLog)
-					.failureHandler(loginLogoutLog)
+					.successHandler(loginLogoutLog) // ne fonctionne pas
+					.failureHandler(loginLogoutLog) // ne fonctionne pas
 					.defaultSuccessUrl("/index.html")
 					//.loginPage("/login")
 					//.successForwardUrl("/index.html")
