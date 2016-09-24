@@ -1,5 +1,6 @@
 package org.rss.ui.config;
 
+import org.rss.ui.security.LoginLogoutLog;
 import org.rss.ui.security.ProperCookieClearingLogoutHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	//@Autowired
 	//private SessionRegistry sessionRegistry;
+	@Autowired
+	private LoginLogoutLog loginLogoutLog;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -37,6 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				//.permitAll()*/
 				.and()
 				.formLogin()
+					.successHandler(loginLogoutLog)
+					.failureHandler(loginLogoutLog)
 					.defaultSuccessUrl("/index.html")
 					//.loginPage("/login")
 					//.successForwardUrl("/index.html")
@@ -49,8 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.clearAuthentication(true)
 					.addLogoutHandler(new ProperCookieClearingLogoutHandler("JSESSIONID","USER"))
 					.addLogoutHandler(new SecurityContextLogoutHandler())
+					.addLogoutHandler(loginLogoutLog)
 					.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 					.logoutSuccessUrl("/index.html")
+
 					//.permitAll()
 				/*.and()
 				.sessionManagement()
