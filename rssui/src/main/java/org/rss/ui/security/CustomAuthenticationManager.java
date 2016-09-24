@@ -1,8 +1,11 @@
 package org.rss.ui.security;
 
 import com.google.common.collect.Lists;
+import org.rss.registry.IRestDb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,6 +26,9 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(CustomAuthenticationManager.class);
 
+	@Autowired
+	private IRestDb restDb;
+
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
@@ -39,7 +45,7 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 		LOGGER.info("Login authenticate : password="+password);
 		LOGGER.info("Login authenticate : isAuthenticated="+authentication.isAuthenticated());
 
-		if(StringUtils.isEmpty(login)||StringUtils.isEmpty(password)){
+		if(!loginUser(login, password)){
 			LOGGER.info("Login authenticate : KO");
 			throw new BadCredentialsException("Erreur d'authentification");
 		} else {
@@ -50,5 +56,30 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 		}
 
 		return usernamePasswordAuthenticationToken;
+	}
+
+	private boolean loginUser(String login, String password) {
+		try {
+			if (false) {
+				return StringUtils.isEmpty(login) || StringUtils.isEmpty(password);
+			} else {
+				ResponseEntity<Boolean> res = restDb.connecteUser(login, password);
+				if(res.getStatusCode().is2xxSuccessful()){
+					if(res.hasBody()){
+						Boolean b = res.getBody();
+						return b.booleanValue();
+					}else {
+						LOGGER.error("Erreur pour vérifier la connexion : la ressource n'a rien retournée");
+						return false;
+					}
+				}else {
+					LOGGER.error("Erreur pour vérifier la connexion : code retour = "+res.getStatusCode().value());
+					return false;
+				}
+			}
+		}catch(Exception e){
+			LOGGER.error("Erreur pour vérifier la connexion : "+e.getMessage(),e);
+			return false;
+		}
 	}
 }

@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -215,9 +216,17 @@ public class ServiceRestSpring {
 		return liste;
 	}
 
-	@RequestMapping("/api3/user_exists")
-	public boolean userExiste(@RequestParam(name="login") String login,@RequestParam(name="login")String password)
+	@RequestMapping(value = "/api3/user_exists",method = RequestMethod.POST)
+	public Boolean userExiste(@RequestParam(name="login") String login,@RequestParam(name="password")String password)
 	{
-		return true;
+		Boolean res;
+		LOGGER.info("tentative connexion login={} password={}",login,password);
+		if(StringUtils.isEmpty(login)||StringUtils.isEmpty(password)){
+			res=false;
+		} else {
+			res=true;
+		}
+		LOGGER.info("tentative connexion res={}",res);
+		return res;
 	}
 }

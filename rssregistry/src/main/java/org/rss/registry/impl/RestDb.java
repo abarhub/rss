@@ -103,4 +103,23 @@ public class RestDb implements IRestDb {
 		return res;
 	}
 
+	@Override
+	public ResponseEntity<Boolean> connecteUser(String login,String password){
+		String url;
+		RestTemplate restTemplate = getRestTemplate("connecteUser");
+
+		url=urlDbServeur+"api3/user_exists?login="+login+"&password="+password;
+
+		//LOGGER.info("url param:"+url);
+		/*Map<String,String> map=Maps.newHashMap();
+		map.put("login",login);
+		map.put("password",password);*/
+
+		//ResponseEntity<Boolean> res = restTemplate.postForEntity(url,null,Boolean.class,map);
+		ResponseEntity<Boolean> res = restTemplate.postForEntity(url,null,Boolean.class);
+
+		return res;
+	}
+
+
 }

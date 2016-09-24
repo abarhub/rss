@@ -50,6 +50,7 @@ public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
 			OutilsMDC.addMdc(MDCKey.SERVEUR, nomServeur);
 			OutilsMDC.addMdc(MDCKey.GET_URL, nomUrl);
 
+			LOGGER.info("appel rest : url = " + request.getURI());
 			String str = new String(body, StandardCharsets.UTF_8);
 			LOGGER.info("appel rest : body = " + str);
 			LOGGER.info("appel rest : response status = " + response.getRawStatusCode() + ":" + response.getStatusText());

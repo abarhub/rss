@@ -15,4 +15,6 @@ public interface IRestDb {
 	ResponseEntity<String> addRss(RssChannel rss);
 
 	ResponseEntity<RssListeUrl> lectureParametres();
+
+	ResponseEntity<Boolean> connecteUser(String login,String password);
 }
