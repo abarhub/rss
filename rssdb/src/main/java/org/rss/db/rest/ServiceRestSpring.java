@@ -214,4 +214,10 @@ public class ServiceRestSpring {
 
 		return liste;
 	}
+
+	@RequestMapping("/api3/user_exists")
+	public boolean userExiste(@RequestParam(name="login") String login,@RequestParam(name="login")String password)
+	{
+		return true;
+	}
 }
