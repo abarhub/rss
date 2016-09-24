@@ -1,23 +1,14 @@
 package org.rss.ui.config;
 
-import org.rss.ui.security.CustomAuthenticationManager;
-import org.rss.ui.security.LoginLogoutLog;
-import org.rss.ui.security.ProperCookieClearingLogoutHandler;
+import org.rss.ui.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import java.security.AuthProvider;
-import java.util.Arrays;
 
 /**
  * Created by Alain on 18/09/2016.
@@ -29,8 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	//@Autowired
 	//private SessionRegistry sessionRegistry;
-	@Autowired
-	private LoginLogoutLog loginLogoutLog;
+	//@Autowired
+	//private LoginSuccesLog loginLogoutLog;
 
 	@Autowired
 	private CustomAuthenticationManager customAuthenticationManager;
@@ -55,9 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				//.permitAll()*/
 				.and()
 				.formLogin()
-					.successHandler(loginLogoutLog) // ne fonctionne pas
-					.failureHandler(loginLogoutLog) // ne fonctionne pas
-					.defaultSuccessUrl("/index.html")
+					//.successHandler(loginLogoutLog) // ne fonctionne pas
+					//.failureHandler(loginLogoutLog) // ne fonctionne pas
+					.successHandler(new LoginSuccesLog("/liste7.html"))
+					//.successHandler(new LoginSuccesLog())
+					.failureHandler(new LoginFailureLog())
+					//.defaultSuccessUrl("/index.html")
 					//.loginPage("/login")
 					//.successForwardUrl("/index.html")
 				.and()
@@ -69,7 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.clearAuthentication(true)
 					.addLogoutHandler(new ProperCookieClearingLogoutHandler("JSESSIONID","USER"))
 					.addLogoutHandler(new SecurityContextLogoutHandler())
-					.addLogoutHandler(loginLogoutLog)
+					//.addLogoutHandler(loginLogoutLog)
+					.addLogoutHandler(new LogoutLog())
 					.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 					.logoutSuccessUrl("/index.html")
 

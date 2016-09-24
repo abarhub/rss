@@ -18,9 +18,9 @@ import java.io.IOException;
  * Created by Alain on 24/09/2016.
  */
 @Service
-public class LoginLogoutLog implements AuthenticationSuccessHandler, AuthenticationFailureHandler, LogoutHandler {
+public class LogoutLog implements AuthenticationSuccessHandler, AuthenticationFailureHandler, LogoutHandler {
 
-	public static final Logger LOGGER = LoggerFactory.getLogger(LoginLogoutLog.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(LogoutLog.class);
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
