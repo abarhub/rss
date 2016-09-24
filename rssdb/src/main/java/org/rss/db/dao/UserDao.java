@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -118,5 +119,22 @@ public class UserDao implements IUserDao {
 		} else {
 			throw new ErrorJpaException("Ce role est présent plusieurs fois dans la base");
 		}
+	}
+
+	public boolean connectUser(String login,String password) throws ErrorJpaException{
+		if(OutilsGeneriques.vide(login)){
+			return false;
+		} else {
+
+			List<UserJpa> list=userRepository.findByLoginAndPassword(login,password);
+			if(list==null||list.isEmpty()){
+				return false;
+			} else if(list.size()==1) {
+				return true;
+			} else {// plusieurs utilisateurs avec ce login
+				return false;
+			}
+		}
+
 	}
 }
