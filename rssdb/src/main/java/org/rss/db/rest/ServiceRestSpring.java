@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import org.rss.beans.flux.DateTimeZone;
 import org.rss.beans.flux.RssChannel;
 import org.rss.beans.flux.RssItem;
+import org.rss.beans.metier.LoginDTO;
 import org.rss.beans.param.RssListeUrl;
 import org.rss.beans.param.RssUrl;
 import org.rss.db.dao.*;
@@ -40,9 +41,6 @@ public class ServiceRestSpring {
 
 	@Autowired
 	private Outils outils;
-
-	@Autowired
-	private IUserDao userDao;
 
 	@RequestMapping("/api3/test1")
 	public String test1(@RequestParam(value="name", defaultValue="World") String name)
@@ -217,24 +215,5 @@ public class ServiceRestSpring {
 		}
 
 		return liste;
-	}
-
-	@RequestMapping(value = "/api3/user_exists",method = RequestMethod.POST)
-	public Boolean userExiste(@RequestParam(name="login") String login,@RequestParam(name="password")String password)
-	{
-		Boolean res;
-		LOGGER.info("tentative connexion login={} password={}",login,password);
-		try {
-			if(!userDao.connectUser(login,password)){
-				res=false;
-			} else {
-				res=true;
-			}
-		} catch (ErrorJpaException e) {
-			LOGGER.info("tentative connexion error:"+e.getMessage(),e);
-			res=false;
-		}
-		LOGGER.info("tentative connexion res={}",res);
-		return res;
 	}
 }
