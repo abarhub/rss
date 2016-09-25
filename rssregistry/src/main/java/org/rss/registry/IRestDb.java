@@ -1,6 +1,7 @@
 package org.rss.registry;
 
 import org.rss.beans.flux.RssChannel;
+import org.rss.beans.metier.LoginResponseDTO;
 import org.rss.beans.param.RssListeUrl;
 import org.springframework.http.ResponseEntity;
 
@@ -16,5 +17,5 @@ public interface IRestDb {
 
 	ResponseEntity<RssListeUrl> lectureParametres();
 
-	ResponseEntity<Boolean> connecteUser(String login,String password);
+	ResponseEntity<LoginResponseDTO> connecteUser(String login, String password);
 }

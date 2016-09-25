@@ -1,6 +1,7 @@
 package org.rss.ui.security;
 
 import com.google.common.collect.Lists;
+import org.rss.beans.metier.LoginResponseDTO;
 import org.rss.registry.IRestDb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,11 +64,11 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 			if (false) {
 				return StringUtils.isEmpty(login) || StringUtils.isEmpty(password);
 			} else {
-				ResponseEntity<Boolean> res = restDb.connecteUser(login, password);
+				ResponseEntity<LoginResponseDTO> res = restDb.connecteUser(login, password);
 				if(res.getStatusCode().is2xxSuccessful()){
 					if(res.hasBody()){
-						Boolean b = res.getBody();
-						return b.booleanValue();
+						LoginResponseDTO b = res.getBody();
+						return b.isLoginOk();
 					}else {
 						LOGGER.error("Erreur pour vérifier la connexion : la ressource n'a rien retournée");
 						return false;
