@@ -2,53 +2,6 @@
  * Created by Alain on 01/11/2015.
  */
 
-function stringStartWith(s1,s2) {
-    if (typeof s1 !== 'undefined') {
-        if (typeof s2 !== 'undefined') {
-            return s1.lastIndexOf(s2, 0) === 0;
-        }
-    }
-    return false;
-}
-
-function logMsg(s){
-    console.log(s);
-    alert(s);
-}
-
-function logMsgErr($http,s){
-    logMsg2($http,s,'Erreur');
-}
-
-function logMsgInfo($http,s){
-    logMsg2($http,s,'Info');
-}
-
-function logMsg2($http,s,niveau){
-    console.log(s);
-    //alert(s);
-    if($http !== 'undefined'){
-        var niveauErreur;
-        var composant;
-        var message;
-        niveauErreur='Info';
-        if(niveau == 'undefined'){
-            niveauErreur=niveau;
-        }
-        composant='UI';
-        message=s;
-        $http.post('/traces?'+
-                'niveauErreur='+encodeURIComponent(niveauErreur)+
-                '&composant=' + encodeURIComponent(composant)+
-                '&message=' + encodeURIComponent(message))
-                .then(function (value) {
-                    console.log("trace ok");
-                }, function (reason) {
-                    console.log("Error : " + reason);
-                });
-    }
-}
-
 angular.module('todoApp', ['ngSanitize'])
         .controller('TodoListController', ['$scope', '$http', '$interval',
                 function($scope, $http, $interval) {

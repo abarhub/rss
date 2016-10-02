@@ -3,8 +3,7 @@ package org.rss.registry.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import org.rss.beans.flux.RssChannel;
-import org.rss.beans.metier.LoginDTO;
-import org.rss.beans.metier.LoginResponseDTO;
+import org.rss.beans.metier.*;
 import org.rss.beans.param.RssListeUrl;
 import org.rss.registry.IRestDb;
 import org.slf4j.Logger;
@@ -121,6 +120,35 @@ public class RestDb implements IRestDb {
 
 		return res;
 	}
+
+	@Override
+	public ResponseEntity<SearchUsersResponseDTO> searchUser(String nom){
+		String url;
+		RestTemplate restTemplate = getRestTemplate("searchUser");
+
+		url=urlDbServeur+"api3/users_search";
+
+		SearchUsersDTO searchUsersDTO;
+		searchUsersDTO=new SearchUsersDTO();
+		searchUsersDTO.setNom(nom);
+
+		ResponseEntity<SearchUsersResponseDTO> res = restTemplate.postForEntity(url,searchUsersDTO,SearchUsersResponseDTO.class);
+
+		return res;
+	}
+
+	@Override
+	public ResponseEntity<Boolean> addUser(UserDTO userDTO){
+		String url;
+		RestTemplate restTemplate = getRestTemplate("addUser");
+
+		url=urlDbServeur+"api3/add_user";
+
+		ResponseEntity<Boolean> res = restTemplate.postForEntity(url,userDTO,Boolean.class);
+
+		return res;
+	}
+
 
 
 }

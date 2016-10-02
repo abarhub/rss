@@ -62,6 +62,13 @@
             <column name="anonymous" value="true"/>
         </insert>
 
+        <insert tableName="ROLE">
+            <column name="nom" value="SIMPLE_USER"/>
+            <column name="description" value="SIMPLE USER"/>
+            <column name="admin" value="false"/>
+            <column name="anonymous" value="false"/>
+        </insert>
+
         <insert tableName="USER">
             <column name="login" value="ADMIN"/>
             <column name="password" value="ADMIN"/>

@@ -14,10 +14,41 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.min.js"></script>
+    <script src="js/outils.js"></script>
     <script src="js/users.js"></script>
 </head>
 <body>
+
+
 <div ng-controller="UsersController as usersList" class="container">
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Ajoute utilisateur</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Ajout d'un utilisateur</p>
+                    <form ng-submit="usersList.addUser()">
+                        Nom : <input type="text" ng-model="usersList.addUserForm.nom"  size="30" placeholder="add new todo here"><br/>
+                        Prenom : <input type="text" ng-model="usersList.addUserForm.prenom"  size="30" placeholder="add new todo here"><br/>
+                        Login : <input type="text" ng-model="usersList.addUserForm.login"  size="30" placeholder="add new todo here"><br/>
+                        Password : <input type="text" ng-model="usersList.addUserForm.password"  size="30" placeholder="add new todo here"><br/>
+                        <input class="btn-primary" type="submit" value="Add">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <div class="row">
         <nav class="navbar navbar-inverse">
@@ -41,10 +72,26 @@
 
     <div class="row">
 
-        <table>
+        <form ng-submit="usersList.search()">
+            <input type="text" ng-model="usersList.searchUserText"  size="30"
+                   placeholder="add new todo here">
+            <input class="btn-primary" type="submit" value="Search">
+        </form>
+
+        <button ng-click="usersList.showAddUser()">Add User</button>
+
+        <table class="table" >
+            <tr >
+                <th>ID</th>
+                <th>LOGIN</th>
+                <th>NOM</th>
+                <th>PRENOM</th>
+            </tr>
             <tr ng-repeat="u in usersList.listeUsers">
-                <td>{{ x.nom }}</td>
-                <td>{{ x.prenom }}</td>
+                <td>{{ u.id }}</td>
+                <td>{{ u.login }}</td>
+                <td>{{ u.nom }}</td>
+                <td>{{ u.prenom }}</td>
             </tr>
         </table>
 
