@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface UserRepository extends CrudRepository<UserJpa,Integer>,JpaRepository<UserJpa,Integer> {
 
 	List<UserJpa> findByLoginAndPassword(String login, String password);
+
+	List<UserJpa> findByNomContainingIgnoreCase(String nom);
 }

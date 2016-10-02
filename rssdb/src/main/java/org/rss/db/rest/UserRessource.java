@@ -5,8 +5,7 @@ import com.google.common.collect.Lists;
 import org.rss.beans.flux.DateTimeZone;
 import org.rss.beans.flux.RssChannel;
 import org.rss.beans.flux.RssItem;
-import org.rss.beans.metier.LoginDTO;
-import org.rss.beans.metier.LoginResponseDTO;
+import org.rss.beans.metier.*;
 import org.rss.beans.param.RssListeUrl;
 import org.rss.beans.param.RssUrl;
 import org.rss.db.dao.ErrorJpaException;
@@ -15,14 +14,18 @@ import org.rss.db.dao.IUserDao;
 import org.rss.db.dao.jpa.FeedsRssJpa;
 import org.rss.db.dao.jpa.ItemRssJpa;
 import org.rss.db.dao.jpa.UrlJpa;
+import org.rss.db.dao.jpa.UserJpa;
 import org.rss.db.dao.repository.UrlRssRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,5 +66,32 @@ public class UserRessource {
 		}
 		LOGGER.info("tentative connexion res={}",res);
 		return res;
+	}
+
+
+	@RequestMapping(value = "/api3/users_search",method = RequestMethod.POST)
+	public SearchUsersResponseDTO searchUser(@RequestBody SearchUsersDTO searchUsersDTO)
+	{
+		Preconditions.checkNotNull(searchUsersDTO);
+		Preconditions.checkArgument(!StringUtils.isEmpty(searchUsersDTO.getNom()));
+
+		List<UserJpa> liste = userDao.searchUser(searchUsersDTO.getNom());
+		SearchUsersResponseDTO searchUsersResponseDTO=new SearchUsersResponseDTO();
+		UserDTO userDTO;
+
+		if(!CollectionUtils.isEmpty(liste)){
+			searchUsersResponseDTO.setListUserDTO(new ArrayList<>());
+			for(UserJpa userJpa:liste){
+				userDTO=new UserDTO();
+				userDTO.setNom(userJpa.getNom());
+				userDTO.setPrenom(userJpa.getPrenom());
+				userDTO.setLogin(userJpa.getLogin());
+				userDTO.setNonModifiable(false);
+				userDTO.setId(userJpa.getId());
+				searchUsersResponseDTO.getListUserDTO().add(userDTO);
+			}
+		}
+
+		return searchUsersResponseDTO;
 	}
 }

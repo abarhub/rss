@@ -14,6 +14,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.min.js"></script>
+    <script src="js/outils.js"></script>
     <script src="js/users.js"></script>
 </head>
 <body>
@@ -41,8 +42,22 @@
 
     <div class="row">
 
+        <form ng-submit="usersList.search()">
+            <input type="text" ng-model="usersList.searchUserText"  size="30"
+                   placeholder="add new todo here">
+            <input class="btn-primary" type="submit" value="Search">
+        </form>
+
         <table class="table" >
+            <tr >
+                <th>ID</th>
+                <th>LOGIN</th>
+                <th>NOM</th>
+                <th>PRENOM</th>
+            </tr>
             <tr ng-repeat="u in usersList.listeUsers">
+                <td>{{ u.id }}</td>
+                <td>{{ u.login }}</td>
                 <td>{{ u.nom }}</td>
                 <td>{{ u.prenom }}</td>
             </tr>

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -136,5 +137,15 @@ public class UserDao implements IUserDao {
 			}
 		}
 
+	}
+
+	public List<UserJpa> searchUser(String nom){
+		Preconditions.checkArgument(!OutilsGeneriques.vide(nom));
+		List<UserJpa> liste = userRepository.findByNomContainingIgnoreCase(nom);
+		if(CollectionUtils.isEmpty(liste)){
+			return null;
+		} else {
+			return liste;
+		}
 	}
 }
