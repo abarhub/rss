@@ -24,10 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.SimpleDateFormat;
@@ -192,6 +189,32 @@ public class ListeController {
 		}
 
 		return res;
+	}
+
+
+	@RequestMapping(value = "/addUser",method = RequestMethod.POST)
+	public ResponseUI addUser(@RequestBody AddUserUI addUserUI) {
+		Preconditions.checkNotNull(addUserUI);
+		String res;
+		UserDTO user;
+		ResponseUI responseUI;
+		user=new UserDTO();
+		user.setNom(addUserUI.getNom());
+		user.setPrenom(addUserUI.getPrenom());
+		user.setLogin(addUserUI.getLogin());
+		user.setPassword(addUserUI.getPassword());
+		ResponseEntity<Boolean> res2 = restDb.addUser(user);
+		if(res2.getStatusCode().is2xxSuccessful()){
+			if(res2.hasBody()&& res2.getBody()){
+				responseUI=new ResponseUI();
+			} else {
+				responseUI=new ResponseUI("Error");
+			}
+		} else {
+			responseUI=new ResponseUI("Error");
+		}
+
+		return responseUI;
 	}
 
 }

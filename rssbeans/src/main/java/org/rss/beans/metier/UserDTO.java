@@ -8,6 +8,7 @@ public class UserDTO {
 	private String login;
 	private String nom;
 	private String prenom;
+	private String password;
 	private boolean nonModifiable;
 	private int id;
 
@@ -51,12 +52,21 @@ public class UserDTO {
 		this.id = id;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	@Override
 	public String toString() {
 		return "UserDTO{" +
 				"login='" + login + '\'' +
 				", nom='" + nom + '\'' +
 				", prenom='" + prenom + '\'' +
+				", password='" + password + '\'' +
 				", nonModifiable=" + nonModifiable +
 				", id=" + id +
 				'}';

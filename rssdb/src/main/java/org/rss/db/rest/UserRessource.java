@@ -11,10 +11,7 @@ import org.rss.beans.param.RssUrl;
 import org.rss.db.dao.ErrorJpaException;
 import org.rss.db.dao.IUrlDao;
 import org.rss.db.dao.IUserDao;
-import org.rss.db.dao.jpa.FeedsRssJpa;
-import org.rss.db.dao.jpa.ItemRssJpa;
-import org.rss.db.dao.jpa.UrlJpa;
-import org.rss.db.dao.jpa.UserJpa;
+import org.rss.db.dao.jpa.*;
 import org.rss.db.dao.repository.UrlRssRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,5 +90,28 @@ public class UserRessource {
 		}
 
 		return searchUsersResponseDTO;
+	}
+
+
+	@RequestMapping(value = "/api3/add_user",method = RequestMethod.POST)
+	public Boolean addUser(@RequestBody UserDTO userDTO)
+	{
+		boolean res=false;
+		Preconditions.checkNotNull(userDTO);
+		UserJpa userJpa=new UserJpa();
+		userJpa.setLogin(userDTO.getLogin());
+		userJpa.setPassword(userDTO.getPassword());
+		userJpa.setNom(userDTO.getNom());
+		userJpa.setPrenom(userDTO.getPrenom());
+		try {
+			RoleJpa role = userDao.findRoleByNom("SIMPLE_USER");
+			Preconditions.checkNotNull(role);
+			userJpa.setRole(role);
+			userDao.addUser(userJpa);
+			res=true;
+		} catch (ErrorJpaException e) {
+			LOGGER.error("Erreur pour ajouter l'utilisateur :"+e.getMessage(),e);
+		}
+		return res;
 	}
 }

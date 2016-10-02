@@ -47,6 +47,18 @@ public class UserDao implements IUserDao {
 			throw new ErrorJpaException("Cet utilisateur n'a pas de role");
 		}
 
+		if(StringUtils.isEmpty(userJpa.getLogin())) {
+			throw new ErrorJpaException("Le login est vide");
+		}
+
+		if(StringUtils.isEmpty(userJpa.getPassword())) {
+			throw new ErrorJpaException("Le password est vide");
+		}
+
+		if(StringUtils.isEmpty(userJpa.getNom())) {
+			throw new ErrorJpaException("Le nom est vide");
+		}
+
 		if(findUserByLogin(userJpa.getLogin())!=null) {
 			throw new ErrorJpaException("Un autre utilisateur a ce login");
 		}
