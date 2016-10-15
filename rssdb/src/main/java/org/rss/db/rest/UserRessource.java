@@ -8,6 +8,7 @@ import org.rss.beans.flux.RssItem;
 import org.rss.beans.metier.*;
 import org.rss.beans.param.RssListeUrl;
 import org.rss.beans.param.RssUrl;
+import org.rss.beans.security.UserInfoDTO;
 import org.rss.db.dao.ErrorJpaException;
 import org.rss.db.dao.IUrlDao;
 import org.rss.db.dao.IUserDao;
@@ -111,6 +112,28 @@ public class UserRessource {
 			res=true;
 		} catch (ErrorJpaException e) {
 			LOGGER.error("Erreur pour ajouter l'utilisateur :"+e.getMessage(),e);
+		}
+		return res;
+	}
+
+	@RequestMapping(value = "/api3/get_user",method = RequestMethod.POST)
+	public UserInfoDTO getUser(@RequestBody UserDTO userDTO)
+	{
+		UserInfoDTO res=null;
+		Preconditions.checkNotNull(userDTO);
+		Preconditions.checkArgument(!StringUtils.isEmpty(userDTO.getLogin()));
+
+		try {
+
+			UserJpa u = userDao.findUserByLogin(userDTO.getLogin());
+
+			res=new UserInfoDTO();
+			res.setLogin(u.getLogin());
+			res.setNom(u.getNom());
+			res.setPrenom(u.getPrenom());
+
+		} catch (ErrorJpaException e) {
+			LOGGER.error("Erreur pour rechercher l'utilisateur :"+e.getMessage(),e);
 		}
 		return res;
 	}

@@ -133,12 +133,30 @@
             <column name="tout" value="true"/>
         </insert>
 
+        <createTable tableName="FEEDS_NAME">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="categorie_jpa_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_categorie3" references="CATEGORIE(id)"/>
+            </column>
+            <column name="url_jpa_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_param" references="PARAM_URL(id)"/>
+            </column>
+            <column name="feeds_id" type="int" >
+                <constraints nullable="true" foreignKeyName="fk_feeds5" references="feeds(id)"/>
+            </column>
+        </createTable>
+
         <createTable tableName="FEEDS_ATTRIBUTS">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="user_jpa_id" type="int" >
-                <constraints nullable="false" foreignKeyName="fk_user3" references="user(id)"/>
+            <column name="feeds_name_jpa_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_feeds_name" references="feeds_name(id)"/>
             </column>
             <column name="feeds_jpa_id" type="int" >
                 <constraints nullable="false" foreignKeyName="fk_feeds4" references="feeds(id)"/>

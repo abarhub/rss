@@ -10,5 +10,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface RoleRepository extends CrudRepository<RoleJpa,Integer>,JpaRepository<RoleJpa,Integer> {
 
-
+	RoleJpa findByNom(String nom);
 }

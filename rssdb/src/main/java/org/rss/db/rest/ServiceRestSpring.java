@@ -13,6 +13,7 @@ import org.rss.db.dao.jpa.FeedsRssJpa;
 import org.rss.db.dao.jpa.ItemRssJpa;
 import org.rss.db.dao.jpa.UrlJpa;
 import org.rss.db.dao.repository.UrlRssRepository;
+import org.rss.db.service.UrlService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,9 @@ public class ServiceRestSpring {
 
 	@Autowired
 	private Outils outils;
+
+	@Autowired
+	private UrlService urlService;
 
 	@RequestMapping("/api3/test1")
 	public String test1(@RequestParam(value="name", defaultValue="World") String name)
@@ -101,13 +105,15 @@ public class ServiceRestSpring {
 
 	@RequestMapping("/api3/add_url")
 	public ResponseEntity<String> addUrl(@RequestParam(value="name") String nom,
-	                                     @RequestParam(value="url") String url)
-	{
+	                                     @RequestParam(value="url") String url,
+	                                     @RequestParam(value="userId") String userId) throws ErrorJpaException {
 		UrlJpa rss;
 		String res;
 		HttpStatus statusCode;
 
 		LOGGER.info("add_url debut");
+
+		LOGGER.info("userId="+userId);
 
 		res="";
 		if(isEmpty(nom))
@@ -139,7 +145,8 @@ public class ServiceRestSpring {
 			}
 			else
 			{
-				dao_url.save(rss);
+				//dao_url.save(rss);
+				urlService.save(userId,rss);
 			}
 			res="OK";
 			statusCode= HttpStatus.OK;
@@ -164,10 +171,12 @@ public class ServiceRestSpring {
 	}
 
 	@RequestMapping("/api3/liste_rss")
-	public List<RssChannel> liste_rss()
+	public List<RssChannel> liste_rss(@RequestParam(value="userId") String userId)
 	{
 		List<RssChannel> liste;
 		List<FeedsRssJpa> liste_jpa;
+
+		LOGGER.info("userId="+userId);
 
 		liste=Lists.newArrayList();
 
