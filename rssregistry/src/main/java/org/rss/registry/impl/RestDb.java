@@ -54,7 +54,7 @@ public class RestDb implements IRestDb {
 	private URI getUri(String url, String... param){
 		UriComponents uriComponents =
 				UriComponentsBuilder.fromUriString(url).build()
-						.expand((Object)param)
+						.expand((Object[])param)
 						.encode();
 		return uriComponents.toUri();
 	}

@@ -22,9 +22,6 @@ public class UrlJpa {
 	@ManyToOne(fetch = FetchType.LAZY,optional = true,targetEntity = FeedsGenericJpa.class)
 	private FeedsJpa liste_feeds;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	private UserJpa user;
-
 	public UrlJpa() {
 	}
 
@@ -60,14 +57,6 @@ public class UrlJpa {
 		this.liste_feeds = liste_feeds;
 	}
 
-	public UserJpa getUser() {
-		return user;
-	}
-
-	public void setUser(UserJpa user) {
-		this.user = user;
-	}
-
 	@Override
 	public String toString() {
 		return "UrlJpa{" +
@@ -75,7 +64,6 @@ public class UrlJpa {
 				", nom='" + nom + '\'' +
 				", url='" + url + '\'' +
 				", liste_feeds=" + liste_feeds +
-				", user=" + user +
 				'}';
 	}
 }

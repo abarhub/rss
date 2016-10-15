@@ -35,11 +35,8 @@ public class UserJpa {
 	@OneToMany(fetch = FetchType.LAZY,mappedBy="userJpa")
 	private List<CategorieJpa> listeCategorie;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="userJpa")
-	private List<FeedsAttributJpa> feeds;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="user")
-	private List<UrlJpa> urlList;
+	//@OneToMany(fetch = FetchType.LAZY, mappedBy="userJpa")
+	//private List<FeedsAttributJpa> feeds;
 
 	public Integer getId() {
 		return id;
@@ -105,22 +102,6 @@ public class UserJpa {
 		this.listeCategorie = listeCategorie;
 	}
 
-	public List<FeedsAttributJpa> getFeeds() {
-		return feeds;
-	}
-
-	public void setFeeds(List<FeedsAttributJpa> feeds) {
-		this.feeds = feeds;
-	}
-
-	public List<UrlJpa> getUrlList() {
-		return urlList;
-	}
-
-	public void setUrlList(List<UrlJpa> urlList) {
-		this.urlList = urlList;
-	}
-
 	@Override
 	public String toString() {
 		return "UserJpa{" +
@@ -132,8 +113,6 @@ public class UserJpa {
 				", role=" + role +
 				", desactive=" + desactive +
 				", listeCategorie=" + listeCategorie +
-				", feeds=" + feeds +
-				", urlList=" + urlList +
 				'}';
 	}
 
