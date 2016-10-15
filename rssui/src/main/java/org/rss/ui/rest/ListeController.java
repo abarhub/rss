@@ -15,6 +15,8 @@ import org.rss.beans.param.RssUrl;
 import org.rss.registry.IRestDb;
 import org.rss.registry.impl.RestDb;
 import org.rss.ui.bean.*;
+import org.rss.ui.service.IRestDbUser;
+import org.rss.ui.service.RestDbUser;
 import org.rss.ui.service.UIService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -52,14 +55,17 @@ public class ListeController {
 	@Autowired
 	private UIService uiService;
 
+	@Autowired
+	private IRestDbUser restDbUser;
+
 	@RequestMapping("/add_url")
 	public String addUrl(@RequestParam(value = "name") String nom,
-	                     @RequestParam(value = "url") String url) {
+	                     @RequestParam(value = "url") String url) throws UnsupportedEncodingException {
 		String res = "";
 
 		LOGGER.info("ajout url ...");
 
-		ResponseEntity<String> tmp = restDb.add_url(nom, url);
+		ResponseEntity<String> tmp = restDbUser.add_url(nom, url);
 
 		LOGGER.info("fin url : " + tmp.getBody());
 
@@ -68,7 +74,7 @@ public class ListeController {
 
 
 	@RequestMapping("/listeUrl")
-	public ListChannelUi listeUrl() {
+	public ListChannelUi listeUrl() throws UnsupportedEncodingException {
 
 		ListChannelUi res;
 		ChannelUi c;
@@ -83,7 +89,7 @@ public class ListeController {
 		liste_channel = Lists.newArrayList();
 		res.setListe_channel(liste_channel);
 
-		ResponseEntity<RssChannel[]> tmp = restDb.listeRssDetaille();
+		ResponseEntity<RssChannel[]> tmp = restDbUser.listeRssDetaille();
 
 		liste_url = tmp.getBody();
 
@@ -122,7 +128,7 @@ public class ListeController {
 	}
 
 	@RequestMapping("/listeMessages")
-	public ChannelUi listeRss(@RequestParam(value = "id", defaultValue = "", required = false) String id) {
+	public ChannelUi listeRss(@RequestParam(value = "id", defaultValue = "", required = false) String id) throws UnsupportedEncodingException {
 
 		ListChannelUi res;
 		ChannelUi c = null;
@@ -135,7 +141,7 @@ public class ListeController {
 		liste_channel = Lists.newArrayList();
 		res.setListe_channel(liste_channel);
 
-		ResponseEntity<RssChannel[]> tmp = restDb.listeRssDetaille();
+		ResponseEntity<RssChannel[]> tmp = restDbUser.listeRssDetaille();
 
 		liste_url = tmp.getBody();
 

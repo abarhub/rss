@@ -148,6 +148,15 @@
             </column>
         </createTable>
 
+        <addColumn tableName="PARAM_URL">
+            <column name="user_id" type="int"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="PARAM_URL"
+                                 constraintName="fk_param_url_user"
+                                 referencedColumnNames="id"
+                                 referencedTableName="USER"/>
 
     </changeSet>
 </databaseChangeLog>

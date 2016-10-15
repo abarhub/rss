@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import org.rss.beans.flux.RssChannel;
 import org.rss.beans.metier.*;
 import org.rss.beans.param.RssListeUrl;
+import org.rss.beans.security.UserInfoDTO;
 import org.rss.registry.IRestDb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,9 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,13 +36,16 @@ public class RestDb implements IRestDb {
 	private final String urlDbServeur="http://localhost:8083/";
 
 	@Override
-	public ResponseEntity<RssChannel[]> listeRssDetaille(){
+	public ResponseEntity<RssChannel[]> listeRssDetaille(String idUser) throws UnsupportedEncodingException {
 		String url;
-		url=urlDbServeur+"api3/liste_rss";
+		url=urlDbServeur+"api3/liste_rss?userId="+encodeParam(idUser);
 
 		RestTemplate restTemplate = getRestTemplate("listeRssDetaille");
 
-		ResponseEntity<RssChannel[]> tmp = restTemplate.getForEntity(url, RssChannel[].class, Maps.newHashMap());
+		Map<String, Object> param = Maps.newHashMap();
+		//param.put("userId",idUser);
+
+		ResponseEntity<RssChannel[]> tmp = restTemplate.getForEntity(url, RssChannel[].class, param);
 
 		return tmp;
 	}
@@ -61,15 +67,24 @@ public class RestDb implements IRestDb {
 	}
 
 	@Override
-	public ResponseEntity<String> add_url(String nom, String url){
+	public ResponseEntity<String> add_url(String idUser,String nom, String url) throws UnsupportedEncodingException {
 		String url2;
 		RestTemplate restTemplate = getRestTemplate("add_url");
-		url2=urlDbServeur+"api3/add_url?name="+nom+"&url="+url;
+		//url2=urlDbServeur+"api3/add_url?name="+nom+"&url="+url;
+		//url2=urlDbServeur+"api3/add_url";
+		url2=urlDbServeur+"api3/add_url?name="+encodeParam(nom)+"&url="+encodeParam(url)+"&userId="+encodeParam(idUser);
 
 		Map<String, Object> param = Maps.newHashMap();
+		/*param.put("userId",idUser);
+		param.put("name",nom);
+		param.put("url",url);*/
 		ResponseEntity<String> tmp = restTemplate.postForEntity(url2, null,String.class, param);
 
 		return tmp;
+	}
+
+	private String encodeParam(String nom) throws UnsupportedEncodingException {
+		return UriUtils.encodeQueryParam(nom,"UTF-8");
 	}
 
 
@@ -149,6 +164,20 @@ public class RestDb implements IRestDb {
 		return res;
 	}
 
+	@Override
+	public ResponseEntity<UserInfoDTO> getUser(String userId){
+		String url;
+		RestTemplate restTemplate = getRestTemplate("getUser");
+
+		url=urlDbServeur+"api3/get_user";
+
+		UserDTO userDTO=new UserDTO();
+		userDTO.setLogin(userId);
+
+		ResponseEntity<UserInfoDTO> res = restTemplate.postForEntity(url,userDTO,UserInfoDTO.class);
+
+		return res;
+	}
 
 
 }
