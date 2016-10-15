@@ -18,9 +18,12 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.UriUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -37,17 +40,23 @@ public class RestDb implements IRestDb {
 
 	@Override
 	public ResponseEntity<RssChannel[]> listeRssDetaille(String idUser) throws UnsupportedEncodingException {
-		String url;
-		url=urlDbServeur+"api3/liste_rss?userId="+encodeParam(idUser);
+		//String url;
+		//url=urlDbServeur+"api3/liste_rss?userId="+encodeParam(idUser);
+		URI url=getUri(urlDbServeur+"api3/liste_rss?userId={userId}",idUser);
 
 		RestTemplate restTemplate = getRestTemplate("listeRssDetaille");
 
-		Map<String, Object> param = Maps.newHashMap();
-		//param.put("userId",idUser);
-
-		ResponseEntity<RssChannel[]> tmp = restTemplate.getForEntity(url, RssChannel[].class, param);
+		ResponseEntity<RssChannel[]> tmp = restTemplate.getForEntity(url, RssChannel[].class);
 
 		return tmp;
+	}
+
+	private URI getUri(String url, String... param){
+		UriComponents uriComponents =
+				UriComponentsBuilder.fromUriString(url).build()
+						.expand((Object)param)
+						.encode();
+		return uriComponents.toUri();
 	}
 
 	private RestTemplate getRestTemplate(String url) {
@@ -68,17 +77,19 @@ public class RestDb implements IRestDb {
 
 	@Override
 	public ResponseEntity<String> add_url(String idUser,String nom, String url) throws UnsupportedEncodingException {
-		String url2;
+		//String url2;
 		RestTemplate restTemplate = getRestTemplate("add_url");
 		//url2=urlDbServeur+"api3/add_url?name="+nom+"&url="+url;
 		//url2=urlDbServeur+"api3/add_url";
-		url2=urlDbServeur+"api3/add_url?name="+encodeParam(nom)+"&url="+encodeParam(url)+"&userId="+encodeParam(idUser);
+		//url2=urlDbServeur+"api3/add_url?name="+encodeParam(nom)+"&url="+encodeParam(url)+"&userId="+encodeParam(idUser);
+		URI url2;
+		url2=getUri(urlDbServeur+"api3/add_url?name={nom}&url={url}&userId={userId}",nom,url,idUser);
 
 		Map<String, Object> param = Maps.newHashMap();
 		/*param.put("userId",idUser);
 		param.put("name",nom);
 		param.put("url",url);*/
-		ResponseEntity<String> tmp = restTemplate.postForEntity(url2, null,String.class, param);
+		ResponseEntity<String> tmp = restTemplate.postForEntity(url2, null,String.class);
 
 		return tmp;
 	}
