@@ -73,14 +73,14 @@ public class RssDao implements IRssDao {
 		Preconditions.checkNotNull(categorieJpa.getUserJpa().getId());
 		Preconditions.checkArgument(!OutilsGeneriques.vide(feedsGenericJpa.getUrl()));
 
-		if(categorieJpa.getFeeds()!=null){
-			Optional<FeedsJpa> elt=categorieJpa.getFeeds().stream()
-					.filter(x -> x.getUrl().equals(feedsGenericJpa.getUrl()))
-					.findFirst();
-			if(elt.isPresent()){
-				return elt.get();
-			}
-		}
+//		if(categorieJpa.getFeeds()!=null){
+//			Optional<FeedsJpa> elt=categorieJpa.getFeeds().stream()
+//					.filter(x -> x.getUrl().equals(feedsGenericJpa.getUrl()))
+//					.findFirst();
+//			if(elt.isPresent()){
+//				return elt.get();
+//			}
+//		}
 
 		if(categorieJpa.getFeeds()==null){
 			categorieJpa.setFeeds(Lists.newArrayList());
@@ -92,7 +92,7 @@ public class RssDao implements IRssDao {
 			throw new ErrorJpaException("Impossible d'ajouter de Rss");
 		}
 
-		categorieJpa.getFeeds().add(feedsGenericJpa2);
+//		categorieJpa.getFeeds().add(feedsGenericJpa2);
 		categorieRepository.save(categorieJpa);
 
 		return feedsGenericJpa2;

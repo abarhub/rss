@@ -55,6 +55,7 @@ public class UrlService {
 			c=new CategorieJpa();
 			c.setTout(true);
 			c.setName("ALL");
+			c.setDescription("ALL");
 			c.setUserJpa(u);
 			c=categorieRepository.save(c);
 		}
