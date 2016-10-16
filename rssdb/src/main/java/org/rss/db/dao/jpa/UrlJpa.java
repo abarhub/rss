@@ -13,7 +13,7 @@ public class UrlJpa {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(nullable = false,length = 1000)
+	@Column(nullable = true,length = 1000)
 	private String nom;
 
 	@Column(nullable = false,length = 1000)

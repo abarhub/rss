@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * Created by Alain on 30/01/2016.
  */
 @Repository
+@Transactional
 public class UrlDao implements IUrlDao {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(UrlDao.class);
@@ -53,6 +55,13 @@ public class UrlDao implements IUrlDao {
 		} else {
 			LOGGER.info("Enregistrement rss '" + rss.getUrl() + "' ...");
 			repo_rss.addChannel(rss);
+			Preconditions.checkNotNull(rss.getId());
+			UrlJpa u = repository.findByUrl(rss.getUrl());
+			if(u!=null) {
+				Preconditions.checkNotNull(u);
+				u.setListe_feeds(rss);
+				repository.save(u);
+			}
 			LOGGER.info("Enregistrement rss Ok");
 		}
 	}

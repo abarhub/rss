@@ -126,6 +126,11 @@ public class ServiceRestSpring {
 			res="Erreur:parametre url invalide !";
 			statusCode= HttpStatus.BAD_REQUEST;
 		}
+		else if(isEmpty(userId))
+		{
+			res="Erreur:parametre userId invalide !";
+			statusCode= HttpStatus.BAD_REQUEST;
+		}
 		else if(nomExiste(nom)){
 			res="Erreur: Le nom '"+nom+"' existe déjà !";
 			statusCode= HttpStatus.BAD_REQUEST;
@@ -140,14 +145,8 @@ public class ServiceRestSpring {
 			rss.setUrl(url);
 
 			LOGGER.info("add:"+rss);
-			if(false) {
-				repo.addUrl(rss);
-			}
-			else
-			{
-				//dao_url.save(rss);
-				urlService.save(userId,rss);
-			}
+			urlService.save(userId,rss);
+
 			res="OK";
 			statusCode= HttpStatus.OK;
 		}

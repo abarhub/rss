@@ -8,6 +8,7 @@ app:
 server:
   port: ${port:8083}
   address: localhost
+  context-path: /db
 
   tomcat:
     accesslog:
@@ -19,6 +20,7 @@ server:
       pattern: common
 
     basedir: ${app.repertoire}\\tomcat\\tomcat
+
 
 #logging.level.org.hibernate.SQL=debug
 #spring.jpa.hibernate.

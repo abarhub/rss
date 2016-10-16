@@ -36,7 +36,7 @@ public class RestDb implements IRestDb {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RestDb.class);
 
-	private final String urlDbServeur="http://localhost:8083/";
+	private final String urlDbServeur="http://localhost:8083/db/";
 
 	@Override
 	public ResponseEntity<RssChannel[]> listeRssDetaille(String idUser) throws UnsupportedEncodingException {

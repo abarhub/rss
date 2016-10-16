@@ -1,5 +1,6 @@
 package org.rss.db.service;
 
+import com.google.common.base.Preconditions;
 import org.rss.db.dao.ErrorJpaException;
 import org.rss.db.dao.IUrlDao;
 import org.rss.db.dao.UserDao;
@@ -14,6 +15,10 @@ import org.rss.db.dao.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+
+import static org.rss.db.dao.Constantes.CATEGORIE_TOUT_DESCRIPTION;
+import static org.rss.db.dao.Constantes.CATEGORIE_TOUT_NOM;
 
 /**
  * Created by Alain on 15/10/2016.
@@ -44,35 +49,43 @@ public class UrlService {
 	}
 
 	public void save(String userId, UrlJpa rss) throws ErrorJpaException {
+		Preconditions.checkNotNull(userId);
+		Preconditions.checkArgument(!StringUtils.isEmpty(userId));
+		Preconditions.checkNotNull(rss);
+		Preconditions.checkArgument(!StringUtils.isEmpty(rss.getUrl()));
+		Preconditions.checkArgument(!StringUtils.isEmpty(rss.getNom()));
+
 		UserJpa u = userDao.findUserByLogin(userId);
 		if(u==null){
 			throw new SecurityException("Utilisateur non trouvé");
 		}
 
-		CategorieJpa c = categorieRepository.findByNameAndUserJpa("ALL",u);
+		CategorieJpa c = categorieRepository.findByNameAndUserJpa(CATEGORIE_TOUT_NOM,u);
 
 		if(c==null){
 			c=new CategorieJpa();
 			c.setTout(true);
-			c.setName("ALL");
-			c.setDescription("ALL");
+			c.setName(CATEGORIE_TOUT_NOM);
+			c.setDescription(CATEGORIE_TOUT_DESCRIPTION);
 			c.setUserJpa(u);
 			c=categorieRepository.save(c);
 		}
 
-		/*if(u.getUrlList()==null){
-			u.setUrlList(new ArrayList<>());
+		UrlJpa rss2;
+		rss2=urlRepository.findByUrl(rss.getUrl());
+		if(rss2==null){
+			rss2=new UrlJpa();
+			rss2.setUrl(rss.getUrl());
+
+			rss2=urlRepository.save(rss2);
 		}
-		u.getUrlList().add(rss);
-		rss.setUser(u);*/
-		rss=urlRepository.save(rss);
-		//userRepository.save(u);
 
 		FeedsNameJpa feedsNameJpa;
 		feedsNameJpa=new FeedsNameJpa();
 		feedsNameJpa.setName(rss.getNom());
-		feedsNameJpa.setUrlJpa(rss);
+		feedsNameJpa.setUrlJpa(rss2);
 		feedsNameJpa.setCategorieJpa(c);
+		feedsNameJpa.setFeeds(rss2.getListe_feeds());
 		feedsNameRepository.save(feedsNameJpa);
 
 	}

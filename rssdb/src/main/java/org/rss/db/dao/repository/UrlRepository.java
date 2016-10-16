@@ -14,6 +14,8 @@ import java.util.List;
 public interface UrlRepository extends CrudRepository<UrlJpa, Integer> {
 
 	@Query("SELECT e FROM UrlJpa e")
-	public List<UrlJpa> findAllUrl();
+	List<UrlJpa> findAllUrl();
+
+	UrlJpa findByUrl(String url);
 
 }
