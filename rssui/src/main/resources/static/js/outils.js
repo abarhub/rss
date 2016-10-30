@@ -31,13 +31,14 @@ function logMsg2($http,s,niveau){
         var niveauErreur;
         var composant;
         var message;
+        var racineUrl='/web';
         niveauErreur='Info';
         if(niveau == 'undefined'){
             niveauErreur=niveau;
         }
         composant='UI';
         message=s;
-        $http.post('/traces?'+
+        $http.post(racineUrl+'/traces?'+
                 'niveauErreur='+encodeURIComponent(niveauErreur)+
                 '&composant=' + encodeURIComponent(composant)+
                 '&message=' + encodeURIComponent(message))

@@ -9,6 +9,8 @@ angular.module('usersApp', ['ngSanitize'])
             function($scope, $http, $interval) {
                 var usersThis = this;
 
+                usersThis.racineUrl="/web";
+
                 usersThis.listeUsers=[
                     {"nom":"Dupuis","prenom":"pierre","id":"1"},
                     {"nom":"Dupond","prenom":"jacques","id":"2"}
@@ -25,7 +27,7 @@ angular.module('usersApp', ['ngSanitize'])
 
                     usersThis.searchUserText="";
 
-                    $http.get('/searchUsers?nom='+nom).then(function(value) {
+                    $http.get(usersThis.racineUrl+'/searchUsers?nom='+nom).then(function(value) {
                         logMsgInfo($http,"Ok");
                         //alert("Debut");
                         var tmp=value.data;
@@ -83,7 +85,7 @@ angular.module('usersApp', ['ngSanitize'])
                     //usersThis.searchUserText="";
                     var req = {
                         method: 'POST',
-                        url: '/addUser',
+                        url: usersThis.racineUrl+'/addUser',
                         headers: {
                             'Content-Type': 'application/json '//undefined
                         },

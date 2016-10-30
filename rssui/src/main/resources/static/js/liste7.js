@@ -9,6 +9,8 @@ angular.module('todoApp', ['ngSanitize'])
 
             var stopUpdateDisplay;
 
+            todoList.racineUrl="/web";
+
             todoList.liste1 = [
                 {"url":"http://www.google.fr/0","listeItem":[{"title":"KKKKKK0-0","description":"GGGG0-0","link":"http://www.yahoo.fr/0","pubDate":"2001-01-03","guid":"HHHH0-0"},{"title":"KKKKKK0-1","description":"GGGG0-1","link":"http://www.yahoo.fr/1","pubDate":"2001-01-03","guid":"HHHH0-1"},{"title":"KKKKKK0-2","description":"GGGG0-2","link":"http://www.yahoo.fr/2","pubDate":"2001-01-03","guid":"HHHH0-2"}],"title":"BBBBBB0","description":"AAAA0","language":"en","lastBuildDate":"2001-01-01","pubDate":"2001-01-02"},
                 {"url":"http://www.google.fr/1","listeItem":[{"title":"KKKKKK1-0","description":"GGGG1-0","link":"http://www.yahoo.fr/0","pubDate":"2001-01-03","guid":"HHHH1-0"},{"title":"KKKKKK1-1","description":"GGGG1-1","link":"http://www.yahoo.fr/1","pubDate":"2001-01-03","guid":"HHHH1-1"},{"title":"KKKKKK1-2","description":"GGGG1-2","link":"http://www.yahoo.fr/2","pubDate":"2001-01-03","guid":"HHHH1-2"}],"title":"BBBBBB1","description":"AAAA1","language":"en","lastBuildDate":"2001-01-01","pubDate":"2001-01-02"},
@@ -60,7 +62,7 @@ angular.module('todoApp', ['ngSanitize'])
                                 logMsgInfo($http,"URL a ajouter : " + urlAAjouter);
                                 todoList.urlAAjouter = "";
                                 todoList.nomAAjouter = "";
-                                $http.post('/add_url?name='+encodeURIComponent(nomAAjouter)+
+                                $http.post(todoList.racineUrl+'/add_url?name='+encodeURIComponent(nomAAjouter)+
                                         '&url=' + encodeURIComponent(urlAAjouter))
                                         .then(function (value) {
                                             logMsgInfo($http,"ok : " + value);
@@ -88,7 +90,7 @@ angular.module('todoApp', ['ngSanitize'])
 
             todoList.updateListFlux=function() {
                 logMsgInfo($http,"Test1 updateListFlux");
-                $http.get('/listeUrl').then(function(value) {
+                $http.get(todoList.racineUrl+'/listeUrl').then(function(value) {
                     logMsgInfo($http,"Ok");
                     var tmp=value.data;
                     logMsgInfo($http,"res="+tmp);
@@ -107,7 +109,7 @@ angular.module('todoApp', ['ngSanitize'])
 
             todoList.updateMsg=function(id) {
                 logMsgInfo($http,"Test2 updateMsg:"+id);
-                $http.get('/listeMessages?id='+id).then(function(value) {
+                $http.get(todoList.racineUrl+'/listeMessages?id='+id).then(function(value) {
                     logMsgInfo($http,"Ok");
                     var tmp=value.data;
                     logMsgInfo($http,"res="+tmp);
