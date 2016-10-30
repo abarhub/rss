@@ -3,13 +3,11 @@ package org.rss.db.dao;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.rss.db.dao.jpa.CategorieJpa;
 import org.rss.db.dao.jpa.FeedsNameJpa;
 import org.rss.db.dao.jpa.FeedsRssJpa;
 import org.rss.db.dao.jpa.UrlJpa;
-import org.rss.db.dao.repository.FeedsNameRepository;
-import org.rss.db.dao.repository.Rss2Repository;
-import org.rss.db.dao.repository.RssRepository;
-import org.rss.db.dao.repository.UrlRepository;
+import org.rss.db.dao.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -41,6 +39,9 @@ public class UrlDaoIntegrationTest {
 	@Autowired
 	private FeedsNameRepository feedsNameRepository;
 
+	@Autowired
+	private TestFixtureDao testFixtureDao;
+
 	@Before
 	public void setUp() throws Exception {
 		saveUrl(URL1,"BBB");
@@ -54,7 +55,7 @@ public class UrlDaoIntegrationTest {
 		String url,description;
 		url="http://aaabb;ùdsfsqfdsf";
 		description="GGG";
-		rss = getFeedsRssJpa(url,description);
+		rss = testFixtureDao.getFeedsRssJpa(url,description);
 		urlDao.enregistre_rss(rss);
 		assertTrue(repo_rss.urlExiste(url));
 		//FeedsRssJpa rss2;
@@ -75,7 +76,7 @@ public class UrlDaoIntegrationTest {
 		FeedsRssJpa rss;
 		String url;
 		url="http://tttbb;ùdsfsqfdsf";
-		rss = getFeedsRssJpa(url,"GGG");
+		rss = testFixtureDao.getFeedsRssJpa(url,"GGG");
 		urlDao.enregistre_rss(rss);
 		assertTrue(repo_rss.urlExiste(url));
 		FeedsRssJpa rss2=findRssJpa(url);
@@ -97,8 +98,14 @@ public class UrlDaoIntegrationTest {
 		FeedsNameJpa feedsNameJpa=feedsNameRepository.findByUrlJpa(urlJpa);
 		assertNull(feedsNameJpa);
 
+		feedsNameJpa = testFixtureDao.getFeedsNameJpa(urlJpa);
+		feedsNameRepository.save(feedsNameJpa);
+		feedsNameJpa=feedsNameRepository.findByUrlJpa(urlJpa);
+		assertNotNull(feedsNameJpa);
+		assertNull(feedsNameJpa.getFeeds());
+
 		// methode à tester
-		rss = getFeedsRssJpa(url,"GGG");
+		rss = testFixtureDao.getFeedsRssJpa(url,"GGG");
 		urlDao.enregistre_rss(rss);
 
 		assertTrue(repo_rss.urlExiste(url));
@@ -110,15 +117,7 @@ public class UrlDaoIntegrationTest {
 
 		feedsNameJpa=feedsNameRepository.findByUrlJpa(urlJpa);
 		assertNotNull(feedsNameJpa);
-	}
-
-	private FeedsRssJpa getFeedsRssJpa(String url,String description) {
-		FeedsRssJpa rss;
-		rss=new FeedsRssJpa();
-		rss.setUrl(url);
-		rss.setDescription(description);
-		rss.setLanguage("FR");
-		return rss;
+		assertNotNull(feedsNameJpa.getFeeds());
 	}
 
 	private FeedsRssJpa findRssJpa(String url){

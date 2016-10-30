@@ -76,7 +76,7 @@
                 <constraints nullable="true"/>
             </column>
             <column name="liste_feeds_id" type="int">
-                <constraints nullable="true" foreignKeyName="fk_feeds_item" references="feeds_item(id)"/>
+                <constraints nullable="true" foreignKeyName="fk_param_url_feeds" references="feeds(id)"/>
             </column>
         </createTable>
 

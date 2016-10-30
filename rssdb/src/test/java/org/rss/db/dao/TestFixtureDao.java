@@ -2,9 +2,8 @@ package org.rss.db.dao;
 
 import com.google.common.base.Preconditions;
 import org.rss.beans.OutilsGeneriques;
-import org.rss.db.dao.jpa.CategorieJpa;
-import org.rss.db.dao.jpa.RoleJpa;
-import org.rss.db.dao.jpa.UserJpa;
+import org.rss.db.dao.jpa.*;
+import org.rss.db.dao.repository.CategorieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +20,9 @@ public class TestFixtureDao {
 
 	@Autowired
 	private IRssDao rssDao;
+
+	@Autowired
+	private CategorieRepository categorieRepository;
 
 	public RoleJpa getRole(String nomRole) throws ErrorJpaException {
 		Preconditions.checkArgument(!OutilsGeneriques.vide(nomRole));
@@ -62,4 +64,29 @@ public class TestFixtureDao {
 		assertNotNull(categorieJpa2.getId());
 		return categorieJpa2;
 	}
+
+
+	public FeedsNameJpa getFeedsNameJpa(UrlJpa urlJpa) throws ErrorJpaException {
+		Preconditions.checkNotNull(urlJpa);
+		FeedsNameJpa feedsNameJpa;
+		feedsNameJpa=new FeedsNameJpa();
+		feedsNameJpa.setName("AAA");
+		feedsNameJpa.setUrlJpa(urlJpa);
+		UserJpa userJpa=getUser("HHH");
+		CategorieJpa categorieJpa=getCategorie(userJpa,"TTT");
+		feedsNameJpa.setCategorieJpa(categorieJpa);
+		return feedsNameJpa;
+	}
+
+	public FeedsRssJpa getFeedsRssJpa(String url,String description) {
+		Preconditions.checkNotNull(url);
+		Preconditions.checkNotNull(description);
+		FeedsRssJpa rss;
+		rss=new FeedsRssJpa();
+		rss.setUrl(url);
+		rss.setDescription(description);
+		rss.setLanguage("FR");
+		return rss;
+	}
+
 }
