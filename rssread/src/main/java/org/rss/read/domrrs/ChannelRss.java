@@ -75,4 +75,17 @@ public class ChannelRss {
 	public void setLastBuildDate(String lastBuildDate) {
 		this.lastBuildDate = lastBuildDate;
 	}
+
+	@Override
+	public String toString() {
+		return "ChannelRss{" +
+				"title='" + title + '\'' +
+				", description='" + description + '\'' +
+				", link='" + link + '\'' +
+				", language='" + language + '\'' +
+				", lastBuildDate='" + lastBuildDate + '\'' +
+				", pubDate='" + pubDate + '\'' +
+				", listItem=" + listItem +
+				'}';
+	}
 }

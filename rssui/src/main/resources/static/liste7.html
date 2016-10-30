@@ -1,0 +1,114 @@
+<!doctype html>
+<html ng-app="todoApp" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.min.js"></script>
+    <script src="js/outils.js"></script>
+    <script src="js/liste7.js"></script>
+    <!--<link rel="stylesheet" href="css/todo.css">-->
+</head>
+<body>
+<div ng-controller="TodoListController as todoList" class="container">
+
+    <div class="row">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">RSS</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Page 1</a></li>
+                    <li><a href="#">Page 2</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{todoList.racineUrl}}/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    <li><a href="{{todoList.racineUrl}}/users.html"><span class="glyphicon glyphicon-user"></span> Users</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+        <div class="row">
+            <div class="col-md-8 div_border">
+                <span>Liste Rss de {{todoList.liste1.length}}</span>
+
+                <form ng-submit="todoList.updateListFlux()">
+
+                    <input class="btn-primary" type="submit" value="update">
+                </form>
+                <form ng-submit="todoList.addUrl()">
+                    RSS à ajouter :
+                    Nom : <input type="text" name="url" ng-model="todoList.nomAAjouter">
+                    Url : <input type="text" name="url" ng-model="todoList.urlAAjouter">
+                    <input class="btn-primary" type="submit" value="add">
+                </form>
+                <button ng-click="todoList.updateAffichage()" >
+                    Maj Affichage
+                </button>
+                <a href="{{todoList.racineUrl}}/logout">Deconnexion</a>
+            </div>
+            <div class="col-md-4">
+                <div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success2!</strong> Indicates a successful or positive action.
+                </div>
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Error2!</strong> Indicates a successful or positive action.
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                liste_url<br/>
+                <div class="list-group">
+                    <a href="#" class="list-group-item"
+                       ng-repeat="rss1 in todoList.liste_url"
+                       ng-click="todoList.updateMsg(rss1.id)">
+                        url : {{rss1.url}}<br/>
+                        Titre : {{rss1.title}}<br/>
+                        id : {{rss1.id}}<br/>
+                        nom : {{rss1.name}}<br/>
+                    </a>
+                </div>
+
+            </div>
+            <div class="col-md-8">
+                liste_messages
+                <ul class="unstyled">
+                    <li ng-repeat="rss2 in todoList.liste_item_select">
+                        <h3>
+                            <span class="glyphicon glyphicon-certificate"></span>
+                            <span class="glyphicon glyphicon-ok-circle"></span>
+                            {{rss2.title}}
+                        </h3>
+                        date :{{rss2.pubDate}} <br/>
+                        Description :
+                            <p ng-bind-html="rss2.description" ></p>
+                            <div ng-if="rss2.link">
+                                <a href="{{rss2.link}}">
+                                    <span class="glyphicon glyphicon-link"></span>
+                                    Lien </a>
+                            </div>
+                        <br/>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+</div>
+</body>
+</html>

@@ -1,6 +1,9 @@
 package org.rss.db.dao.jpa;
 
+import org.springframework.util.StringUtils;
+
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 /**
@@ -24,7 +27,7 @@ public class ItemRssJpa {
 	private String link;
 
 	@Column
-	private Date pubDate;
+	private ZonedDateTime pubDate;
 
 	@Column(nullable = false)
 	private String guid;
@@ -56,11 +59,11 @@ public class ItemRssJpa {
 		this.link = link;
 	}
 
-	public Date getPubDate() {
+	public ZonedDateTime getPubDate() {
 		return pubDate;
 	}
 
-	public void setPubDate(Date pubDate) {
+	public void setPubDate(ZonedDateTime pubDate) {
 		this.pubDate = pubDate;
 	}
 
@@ -78,5 +81,27 @@ public class ItemRssJpa {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public boolean similaire(ItemRssJpa itemRssJpa){
+		if(!StringUtils.isEmpty(getLink())&&!StringUtils.isEmpty(itemRssJpa.getLink())) {
+			return getLink().equals(itemRssJpa.getLink());
+		}
+		if(!StringUtils.isEmpty(getGuid())&&!StringUtils.isEmpty(itemRssJpa.getGuid())) {
+			return getGuid().equals(itemRssJpa.getGuid());
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "ItemRssJpa{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", description='" + description + '\'' +
+				", link='" + link + '\'' +
+				", pubDate=" + pubDate +
+				", guid='" + guid + '\'' +
+				'}';
 	}
 }

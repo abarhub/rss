@@ -3,21 +3,40 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      #ddl-auto: create-drop
+      ddl-auto: validate
+      #ddl-auto: update
+      #ddl-auto: create
     database-platform: org.hibernate.dialect.H2Dialect
+    #show-sql: true
+
 
   datasource:
-    url: jdbc:h2:mem:rss;DB_CLOSE_ON_EXIT=FALSE
+    #url: jdbc:h2:mem:rss;DB_CLOSE_ON_EXIT=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS rss;SCHEMA=rss
+    #url: jdbc:h2:mem:PUBLIC;DB_CLOSE_ON_EXIT=FALSE
+    #url: jdbc:h2:mem:rss;DB_CLOSE_ON_EXIT=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS rss\\;SET SCHEMA rss
+    #url: jdbc:h2:mem:rss;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:rss;DB_CLOSE_ON_EXIT=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS rss
     #platform: h2
     username: sa
     password:
     #driver-class-name: com.mysql.jdbc.Driver
     continue-on-error: true
     initialize: false
+    #schema: classpath:/scriptSql/script.sql
+    #schema: rss
+    #schema: public
+    #data:
+    #dbcp:
+      #default-catalog: rss
+
 
   h2:
       console:
         enabled: true
-        path: /console
+        #path: /h2-console
+        #settings:
+          #web-allow-others: true
+
 
 

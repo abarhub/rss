@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="authorName" id="changelog-1.0">
+        <createTable tableName="FEEDS">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="url" type="varchar(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="varchar(1000)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="description" type="varchar(5000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(5000)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="type" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="language" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="last_build_date" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+            <column name="pub_date" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="FEEDS_ITEM">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="description" type="varchar(5000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="guid" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="link" type="varchar(1024)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="pub_date" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="FEEDS_LISTE_ITEM">
+            <column name="feeds_rss_jpa_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_FEEDS2" references="FEEDS(id)"/>
+            </column>
+            <column name="liste_item_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_feeds_item2" references="feeds_item(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="PARAM_URL">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nom" type="varchar(1000)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="url" type="varchar(1000)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="liste_feeds_id" type="int">
+                <constraints nullable="true" foreignKeyName="fk_param_url_feeds" references="feeds(id)"/>
+            </column>
+        </createTable>
+
+
+    </changeSet>
+</databaseChangeLog>

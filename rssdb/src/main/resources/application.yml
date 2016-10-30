@@ -8,6 +8,7 @@ app:
 server:
   port: ${port:8083}
   address: localhost
+  context-path: /db
 
   tomcat:
     accesslog:
@@ -20,6 +21,7 @@ server:
 
     basedir: ${app.repertoire}\\tomcat\\tomcat
 
+
 #logging.level.org.hibernate.SQL=debug
 #spring.jpa.hibernate.
 #spring.jpa.show-sql=true
@@ -30,6 +32,14 @@ server:
 
 spring.profiles.active: h2
 #spring.profiles.active: mysql
+
+
+liquibase:
+  enabled: true
+  change-log: classpath:/db/changelog/db.changelog-master.xml
+  #default-schema: rss
+  #default-schema: public
+  #drop-first: true
 
 
 

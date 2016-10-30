@@ -1,6 +1,7 @@
 package org.rss.db.dao.jpa;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -18,10 +19,10 @@ public class FeedsRssJpa extends FeedsGenericJpa {
 	private String language;
 
 	@Column
-	private Date lastBuildDate;
+	private ZonedDateTime lastBuildDate;
 
 	@Column
-	private Date pubDate;
+	private ZonedDateTime pubDate;
 
 	public FeedsRssJpa() {
 	}
@@ -42,20 +43,29 @@ public class FeedsRssJpa extends FeedsGenericJpa {
 		this.language = language;
 	}
 
-	public Date getLastBuildDate() {
+	public ZonedDateTime getLastBuildDate() {
 		return lastBuildDate;
 	}
 
-	public void setLastBuildDate(Date lastBuildDate) {
+	public void setLastBuildDate(ZonedDateTime lastBuildDate) {
 		this.lastBuildDate = lastBuildDate;
 	}
 
-	public Date getPubDate() {
+	public ZonedDateTime getPubDate() {
 		return pubDate;
 	}
 
-	public void setPubDate(Date pubDate) {
+	public void setPubDate(ZonedDateTime pubDate) {
 		this.pubDate = pubDate;
 	}
 
+	@Override
+	public String toString() {
+		return "FeedsRssJpa{" +
+				"listeItem=" + listeItem +
+				", language='" + language + '\'' +
+				", lastBuildDate=" + lastBuildDate +
+				", pubDate=" + pubDate +
+				'}';
+	}
 }

@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
 
-	private static final Logger logger = LoggerFactory.getLogger(LoggingRequestInterceptor.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoggingRequestInterceptor.class);
 
 	private final String nomServeur;
 	private final String nomUrl;
@@ -50,13 +50,14 @@ public class LoggingRequestInterceptor implements ClientHttpRequestInterceptor {
 			OutilsMDC.addMdc(MDCKey.SERVEUR, nomServeur);
 			OutilsMDC.addMdc(MDCKey.GET_URL, nomUrl);
 
+			LOGGER.info("appel rest : url = " + request.getURI());
 			String str = new String(body, StandardCharsets.UTF_8);
-			logger.info("appel rest : body = " + str);
-			logger.info("appel rest : response status = " + response.getRawStatusCode() + ":" + response.getStatusText());
+			LOGGER.info("appel rest : body = " + str);
+			LOGGER.info("appel rest : response status = " + response.getRawStatusCode() + ":" + response.getStatusText());
 			//byte[] tab=ByteStreams.toByteArray(response.getBody());
 			//String str2= new String(tab, StandardCharsets.UTF_8);
 			String str2 = read(response.getBody());
-			logger.info("appel rest : response = " + str2);
+			LOGGER.info("appel rest : response = " + str2);
 		}finally{
 			OutilsMDC.removeMdc(MDCKey.SERVEUR);
 			OutilsMDC.removeMdc(MDCKey.GET_URL);

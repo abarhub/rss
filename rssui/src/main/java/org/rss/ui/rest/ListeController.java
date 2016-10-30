@@ -5,33 +5,38 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.rss.beans.OutilsGeneriques;
+import org.rss.beans.flux.DateTimeZone;
 import org.rss.beans.flux.RssChannel;
 import org.rss.beans.flux.RssItem;
+import org.rss.beans.metier.SearchUsersResponseDTO;
+import org.rss.beans.metier.UserDTO;
 import org.rss.beans.param.RssListeUrl;
 import org.rss.beans.param.RssUrl;
 import org.rss.registry.IRestDb;
 import org.rss.registry.impl.RestDb;
-import org.rss.ui.bean.ChannelUi;
-import org.rss.ui.bean.ItemUi;
-import org.rss.ui.bean.ListChannelUi;
+import org.rss.ui.bean.*;
+import org.rss.ui.service.IRestDbUser;
+import org.rss.ui.service.RestDbUser;
+import org.rss.ui.service.UIService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.util.*;
 
+
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.nullsFirst;
 import static org.rss.beans.OutilsGeneriques.vide;
 
 
@@ -41,199 +46,39 @@ import static org.rss.beans.OutilsGeneriques.vide;
 @RestController
 public class ListeController {
 
-	public static final Logger logger = LoggerFactory.getLogger(ListeController.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(ListeController.class);
 	public static final Marker markerTrace = MarkerFactory.getMarker("TRACE");
 
-	//private static final String template = "Hello, %s!";
-	//private final AtomicLong counter = new AtomicLong();
+	@Autowired
+	private IRestDb restDb;
 
 	@Autowired
-	private IRestDb restDb;//=new RestDb();
+	private UIService uiService;
 
-	@RequestMapping("/liste")
-	public ListChannelUi greeting() {
-
-		return getListe();
-	}
-
-	private ListChannelUi getListe() {
-		ListChannelUi res;
-		ChannelUi c;
-		ItemUi item;
-
-		if(false) {
-			res = new ListChannelUi();
-
-			res.setListe_channel(Lists.newArrayList());
-
-			for (int i = 0; i < 10; i++) {
-				c = new ChannelUi();
-				c.setDescription("AAAA" + i);
-				c.setLanguage("en");
-				c.setLastBuildDate("2001-01-01");
-				c.setPubDate("2001-01-02");
-				c.setTitle("BBBBBB" + i);
-				c.setUrl("http://www.google.fr/" + i);
-
-				c.setListeItem(Lists.newArrayList());
-
-				for (int j = 0; j < 3; j++) {
-					item = new ItemUi();
-					item.setDescription("GGGG" + i + "-" + j);
-					item.setGuid("HHHH" + i + "-" + j);
-					item.setLink("http://www.yahoo.fr/" + j);
-					item.setPubDate("2001-01-03");
-					item.setTitle("KKKKKK" + i + "-" + j);
-
-					c.getListeItem().add(item);
-				}
-
-				res.getListe_channel().add(c);
-			}
-		}
-		else
-		{
-			//RestTemplate restTemplate = new RestTemplate();
-
-			res = new ListChannelUi();
-
-			//String url;
-			RssChannel[] liste_url;
-			List<ChannelUi> liste_channel;
-
-			liste_channel=Lists.newArrayList();
-			res.setListe_channel(liste_channel);
-
-			/*url="http://localhost:8083/api3/liste_rss";
-
-			ResponseEntity<RssChannel[]> tmp = restTemplate.getForEntity(url, RssChannel[].class, Maps.newHashMap());
-
-			liste_url=tmp.getBody();*/
-			ResponseEntity<RssChannel[]> tmp=restDb.listeRssDetaille();
-
-			liste_url=tmp.getBody();
-
-			if(liste_url!=null&&liste_url.length>0)
-			{
-
-				for(RssChannel tmp2:liste_url)
-				{
-					Preconditions.checkNotNull(tmp2.getId());
-					Preconditions.checkState(!tmp2.getId().trim().isEmpty());
-
-					c = new ChannelUi();
-					c.setDescription(tmp2.getDescription());
-					c.setLanguage(tmp2.getLanguage());
-					//c.setLastBuildDate(tmp2.);
-					c.setTitle(tmp2.getTitle());
-					c.setUrl(tmp2.getUrl());
-					c.setId(tmp2.getId());
-
-					if(tmp2.getListeItem()!=null&&!tmp2.getListeItem().isEmpty())
-					{
-						c.setListeItem(Lists.newArrayList());
-
-						for(RssItem item3:tmp2.getListeItem())
-						{
-							ItemUi item2;
-
-							item2=new ItemUi();
-							item2.setDescription(item3.getDescription());
-							item2.setGuid(item3.getGuid());
-							item2.setLink(item3.getLink());
-							item2.setTitle(item3.getTitle());
-
-							c.getListeItem().add(item2);
-						}
-					}
-
-					liste_channel.add(c);
-				}
-			}
-		}
-
-		return res;
-	}
-
+	@Autowired
+	private IRestDbUser restDbUser;
 
 	@RequestMapping("/add_url")
-	public String addUrl(@RequestParam(value="name") String nom,
-	                     @RequestParam(value="url") String url) {
-		String res="",url2;
-		//RestTemplate restTemplate = new RestTemplate();
-		//Map param;
+	public String addUrl(@RequestParam(value = "name") String nom,
+	                     @RequestParam(value = "url") String url) throws UnsupportedEncodingException {
+		String res = "";
 
-		logger.info("ajout url ...");
-		/*url2="http://localhost:8083/api3/add_url?name="+nom+"&url="+url;
-		//url2="http://localhost:8083/api3/add_url";
+		LOGGER.info("ajout url ...");
 
-		param=Maps.newHashMap();
-		//param.put("name",nom);
-		//param.put("url",url);
-		ResponseEntity<String> tmp = restTemplate.postForEntity(url2, null,String.class, param);*/
-		ResponseEntity<String> tmp =restDb.add_url(nom,url);
+		ResponseEntity<String> tmp = restDbUser.add_url(nom, url);
 
-		logger.info("fin url : "+tmp.getBody());
+		LOGGER.info("fin url : " + tmp.getBody());
 
 		return res;
 	}
 
 
 	@RequestMapping("/listeUrl")
-	public ListChannelUi listeUrl() {
+	public ListChannelUi listeUrl() throws UnsupportedEncodingException {
 
 		ListChannelUi res;
 		ChannelUi c;
 		ItemUi item;
-
-				//RestTemplate restTemplate = new RestTemplate();
-
-			res = new ListChannelUi();
-
-			//String url;
-			RssChannel[] liste_url;
-			List<ChannelUi> liste_channel;
-
-			liste_channel=Lists.newArrayList();
-			res.setListe_channel(liste_channel);
-
-			ResponseEntity<RssChannel[]> tmp=restDb.listeRssDetaille();
-
-			liste_url=tmp.getBody();
-
-			if(liste_url!=null&&liste_url.length>0)
-			{
-				for(RssChannel tmp2:liste_url)
-				{
-					Preconditions.checkNotNull(tmp2.getId());
-					Preconditions.checkState(!tmp2.getId().trim().isEmpty());
-
-					c = new ChannelUi();
-					c.setDescription(tmp2.getDescription());
-					c.setLanguage(tmp2.getLanguage());
-					//c.setLastBuildDate(tmp2.);
-					c.setTitle(tmp2.getTitle());
-					c.setUrl(tmp2.getUrl());
-					c.setId(tmp2.getId());
-					c.setName(tmp2.getName());
-
-					liste_channel.add(c);
-				}
-			}
-
-		return res;
-	}
-
-
-	@RequestMapping("/listeMessages")
-	public ChannelUi listeRss(@RequestParam(value="id",defaultValue = "",required = false) String id) {
-
-		ListChannelUi res;
-		ChannelUi c=null;
-		ItemUi item;
-		int id0;
-
-		//RestTemplate restTemplate = new RestTemplate();
 
 		res = new ListChannelUi();
 
@@ -241,101 +86,141 @@ public class ListeController {
 		RssChannel[] liste_url;
 		List<ChannelUi> liste_channel;
 
-		liste_channel=Lists.newArrayList();
+		liste_channel = Lists.newArrayList();
 		res.setListe_channel(liste_channel);
 
-			/*url="http://localhost:8083/api3/liste_rss";
+		ResponseEntity<RssChannel[]> tmp = restDbUser.listeRssDetaille();
 
-			ResponseEntity<RssChannel[]> tmp = restTemplate.getForEntity(url, RssChannel[].class, Maps.newHashMap());
+		liste_url = tmp.getBody();
 
-			liste_url=tmp.getBody();*/
-		ResponseEntity<RssChannel[]> tmp=restDb.listeRssDetaille();
+		if (liste_url != null && liste_url.length > 0) {
+			for (RssChannel tmp2 : liste_url) {
+				Preconditions.checkNotNull(tmp2.getId());
+				Preconditions.checkState(!tmp2.getId().trim().isEmpty());
 
-		liste_url=tmp.getBody();
-
-		if(liste_url!=null&&liste_url.length>0)
-		{
-			/*try {
-				id0 = Integer.parseInt(id);
-				id0=id0-1;
-				if(id0<=0)
-					id0=0;
-			}catch(NumberFormatException e)
-			{
-				id0=0;
-			}
-			RssChannel tmp2=liste_url[id0];*/
-			RssChannel tmp2=trouveFlux(liste_url,id);
-			if(tmp2!=null)
-			{
 				c = new ChannelUi();
 				c.setDescription(tmp2.getDescription());
 				c.setLanguage(tmp2.getLanguage());
 				//c.setLastBuildDate(tmp2.);
 				c.setTitle(tmp2.getTitle());
 				c.setUrl(tmp2.getUrl());
+				c.setId(tmp2.getId());
+				c.setName(tmp2.getName());
 
-				if(tmp2.getListeItem()!=null&&!tmp2.getListeItem().isEmpty())
-				{
-					c.setListeItem(Lists.newArrayList());
-
-					for(RssItem item3:tmp2.getListeItem())
-					{
-						ItemUi item2;
-
-						item2=new ItemUi();
-						item2.setDescription(item3.getDescription());
-						item2.setGuid(item3.getGuid());
-						item2.setLink(item3.getLink());
-						item2.setTitle(item3.getTitle());
-
-						c.getListeItem().add(item2);
-					}
-				}
-
-				//liste_channel.add(c);
+				liste_channel.add(c);
 			}
+			if (!liste_channel.isEmpty()) {
+				String titre = "Tous les flux";
+				c = new ChannelUi();
+				c.setDescription(titre);
+				c.setLanguage("");
+				//c.setLastBuildDate(tmp2.);
+				c.setTitle(titre);
+				c.setUrl("");
+				c.setId(UIService.idTousFlux);
+				c.setName(titre);
+
+				liste_channel.add(c);
+			}
+		}
+
+		return res;
+	}
+
+	@RequestMapping("/listeMessages")
+	public ChannelUi listeRss(@RequestParam(value = "id", defaultValue = "", required = false) String id) throws UnsupportedEncodingException {
+
+		ListChannelUi res;
+		ChannelUi c = null;
+
+		res = new ListChannelUi();
+
+		RssChannel[] liste_url;
+		List<ChannelUi> liste_channel;
+
+		liste_channel = Lists.newArrayList();
+		res.setListe_channel(liste_channel);
+
+		ResponseEntity<RssChannel[]> tmp = restDbUser.listeRssDetaille();
+
+		liste_url = tmp.getBody();
+
+		if (liste_url != null && liste_url.length > 0) {
+			c = uiService.donneListeRss(id, liste_url);
 		}
 
 		return c;
 	}
 
-	private RssChannel trouveFlux(RssChannel[] liste_url, String id) {
-		if(vide(id))
-		{
-			return null;
-		}
-		else
-		{
-			Optional<RssChannel> opt = Arrays.stream(liste_url)
-					.filter(x -> !vide(x.getId()) && x.getId().equals(id))
-					.findAny();
-			if(opt.isPresent())
-			{
-				return opt.get();
+	@RequestMapping(value = "/traces", method = RequestMethod.POST)
+	public void traceMessages(@RequestParam(value = "niveauErreur", defaultValue = "", required = false) String niveauErreur,
+	                          @RequestParam(value = "composant", defaultValue = "", required = false) String composant,
+	                          @RequestParam(value = "message", defaultValue = "", required = false) String message) {
+		if (niveauErreur != null) {
+			if (niveauErreur.equals("Info")) {
+				LOGGER.info(markerTrace, composant + " : " + message);
+			} else if (niveauErreur.equals("Erreur")) {
+				LOGGER.error(markerTrace, composant + " : " + message);
+			} else {
+				LOGGER.info(markerTrace, niveauErreur + " ; " + composant + " : " + message);
 			}
-			else
-			{
-				return null;
-			}
+		} else {
+			LOGGER.info(markerTrace, niveauErreur + " ; " + composant + " : " + message);
 		}
 	}
 
-	@RequestMapping(value = "/traces",method = RequestMethod.POST)
-	public void traceMessages(@RequestParam(value="niveauErreur",defaultValue = "",required = false) String niveauErreur,
-	                          @RequestParam(value="composant",defaultValue = "",required = false) String composant,
-	                          @RequestParam(value="message",defaultValue = "",required = false) String message) {
-		if(niveauErreur!=null){
-			if(niveauErreur.equals("Info")) {
-				logger.info(markerTrace, composant + " : " + message);
-			} else if(niveauErreur.equals("Erreur")) {
-				logger.error(markerTrace, composant + " : " + message);
+
+	@RequestMapping("/searchUsers")
+	public ListUsersUI searchUser(@RequestParam(value = "nom", defaultValue = "", required = false) String nom) {
+		ListUsersUI res=new ListUsersUI();
+		UserUI userUI;
+
+		ResponseEntity<SearchUsersResponseDTO> res2 = restDb.searchUser(nom);
+		if(res2.getStatusCode().is2xxSuccessful()){
+			if(res2.hasBody()){
+				SearchUsersResponseDTO res3 = res2.getBody();
+				if(!CollectionUtils.isEmpty(res3.getListUserDTO())){
+					res.setListUserUI(new ArrayList<>());
+					for(UserDTO tmp:res3.getListUserDTO()){
+						userUI=new UserUI();
+						userUI.setNom(tmp.getNom());
+						userUI.setPrenom(tmp.getPrenom());
+						userUI.setLogin(tmp.getLogin());
+						userUI.setNonModifiable(tmp.isNonModifiable());
+						userUI.setId(tmp.getId());
+						res.getListUserUI().add(userUI);
+					}
+				}
+			}
+		}
+
+		return res;
+	}
+
+
+	@RequestMapping(value = "/addUser",method = RequestMethod.POST)
+	public ResponseUI addUser(@RequestBody AddUserUI addUserUI) {
+		Preconditions.checkNotNull(addUserUI);
+		String res;
+		UserDTO user;
+		ResponseUI responseUI;
+		user=new UserDTO();
+		user.setNom(addUserUI.getNom());
+		user.setPrenom(addUserUI.getPrenom());
+		user.setLogin(addUserUI.getLogin());
+		user.setPassword(addUserUI.getPassword());
+		ResponseEntity<Boolean> res2 = restDb.addUser(user);
+		if(res2.getStatusCode().is2xxSuccessful()){
+			if(res2.hasBody()&& res2.getBody()){
+				responseUI=new ResponseUI();
 			} else {
-				logger.info(markerTrace, niveauErreur + " ; " + composant + " : " + message);
+				responseUI=new ResponseUI("Error");
 			}
 		} else {
-			logger.info(markerTrace, niveauErreur + " ; " + composant + " : " + message);
+			responseUI=new ResponseUI("Error");
 		}
+
+		return responseUI;
 	}
 
 }

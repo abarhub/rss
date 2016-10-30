@@ -1,7 +1,6 @@
 package org.rss.db.rest;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import org.rss.beans.flux.DateTimeZone;
 import org.rss.beans.flux.RssChannel;
@@ -13,12 +12,14 @@ import org.rss.db.dao.jpa.FeedsRssJpa;
 import org.rss.db.dao.jpa.ItemRssJpa;
 import org.rss.db.dao.jpa.UrlJpa;
 import org.rss.db.dao.repository.UrlRssRepository;
+import org.rss.db.service.UrlService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ import java.util.List;
 @RestController//("/api3")
 public class ServiceRestSpring {
 
-	public static final Logger logger = LoggerFactory.getLogger(ServiceRestSpring.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(ServiceRestSpring.class);
 
 	@Autowired
 	private UrlRssRepository repo;
@@ -35,7 +36,13 @@ public class ServiceRestSpring {
 	/*@Autowired
 	private UrlRepository repository;*/
 	@Autowired
-	private IDAOUrl dao_url;
+	private IUrlDao dao_url;
+
+	@Autowired
+	private Outils outils;
+
+	@Autowired
+	private UrlService urlService;
 
 	@RequestMapping("/api3/test1")
 	public String test1(@RequestParam(value="name", defaultValue="World") String name)
@@ -45,14 +52,15 @@ public class ServiceRestSpring {
 
 
 	@RequestMapping(value = "/api3/add_rss",method = RequestMethod.POST)
-	public String add_rss(@RequestBody RssChannel rss)
-	{
-		logger.info("Call spring service");
-		logger.info("list {}");
-		logger.info("rss=" + rss);
-		logger.info("enregistrement rss ...");
-		dao_url.enregistre_rss(Outils.conv_feeds(rss));
-		logger.info("enregistrement rss Ok");
+	public String add_rss(@RequestBody RssChannel rss){
+		Preconditions.checkNotNull(rss);
+		Preconditions.checkNotNull(rss.getUrlRss());
+		LOGGER.info("Call spring service");
+		LOGGER.info("list {}");
+		LOGGER.info("rss=" + rss);
+		LOGGER.info("enregistrement rss ...");
+		dao_url.saveRss(rss.getUrlRss(),outils.conv_feeds(rss));
+		LOGGER.info("enregistrement rss Ok");
 		return "Je suis un service";
 	}
 
@@ -61,7 +69,7 @@ public class ServiceRestSpring {
 	public RssListeUrl liste_url()
 	{
 		RssListeUrl liste;
-		logger.info("liste_url debut");
+		LOGGER.info("liste_url debut");
 
 		liste=new RssListeUrl();
 
@@ -90,57 +98,61 @@ public class ServiceRestSpring {
 			}
 		}
 
-		logger.info("liste_url fin:"+liste);
+		LOGGER.info("liste_url fin:"+liste);
 		return liste;
 	}
 
 	@RequestMapping("/api3/add_url")
-	public String add_url(@RequestParam(value="name") String nom,
-	                      @RequestParam(value="url") String url)
-	{
+	public ResponseEntity<String> addUrl(@RequestParam(value="name") String nom,
+	                                     @RequestParam(value="url") String url,
+	                                     @RequestParam(value="userId") String userId) throws ErrorJpaException {
 		UrlJpa rss;
-		//List<RssUrl> liste;
 		String res;
+		HttpStatus statusCode;
 
-		logger.info("add_url debut");
+		LOGGER.info("add_url debut");
+
+		LOGGER.info("userId="+userId);
 
 		res="";
 		if(isEmpty(nom))
 		{
 			res="Erreur:parametre name invalide !";
+			statusCode= HttpStatus.BAD_REQUEST;
 		}
 		else if(isEmpty(url))
 		{
 			res="Erreur:parametre url invalide !";
+			statusCode= HttpStatus.BAD_REQUEST;
+		}
+		else if(isEmpty(userId))
+		{
+			res="Erreur:parametre userId invalide !";
+			statusCode= HttpStatus.BAD_REQUEST;
 		}
 		else if(nomExiste(nom)){
-			res="Erreur: Le nom '"+nom+"' existe dÈj‡ !";
+			res="Erreur: Le nom '"+nom+"' existe d√©j√† !";
+			statusCode= HttpStatus.BAD_REQUEST;
 		}
 		else if(urlExiste(url)){
-			res="Erreur: L'URL '"+url+"' existe dÈj‡ !";
+			res="Erreur: L'URL '"+url+"' existe d√©j√† !";
+			statusCode= HttpStatus.BAD_REQUEST;
 		}
 		else {
-			//liste = Lists.newArrayList();
 			rss=new UrlJpa();
 			rss.setNom(nom);
 			rss.setUrl(url);
 
-			logger.info("add:"+rss);
-			if(false) {
-				repo.addUrl(rss);
-			}
-			else
-			{
-				dao_url.save(rss);
-			}
-			//liste.add(rss);
+			LOGGER.info("add:"+rss);
+			urlService.save(userId,rss);
+
 			res="OK";
-			//logger.info("add ok:"+rss.getId());
+			statusCode= HttpStatus.OK;
 		}
 
-		logger.info("add_url fin:"+res);
+		LOGGER.info("add_url fin:"+res);
 
-		return res;
+		return new ResponseEntity<>(res, statusCode);
 
 	}
 
@@ -152,19 +164,25 @@ public class ServiceRestSpring {
 		return dao_url.isNomExiste(nom);
 	}
 
-	private boolean isEmpty(/*@RequestParam(value = "name")*/ String nom) {
+	private boolean isEmpty(String nom) {
 		return nom==null||nom.length()==0||nom.trim().length()==0;
 	}
 
 	@RequestMapping("/api3/liste_rss")
-	public List<RssChannel> liste_rss()
+	public List<RssChannel> liste_rss(@RequestParam(value="userId") String userId)
 	{
 		List<RssChannel> liste;
 		List<FeedsRssJpa> liste_jpa;
 
+		LOGGER.info("userId="+userId);
+
 		liste=Lists.newArrayList();
 
-		liste_jpa=dao_url.liste_rss();
+		if(false) {
+			liste_jpa = dao_url.liste_rss();
+		} else {
+			liste_jpa = dao_url.listeRssUser(userId);
+		}
 
 		if(liste_jpa!=null&&!liste_jpa.isEmpty())
 		{
@@ -174,6 +192,7 @@ public class ServiceRestSpring {
 				RssItem item;
 				List<RssItem> liste2;
 
+				Preconditions.checkNotNull(tmp);
 				Preconditions.checkNotNull(tmp.getId());
 
 				channel=new RssChannel();
@@ -195,6 +214,7 @@ public class ServiceRestSpring {
 						item.setGuid(tmp2.getGuid());
 						item.setLink(tmp2.getLink());
 						item.setTitle(tmp2.getTitle());
+						item.setPubDate(new DateTimeZone(tmp2.getPubDate()));
 
 						liste2.add(item);
 					}

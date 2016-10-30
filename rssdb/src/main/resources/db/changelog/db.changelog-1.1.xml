@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+    <changeSet author="authorName" id="changelog-1.1">
+
+        <createTable tableName="ROLE">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nom" type="varchar(30)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="description" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="admin" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="anonymous" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="USER">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="login" type="varchar(30)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nom" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="prenom" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="role_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_role2" references="role(id)"/>
+            </column>
+            <column name="desactive" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <insert tableName="ROLE">
+            <column name="nom" value="ADMIN"/>
+            <column name="description" value="ADMIN"/>
+            <column name="admin" value="true"/>
+            <column name="anonymous" value="false"/>
+        </insert>
+
+        <insert tableName="ROLE">
+            <column name="nom" value="ANONYMOUS"/>
+            <column name="description" value="ANONYMOUS"/>
+            <column name="admin" value="false"/>
+            <column name="anonymous" value="true"/>
+        </insert>
+
+        <insert tableName="ROLE">
+            <column name="nom" value="SIMPLE_USER"/>
+            <column name="description" value="SIMPLE USER"/>
+            <column name="admin" value="false"/>
+            <column name="anonymous" value="false"/>
+        </insert>
+
+        <insert tableName="USER">
+            <column name="login" value="ADMIN"/>
+            <column name="password" value="ADMIN"/>
+            <column name="nom" value="ADMIN"/>
+            <column name="prenom" value=""/>
+            <column name="role_id" valueComputed="(SELECT id from ROLE where nom='ADMIN')"/>
+            <column name="desactive" value="false"/>
+        </insert>
+
+        <insert tableName="USER">
+            <column name="login" value="ANONYMOUS"/>
+            <column name="password" value=""/>
+            <column name="nom" value="ANONYMOUS"/>
+            <column name="prenom" value=""/>
+            <column name="role_id" valueComputed="(SELECT id from ROLE where nom='ANONYMOUS')"/>
+            <column name="desactive" value="false"/>
+        </insert>
+
+
+        <createTable tableName="CATEGORIE">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_jpa_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_user2" references="user(id)"/>
+            </column>
+            <column name="tout" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="CATEGORIE_FEEDS">
+            <column name="categorie_jpa_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_categorie2" references="categorie(id)"/>
+            </column>
+            <column name="feeds_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_feeds3" references="feeds(id)"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="categorie_jpa_id, feeds_id"
+                       constraintName="pk_categorie_feeds"
+                       tableName="CATEGORIE_FEEDS"/>
+
+        <insert tableName="CATEGORIE">
+            <column name="name" value="ALL"/>
+            <column name="description" value="ALL"/>
+            <column name="user_jpa_id" valueComputed="(SELECT id from USER where login='ADMIN')"/>
+            <column name="tout" value="true"/>
+        </insert>
+
+        <insert tableName="CATEGORIE">
+            <column name="name" value="ALL"/>
+            <column name="description" value="ALL"/>
+            <column name="user_jpa_id" valueComputed="(SELECT id from USER where login='ANONYMOUS')"/>
+            <column name="tout" value="true"/>
+        </insert>
+
+        <createTable tableName="FEEDS_NAME">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="categorie_jpa_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_categorie3" references="CATEGORIE(id)"/>
+            </column>
+            <column name="url_jpa_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_param" references="PARAM_URL(id)"/>
+            </column>
+            <column name="feeds_id" type="int" >
+                <constraints nullable="true" foreignKeyName="fk_feeds5" references="feeds(id)"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="FEEDS_ATTRIBUTS">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="feeds_name_jpa_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_feeds_name" references="feeds_name(id)"/>
+            </column>
+            <column name="feeds_jpa_id" type="int" >
+                <constraints nullable="false" foreignKeyName="fk_feeds4" references="feeds(id)"/>
+            </column>
+            <column name="deja_lu" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+
+    </changeSet>
+</databaseChangeLog>

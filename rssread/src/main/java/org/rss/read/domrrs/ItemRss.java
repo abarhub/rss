@@ -53,4 +53,16 @@ public class ItemRss {
 	public void setGuid(String guid) {
 		this.guid = guid;
 	}
+
+	@Override
+	public String toString() {
+		return "ItemRss{" +
+				"title='" + title + '\'' +
+				", description='" + description + '\'' +
+				", link='" + link + '\'' +
+				", pubDate='" + pubDate + '\'' +
+				", guid='" + guid + '\'' +
+				'}';
+	}
+
 }

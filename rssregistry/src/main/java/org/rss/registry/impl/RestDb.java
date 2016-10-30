@@ -3,7 +3,9 @@ package org.rss.registry.impl;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import org.rss.beans.flux.RssChannel;
+import org.rss.beans.metier.*;
 import org.rss.beans.param.RssListeUrl;
+import org.rss.beans.security.UserInfoDTO;
 import org.rss.registry.IRestDb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +18,12 @@ import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.util.UriUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,20 +34,29 @@ import java.util.Map;
 @Service
 public class RestDb implements IRestDb {
 
-	private static final Logger logger = LoggerFactory.getLogger(RestDb.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RestDb.class);
 
-	private final String urlDbServeur="http://localhost:8083/";
+	private final String urlDbServeur="http://localhost:8083/db/";
 
 	@Override
-	public ResponseEntity<RssChannel[]> listeRssDetaille(){
-		String url;
-		url=urlDbServeur+"api3/liste_rss";
+	public ResponseEntity<RssChannel[]> listeRssDetaille(String idUser) throws UnsupportedEncodingException {
+		//String url;
+		//url=urlDbServeur+"api3/liste_rss?userId="+encodeParam(idUser);
+		URI url=getUri(urlDbServeur+"api3/liste_rss?userId={userId}",idUser);
 
 		RestTemplate restTemplate = getRestTemplate("listeRssDetaille");
 
-		ResponseEntity<RssChannel[]> tmp = restTemplate.getForEntity(url, RssChannel[].class, Maps.newHashMap());
+		ResponseEntity<RssChannel[]> tmp = restTemplate.getForEntity(url, RssChannel[].class);
 
 		return tmp;
+	}
+
+	private URI getUri(String url, String... param){
+		UriComponents uriComponents =
+				UriComponentsBuilder.fromUriString(url).build()
+						.expand((Object[])param)
+						.encode();
+		return uriComponents.toUri();
 	}
 
 	private RestTemplate getRestTemplate(String url) {
@@ -60,15 +76,26 @@ public class RestDb implements IRestDb {
 	}
 
 	@Override
-	public ResponseEntity<String> add_url(String nom, String url){
-		String url2;
+	public ResponseEntity<String> add_url(String idUser,String nom, String url) throws UnsupportedEncodingException {
+		//String url2;
 		RestTemplate restTemplate = getRestTemplate("add_url");
-		url2=urlDbServeur+"api3/add_url?name="+nom+"&url="+url;
+		//url2=urlDbServeur+"api3/add_url?name="+nom+"&url="+url;
+		//url2=urlDbServeur+"api3/add_url";
+		//url2=urlDbServeur+"api3/add_url?name="+encodeParam(nom)+"&url="+encodeParam(url)+"&userId="+encodeParam(idUser);
+		URI url2;
+		url2=getUri(urlDbServeur+"api3/add_url?name={nom}&url={url}&userId={userId}",nom,url,idUser);
 
 		Map<String, Object> param = Maps.newHashMap();
-		ResponseEntity<String> tmp = restTemplate.postForEntity(url2, null,String.class, param);
+		/*param.put("userId",idUser);
+		param.put("name",nom);
+		param.put("url",url);*/
+		ResponseEntity<String> tmp = restTemplate.postForEntity(url2, null,String.class);
 
 		return tmp;
+	}
+
+	private String encodeParam(String nom) throws UnsupportedEncodingException {
+		return UriUtils.encodeQueryParam(nom,"UTF-8");
 	}
 
 
@@ -96,11 +123,72 @@ public class RestDb implements IRestDb {
 
 		url=urlDbServeur+"api3/liste_url";
 
-		//logger.info("url param:"+url);
+		//LOGGER.info("url param:"+url);
 
 		ResponseEntity<RssListeUrl> res = restTemplate.getForEntity(url, RssListeUrl.class);
 
 		return res;
 	}
+
+	@Override
+	public ResponseEntity<LoginResponseDTO> connecteUser(String login,String password){
+		String url;
+		RestTemplate restTemplate = getRestTemplate("connecteUser");
+
+		url=urlDbServeur+"api3/user_exists";
+
+		LoginDTO loginDTO;
+		loginDTO=new LoginDTO();
+		loginDTO.setLogin(login);
+		loginDTO.setPassword(password);
+
+		ResponseEntity<LoginResponseDTO> res = restTemplate.postForEntity(url,loginDTO,LoginResponseDTO.class);
+
+		return res;
+	}
+
+	@Override
+	public ResponseEntity<SearchUsersResponseDTO> searchUser(String nom){
+		String url;
+		RestTemplate restTemplate = getRestTemplate("searchUser");
+
+		url=urlDbServeur+"api3/users_search";
+
+		SearchUsersDTO searchUsersDTO;
+		searchUsersDTO=new SearchUsersDTO();
+		searchUsersDTO.setNom(nom);
+
+		ResponseEntity<SearchUsersResponseDTO> res = restTemplate.postForEntity(url,searchUsersDTO,SearchUsersResponseDTO.class);
+
+		return res;
+	}
+
+	@Override
+	public ResponseEntity<Boolean> addUser(UserDTO userDTO){
+		String url;
+		RestTemplate restTemplate = getRestTemplate("addUser");
+
+		url=urlDbServeur+"api3/add_user";
+
+		ResponseEntity<Boolean> res = restTemplate.postForEntity(url,userDTO,Boolean.class);
+
+		return res;
+	}
+
+	@Override
+	public ResponseEntity<UserInfoDTO> getUser(String userId){
+		String url;
+		RestTemplate restTemplate = getRestTemplate("getUser");
+
+		url=urlDbServeur+"api3/get_user";
+
+		UserDTO userDTO=new UserDTO();
+		userDTO.setLogin(userId);
+
+		ResponseEntity<UserInfoDTO> res = restTemplate.postForEntity(url,userDTO,UserInfoDTO.class);
+
+		return res;
+	}
+
 
 }

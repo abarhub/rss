@@ -13,7 +13,7 @@ public class UrlJpa {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(nullable = false,length = 1000)
+	@Column(nullable = true,length = 1000)
 	private String nom;
 
 	@Column(nullable = false,length = 1000)
@@ -55,5 +55,15 @@ public class UrlJpa {
 
 	public void setListe_feeds(FeedsJpa liste_feeds) {
 		this.liste_feeds = liste_feeds;
+	}
+
+	@Override
+	public String toString() {
+		return "UrlJpa{" +
+				"id=" + id +
+				", nom='" + nom + '\'' +
+				", url='" + url + '\'' +
+				", liste_feeds=" + liste_feeds +
+				'}';
 	}
 }
