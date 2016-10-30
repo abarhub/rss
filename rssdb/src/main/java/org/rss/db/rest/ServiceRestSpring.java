@@ -5,7 +5,6 @@ import com.google.common.collect.Lists;
 import org.rss.beans.flux.DateTimeZone;
 import org.rss.beans.flux.RssChannel;
 import org.rss.beans.flux.RssItem;
-import org.rss.beans.metier.LoginDTO;
 import org.rss.beans.param.RssListeUrl;
 import org.rss.beans.param.RssUrl;
 import org.rss.db.dao.*;
@@ -19,7 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,13 +52,14 @@ public class ServiceRestSpring {
 
 
 	@RequestMapping(value = "/api3/add_rss",method = RequestMethod.POST)
-	public String add_rss(@RequestBody RssChannel rss)
-	{
+	public String add_rss(@RequestBody RssChannel rss){
+		Preconditions.checkNotNull(rss);
+		Preconditions.checkNotNull(rss.getUrlRss());
 		LOGGER.info("Call spring service");
 		LOGGER.info("list {}");
 		LOGGER.info("rss=" + rss);
 		LOGGER.info("enregistrement rss ...");
-		dao_url.enregistre_rss(outils.conv_feeds(rss));
+		dao_url.saveRss(rss.getUrlRss(),outils.conv_feeds(rss));
 		LOGGER.info("enregistrement rss Ok");
 		return "Je suis un service";
 	}

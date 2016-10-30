@@ -58,42 +58,45 @@ public class UrlDao implements IUrlDao {
 		return liste1;
 	}
 
-	public void enregistre_rss(FeedsRssJpa rss) {
+	public void saveRss(String url,FeedsRssJpa rss) {
+		Preconditions.checkNotNull(url);
 		Preconditions.checkNotNull(rss);
-		if (repo_rss.channelExiste(rss)) {
-			LOGGER.info("rss '" + rss.getUrl() + "' existe deja");
-			repo_rss.updateChannel(rss);
+		if (repo_rss.urlExiste(url)) {
+			LOGGER.info("rss '" + url + "' existe deja");
+			rss=repo_rss.updateChannel(url,rss);
 		} else {
-			LOGGER.info("Enregistrement rss '" + rss.getUrl() + "' ...");
+			LOGGER.info("Enregistrement rss '" + url + "' ...");
 			repo_rss.addChannel(rss);
-			Preconditions.checkNotNull(rss.getId());
-			LOGGER.info("id rss =" + rss.getId());
-			UrlJpa u = repository.findByUrl(rss.getUrl());
-			if(u!=null) {
-				Preconditions.checkNotNull(u);
-				Preconditions.checkNotNull(rss.getId());
-				u.setListe_feeds(rss);
-				LOGGER.info("url mis à jour ...");
-				u=repository.save(u);
-				LOGGER.info("url mis à jour OK");
-				LOGGER.info("recuperation feedsNameJpa...");
-				FeedsNameJpa feedsNameJpa=feedsNameRepository.findByUrlJpa(u);
-				if(feedsNameJpa!=null){
-					LOGGER.info("feedsNameJpa trouvé");
-					if(feedsNameJpa.getFeeds()==null){
-						LOGGER.info("feedsNameJpa.feed vide");
-						feedsNameJpa.setFeeds(rss);
-						feedsNameRepository.save(feedsNameJpa);
-						LOGGER.info("Asso feedsName Ok");
-					}
-				} else {
-					LOGGER.info("feedsNameJpa non trouvé");
-					List<FeedsNameJpa> liste2 = feedsNameRepository.findAll();
-					LOGGER.info("liste.feedsNameJpa="+liste2);
-				}
-			}
-			LOGGER.info("Enregistrement rss Ok");
 		}
+		Preconditions.checkNotNull(rss.getId());
+		LOGGER.info("id rss =" + rss.getId());
+		UrlJpa u = repository.findByUrl(url);
+		if(u!=null) {
+			Preconditions.checkNotNull(u);
+			Preconditions.checkNotNull(rss.getId());
+			u.setListe_feeds(rss);
+			LOGGER.info("url mis à jour ...");
+			u=repository.save(u);
+			LOGGER.info("url mis à jour OK");
+			LOGGER.info("recuperation feedsNameJpa...");
+			FeedsNameJpa feedsNameJpa=feedsNameRepository.findByUrlJpa(u);
+			if(feedsNameJpa!=null){
+				LOGGER.info("feedsNameJpa trouvé");
+				if(feedsNameJpa.getFeeds()==null){
+					LOGGER.info("feedsNameJpa.feed vide");
+					feedsNameJpa.setFeeds(rss);
+					feedsNameRepository.save(feedsNameJpa);
+					LOGGER.info("Asso feedsName Ok");
+				}
+			} else {
+				LOGGER.info("feedsNameJpa non trouvé");
+				List<FeedsNameJpa> liste2 = feedsNameRepository.findAll();
+				LOGGER.info("liste.feedsNameJpa="+liste2);
+			}
+		} else {
+			LOGGER.error("Erreur pour enregistrer le rss '"+url+"' url inexistante");
+		}
+		LOGGER.info("Enregistrement rss Ok");
 	}
 
 	public List<FeedsRssJpa> liste_rss() {
@@ -121,7 +124,6 @@ public class UrlDao implements IUrlDao {
 
 		Preconditions.checkNotNull(userId);
 
-		//liste = repo_rss.listeChannel();
 		Optional<UserJpa> optUser = userRepository.findByLogin(userId);
 
 		if(optUser.isPresent()){

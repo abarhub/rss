@@ -3,7 +3,6 @@ package org.rss.db.dao;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.rss.db.dao.jpa.CategorieJpa;
 import org.rss.db.dao.jpa.FeedsNameJpa;
 import org.rss.db.dao.jpa.FeedsRssJpa;
 import org.rss.db.dao.jpa.UrlJpa;
@@ -21,13 +20,12 @@ import static org.junit.Assert.*;
  * Created by Alain on 30/10/2016.
  */
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@DataJpaTest(showSql = false)
 public class UrlDaoIntegrationTest {
 
 	private static final String URL1="fgdfgs";
 
 	@Autowired
-	//private RssRepository repo_rss;
 	private Rss2Repository repo_rss;
 
 	@Autowired
@@ -50,13 +48,13 @@ public class UrlDaoIntegrationTest {
 
 
 	@Test
-	public void enregistre_rssOK() throws Exception {
+	public void saveRssOK() throws Exception {
 		FeedsRssJpa rss;
 		String url,description;
 		url="http://aaabb;ùdsfsqfdsf";
 		description="GGG";
 		rss = testFixtureDao.getFeedsRssJpa(url,description);
-		urlDao.enregistre_rss(rss);
+		urlDao.saveRss(url,rss);
 		assertTrue(repo_rss.urlExiste(url));
 		//FeedsRssJpa rss2;
 		//rss2=repo_rss.
@@ -72,12 +70,12 @@ public class UrlDaoIntegrationTest {
 	}
 
 	@Test
-	public void enregistre_rss2OK() throws Exception {
+	public void saveRss2OK() throws Exception {
 		FeedsRssJpa rss;
 		String url;
 		url="http://tttbb;ùdsfsqfdsf";
 		rss = testFixtureDao.getFeedsRssJpa(url,"GGG");
-		urlDao.enregistre_rss(rss);
+		urlDao.saveRss(url,rss);
 		assertTrue(repo_rss.urlExiste(url));
 		FeedsRssJpa rss2=findRssJpa(url);
 		assertNotNull(rss2);
@@ -85,7 +83,7 @@ public class UrlDaoIntegrationTest {
 	}
 
 	@Test
-	public void enregistre_rss3OK() throws Exception {
+	public void saveRssRssAbsentOK() throws Exception {
 		FeedsRssJpa rss;
 		String url;
 		url="http://tttbb;ùdsfsqfdsf";
@@ -106,7 +104,51 @@ public class UrlDaoIntegrationTest {
 
 		// methode à tester
 		rss = testFixtureDao.getFeedsRssJpa(url,"GGG");
-		urlDao.enregistre_rss(rss);
+		assertFalse(repo_rss.channelExiste(rss));
+		urlDao.saveRss(url,rss);
+		assertTrue(repo_rss.channelExiste(rss));
+
+		assertTrue(repo_rss.urlExiste(url));
+		FeedsRssJpa rss2=findRssJpa(url);
+		assertNotNull(rss2);
+		assertEquals(url,rss2.getUrl());
+		urlJpa=urlRepository.findByUrl(url);
+		assertNotNull(urlJpa);
+
+		feedsNameJpa=feedsNameRepository.findByUrlJpa(urlJpa);
+		assertNotNull(feedsNameJpa);
+		assertNotNull(feedsNameJpa.getFeeds());
+	}
+
+	@Test
+	public void saveRssRssDejaPresenteOK() throws Exception {
+		FeedsRssJpa rss;
+		String url;
+		url="http://tttbb;ùdsfsqfdsf";
+
+		saveUrl(url,"CCC");
+
+		UrlJpa urlJpa=urlRepository.findByUrl(url);
+		assertNotNull(urlJpa);
+		assertEquals(url,urlJpa.getUrl());
+		FeedsNameJpa feedsNameJpa=feedsNameRepository.findByUrlJpa(urlJpa);
+		assertNull(feedsNameJpa);
+
+		feedsNameJpa = testFixtureDao.getFeedsNameJpa(urlJpa);
+		feedsNameRepository.save(feedsNameJpa);
+		feedsNameJpa=feedsNameRepository.findByUrlJpa(urlJpa);
+		assertNotNull(feedsNameJpa);
+		assertNull(feedsNameJpa.getFeeds());
+
+		rss = testFixtureDao.getFeedsRssJpa(url,"GGG1");
+		repo_rss.addChannel(rss);
+		assertTrue(repo_rss.channelExiste(rss));
+
+		// methode à tester
+		rss = testFixtureDao.getFeedsRssJpa(url,"GGG2");
+		assertTrue(repo_rss.channelExiste(rss));
+		urlDao.saveRss(url,rss);
+		assertTrue(repo_rss.channelExiste(rss));
 
 		assertTrue(repo_rss.urlExiste(url));
 		FeedsRssJpa rss2=findRssJpa(url);

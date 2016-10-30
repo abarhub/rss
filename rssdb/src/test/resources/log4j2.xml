@@ -11,8 +11,8 @@
         </Logger>-->
         <Logger name="org.rss" level="info"/>
         <Logger name="org.springframework.web" level="info"/>
-        <Logger name="org.hibernate.SQL" level="debug"/>
-        <Logger name="org.hibernate.type" level="trace"/>
+        <!--<Logger name="org.hibernate.SQL" level="debug"/>
+        <Logger name="org.hibernate.type" level="trace"/>-->
         <Logger name="httpclient.wire" level="debug"/>
         <Root level="info">
             <AppenderRef ref="Console"/>

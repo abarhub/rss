@@ -13,8 +13,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,11 +28,6 @@ public class Rss2Repository  {
 
 	@Autowired
 	private Rss3Repository rss3Repository;
-
-	//@PersistenceUnit
-	//private EntityManagerFactory emf;
-	//@PersistenceContext
-	//private EntityManager em;
 
 	public void addChannel(FeedsRssJpa channel){
 
@@ -66,8 +59,6 @@ public class Rss2Repository  {
 
 
 	public boolean urlExiste(String url){
-		String req;
-		List<FeedsRssJpa> res;
 
 		Preconditions.checkNotNull(url);
 
@@ -88,19 +79,15 @@ public class Rss2Repository  {
 		return optFeeds.isPresent();
 	}
 
-	public void updateChannel(FeedsRssJpa rss) {
+	public FeedsRssJpa updateChannel(String url, FeedsRssJpa rss) {
 		Preconditions.checkNotNull(rss);
-		//Preconditions.checkNotNull(rss.getLastBuildDate());
+		Preconditions.checkNotNull(rss.getUrl());
 
-		LOGGER.info("debut maj du flux "+rss.getUrl());
+		LOGGER.info("debut maj du flux "+url);
 
 		FeedsRssJpa rssPersiste;
 
-		/*String req="select f from FeedsRssJpa f where f.url='"+rss.getUrl()+"'";
-
-		rssPersiste=em.createQuery(req,FeedsRssJpa.class).getSingleResult();*/
-
-		Optional<FeedsRssJpa> optRssPersiste = rss3Repository.findByUrl(rss.getUrl());
+		Optional<FeedsRssJpa> optRssPersiste = rss3Repository.findByUrl(url);
 
 		Preconditions.checkArgument(optRssPersiste.isPresent());
 
@@ -153,9 +140,9 @@ public class Rss2Repository  {
 				}
 			}
 
-			//em.persist(rssPersiste);
 			rss3Repository.save(rssPersiste);
 		}
-		LOGGER.info("fin maj du flux "+rss.getUrl());
+		LOGGER.info("fin maj du flux "+url);
+		return rssPersiste;
 	}
 }

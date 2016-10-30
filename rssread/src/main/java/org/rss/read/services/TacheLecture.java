@@ -9,12 +9,14 @@ import org.rss.beans.param.RssListeUrl;
 import org.rss.beans.param.RssUrl;
 import org.rss.read.ResultatRss;
 import org.rss.read.domrrs.ChannelRss;
+import org.rss.read.nettoyage.SupprimeElementDejaPresent;
 import org.rss.registry.IRestDb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
@@ -45,6 +47,9 @@ public class TacheLecture {
 
 	@Autowired
 	private OutilsRead outilsRead;
+
+	@Autowired
+	private SupprimeElementDejaPresent supprimeElementDejaPresent;
 
 	//private int nb0;
 	//private int nb2;
@@ -96,7 +101,7 @@ public class TacheLecture {
 		LOGGER.info("fin lecture flus rss");
 	}
 
-	private void lecture_url(RssUrl url) {
+	public void lecture_url(RssUrl url) {
 		String res="",url0;
 		Preconditions.checkNotNull(url);
 		url0=url.getUrl();
@@ -116,6 +121,7 @@ public class TacheLecture {
 					ChannelRss channel = res2.getRes();
 					Preconditions.checkNotNull(channel);
 					Preconditions.checkNotNull(channel.getLastBuildDate());
+
 					boolean aEnvoyer=false;
 					DateTimeZone date=null;
 					if(StringUtils.isEmpty(channel.getLastBuildDate())){
@@ -126,8 +132,14 @@ public class TacheLecture {
 						if (url_deja_traite.containsKey(url0)) {
 							DateTimeZone dateDernierTraitement = url_deja_traite.get(url0);
 							if (date==null||dateDernierTraitement.compareTo(date) < 0) {
-								aEnvoyer = true;
-								LOGGER.info("envoie(" + dateDernierTraitement + "<" + date + ")");
+								LOGGER.info("envoie?(" + dateDernierTraitement + "<" + date + ")");
+								channel=supprimeElementDejaPresent.supprime(url0,channel);
+								if(!CollectionUtils.isEmpty(channel.getListItem())) {
+									aEnvoyer = true;
+									LOGGER.info("a envoier ("+channel.getListItem().size()+" elt)");
+								} else {
+									LOGGER.info("rien a envoier");
+								}
 							} else {
 								LOGGER.info("pas envoie(" + dateDernierTraitement + ">=" + date + ")");
 							}
@@ -139,7 +151,7 @@ public class TacheLecture {
 						LOGGER.info("Envoie ...");
 						//Preconditions.checkNotNull(date);
 						url_deja_traite.put(url0,date);
-						envoie_flux(channel);
+						envoie_flux(url0,channel);
 					}
 				}
 			} catch (IOException | ExecutionException | InterruptedException e) {
@@ -148,7 +160,7 @@ public class TacheLecture {
 		}
 	}
 
-	private void envoie_flux(ChannelRss res) {
+	public void envoie_flux(String urlRss, ChannelRss res) {
 		RssChannel rss;
 
 		Preconditions.checkNotNull(res);
@@ -158,6 +170,8 @@ public class TacheLecture {
 		rss=outilsRead.convChannel(res);
 
 		Preconditions.checkNotNull(rss);
+
+		rss.setUrlRss(urlRss);
 
 		LOGGER.info("rss="+rss);
 		try {

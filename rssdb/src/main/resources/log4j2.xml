@@ -7,7 +7,7 @@
     </Appenders>
     <Loggers>
         <!--<Logger name="org.springframework.web" level="debug"/>-->
-        <Logger name="org.hibernate.SQL" level="debug"/>
+        <!--<Logger name="org.hibernate.SQL" level="debug"/>-->
         <!--<Logger name="org.hibernate.type" level="trace">
             <AppenderRef ref="Console"/>
         </Logger>-->

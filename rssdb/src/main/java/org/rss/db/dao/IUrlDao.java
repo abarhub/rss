@@ -16,7 +16,7 @@ public interface IUrlDao {
 
 	public List<UrlJpa> getListeUrl();
 
-	public void enregistre_rss(FeedsRssJpa rss);
+	public void saveRss(String url,FeedsRssJpa rss);
 
 	public List<FeedsRssJpa> liste_rss();
 

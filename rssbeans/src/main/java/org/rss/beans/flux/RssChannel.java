@@ -12,6 +12,7 @@ public class RssChannel {
 
 	private String id;
 	private String url;
+	private String urlRss;
 	private List<RssItem> listeItem;
 	private String title;
 	private String description;
@@ -95,11 +96,20 @@ public class RssChannel {
 		this.name = name;
 	}
 
+	public String getUrlRss() {
+		return urlRss;
+	}
+
+	public void setUrlRss(String urlRss) {
+		this.urlRss = urlRss;
+	}
+
 	@Override
 	public String toString() {
 		return "RssChannel{" +
 				"id='" + id + '\'' +
 				", url='" + url + '\'' +
+				", urlRss='" + urlRss + '\'' +
 				", listeItem=" + listeItem +
 				", title='" + title + '\'' +
 				", description='" + description + '\'' +
