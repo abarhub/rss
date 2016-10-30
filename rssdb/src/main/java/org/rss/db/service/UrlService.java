@@ -70,6 +70,7 @@ public class UrlService {
 			c.setUserJpa(u);
 			c=categorieRepository.save(c);
 		}
+		Preconditions.checkNotNull(c);
 
 		UrlJpa rss2;
 		rss2=urlRepository.findByUrl(rss.getUrl());
@@ -79,6 +80,7 @@ public class UrlService {
 
 			rss2=urlRepository.save(rss2);
 		}
+		Preconditions.checkNotNull(rss2);
 
 		FeedsNameJpa feedsNameJpa;
 		feedsNameJpa=new FeedsNameJpa();

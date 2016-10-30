@@ -45,7 +45,7 @@
             <column name="guid" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="link" type="varchar(255)">
+            <column name="link" type="varchar(1024)">
                 <constraints nullable="true"/>
             </column>
             <column name="pub_date" type="DATETIME">

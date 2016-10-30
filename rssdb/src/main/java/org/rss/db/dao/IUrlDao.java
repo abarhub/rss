@@ -23,4 +23,6 @@ public interface IUrlDao {
 	public boolean isUrlExiste(String url);
 
 	public boolean isNomExiste(String nom);
+
+	List<FeedsRssJpa> listeRssUser(String userId);
 }

@@ -28,33 +28,22 @@ server:
 
 #spring.profiles.active=oracle
 
-#spring.profiles.active: h2
+spring.profiles.active: h2
 #spring.profiles.active: mysql
-
 
 
 spring:
   jpa:
+    show-sql: false
     hibernate:
-      ddl-auto: create-drop
-    database-platform: org.hibernate.dialect.H2Dialect
-
-  datasource:
-    url: jdbc:h2:mem:rss;DB_CLOSE_ON_EXIT=FALSE
-    #platform: h2
-    username: sa
-    password:
-    #driver-class-name: com.mysql.jdbc.Driver
-    continue-on-error: true
-    initialize: false
-
-  h2:
-      console:
-        enabled: true
-        path: /console
+      #ddl-auto: create-drop
+      ddl-auto: validate
 
 
 liquibase:
   enabled: true
   change-log: classpath:/db/changelog/db.changelog-master.xml
+  drop-first: true
+
+
 

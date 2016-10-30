@@ -179,7 +179,11 @@ public class ServiceRestSpring {
 
 		liste=Lists.newArrayList();
 
-		liste_jpa=dao_url.liste_rss();
+		if(false) {
+			liste_jpa = dao_url.liste_rss();
+		} else {
+			liste_jpa = dao_url.listeRssUser(userId);
+		}
 
 		if(liste_jpa!=null&&!liste_jpa.isEmpty())
 		{
@@ -189,6 +193,7 @@ public class ServiceRestSpring {
 				RssItem item;
 				List<RssItem> liste2;
 
+				Preconditions.checkNotNull(tmp);
 				Preconditions.checkNotNull(tmp.getId());
 
 				channel=new RssChannel();

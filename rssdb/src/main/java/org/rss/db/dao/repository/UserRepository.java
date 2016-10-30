@@ -15,4 +15,6 @@ public interface UserRepository extends CrudRepository<UserJpa,Integer>,JpaRepos
 	List<UserJpa> findByLoginAndPassword(String login, String password);
 
 	List<UserJpa> findByNomContainingIgnoreCase(String nom);
+
+	Optional<UserJpa> findByLogin(String login);
 }

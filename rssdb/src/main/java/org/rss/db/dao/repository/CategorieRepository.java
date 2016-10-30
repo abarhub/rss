@@ -14,4 +14,6 @@ public interface CategorieRepository extends CrudRepository<CategorieJpa,Integer
 
 	CategorieJpa findByNameAndUserJpa(String nom,UserJpa userJpa);
 
+	List<CategorieJpa> findByUserJpa(UserJpa userJpa);
+
 }

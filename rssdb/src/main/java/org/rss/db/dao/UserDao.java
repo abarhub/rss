@@ -19,6 +19,9 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 
+import static org.rss.db.dao.Constantes.CATEGORIE_TOUT_DESCRIPTION;
+import static org.rss.db.dao.Constantes.CATEGORIE_TOUT_NOM;
+
 /**
  * Created by Alain on 11/09/2016.
  */
@@ -71,8 +74,8 @@ public class UserDao implements IUserDao {
 		CategorieJpa categorieJpa;
 		categorieJpa=new CategorieJpa();
 		categorieJpa.setUserJpa(userJpa2);
-		categorieJpa.setName("TOUT");
-		categorieJpa.setDescription("TOUT");
+		categorieJpa.setName(CATEGORIE_TOUT_NOM);
+		categorieJpa.setDescription(CATEGORIE_TOUT_DESCRIPTION);
 		categorieJpa.setTout(true);
 		categorieRepository.save(categorieJpa);
 
