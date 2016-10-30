@@ -30,7 +30,7 @@ public class ReadHttpITest {
 	public void readOK() throws Exception {
 		LOGGER.info("Port={}",port);
 		LOGGER.info("Lecture du flux ...");
-		String res=readHttp.read("http://localhost:"+port+"/index.html");
+		String res=readHttp.read("http://localhost:"+port+"/read/index.html");
 		LOGGER.info("fin de lecture du flux");
 		assertNotNull(res);
 		String def="<!DOCTYPE html>\r\n" +
