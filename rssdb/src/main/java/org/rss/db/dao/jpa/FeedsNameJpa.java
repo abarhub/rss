@@ -21,8 +21,8 @@ public class FeedsNameJpa {
 	private CategorieJpa categorieJpa;
 
 	//@OneToMany(fetch = FetchType.LAZY,targetEntity = FeedsGenericJpa.class)
-	@ManyToOne(fetch = FetchType.LAZY,targetEntity = FeedsGenericJpa.class)
-	private FeedsJpa feeds;
+	@ManyToOne(fetch = FetchType.LAZY/*,targetEntity = FeedsGenericJpa.class*/)
+	private FeedsRssJpa feeds;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private UrlJpa urlJpa;
@@ -62,11 +62,11 @@ public class FeedsNameJpa {
 		this.urlJpa = urlJpa;
 	}
 
-	public FeedsJpa getFeeds() {
+	public FeedsRssJpa getFeeds() {
 		return feeds;
 	}
 
-	public void setFeeds(FeedsJpa feeds) {
+	public void setFeeds(FeedsRssJpa feeds) {
 		this.feeds = feeds;
 	}
 

@@ -5,9 +5,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.rss.beans.OutilsGeneriques;
-import org.rss.beans.flux.DateTimeZone;
-import org.rss.beans.flux.RssChannel;
-import org.rss.beans.flux.RssItem;
+import org.rss.beans.flux.*;
 import org.rss.beans.metier.SearchUsersResponseDTO;
 import org.rss.beans.metier.UserDTO;
 import org.rss.beans.param.RssListeUrl;
@@ -221,6 +219,110 @@ public class ListeController {
 		}
 
 		return responseUI;
+	}
+
+
+	@RequestMapping("/listeCategorie")
+	public ListCategorieUi listeCategorie() throws UnsupportedEncodingException {
+		String res = "";
+
+		LOGGER.info("liste categorie ...");
+
+		//ResponseEntity<String> tmp = restDbUser.add_url(nom, url);
+
+		ResponseEntity<ListCategories> tmp = restDbUser.listeCategorie();
+
+		ListCategorieUi listCategorieUi;
+
+		listCategorieUi=new ListCategorieUi();
+		listCategorieUi.setCategorieUiList(new ArrayList<>());
+		CategorieUi categorieUi;
+
+		ListCategories liste = tmp.getBody();
+		if(liste!=null&&!CollectionUtils.isEmpty(liste.getCategorieList())){
+			for(Categorie c:liste.getCategorieList()){
+				categorieUi=new CategorieUi();
+				categorieUi.setId("C"+c.getId());
+				categorieUi.setNom(c.getNom());
+				categorieUi.setFluxUiList(new ArrayList<>());
+				listCategorieUi.getCategorieUiList().add(categorieUi);
+
+				if(!CollectionUtils.isEmpty(c.getRssChannelList())){
+					for(RssChannel r:c.getRssChannelList()){
+						FluxUi fluxUi;
+						fluxUi=new FluxUi();
+						fluxUi.setId("F"+r.getId());
+						fluxUi.setNom(r.getName());
+						categorieUi.getFluxUiList().add(fluxUi);
+					}
+				}
+			}
+		}
+
+		/*for(int i=0;i<5;i++){
+			categorieUi=new CategorieUi();
+			categorieUi.setId("C"+i);
+			categorieUi.setNom("Categorie "+i);
+			categorieUi.setFluxUiList(new ArrayList<>());
+			listCategorieUi.getCategorieUiList().add(categorieUi);
+
+			for(int j=0;j<10;j++){
+				FluxUi fluxUi;
+				fluxUi=new FluxUi();
+				fluxUi.setId("F"+i);
+				fluxUi.setNom("Flux "+i);
+				categorieUi.getFluxUiList().add(fluxUi);
+			}
+		}*/
+
+		LOGGER.info("fin liste categorie : " + listCategorieUi);
+
+		return listCategorieUi;
+	}
+
+
+	@RequestMapping("/listeMessages2")
+	public ChannelUi listeRss(@RequestParam(value = "id", defaultValue = "", required = false) String id,
+	                          @RequestParam(value = "type", defaultValue = "", required = false) String type) throws UnsupportedEncodingException {
+
+		LOGGER.info("listeMessages2("+id+","+type+")");
+		ListChannelUi res;
+		ChannelUi c = null;
+
+		res = new ListChannelUi();
+
+		RssChannel[] liste_url;
+		List<ChannelUi> liste_channel;
+
+		liste_channel = Lists.newArrayList();
+		res.setListe_channel(liste_channel);
+
+		ResponseEntity<RssChannel[]> tmp=null;
+
+		if(!StringUtils.isEmpty(type)&&!StringUtils.isEmpty(id)){
+			if(type.equals("categorie")){
+				String id2;
+				if(id.startsWith("C")) {
+					id2=id.substring(1);
+					tmp = restDbUser.listeRssCategorie(id2);
+				}
+			} else if(type.equals("flux")){
+				if(id.startsWith("F")) {
+					String id2 = id.substring(1);
+					tmp = restDbUser.listeRssFlux(id2);
+				}
+			}
+		}
+
+		if(tmp!=null) {
+			liste_url = tmp.getBody();
+
+			if (liste_url != null && liste_url.length > 0) {
+				c = uiService.convertieFlux(liste_url);
+			}
+		}
+
+		return c;
 	}
 
 }

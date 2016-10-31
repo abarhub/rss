@@ -2,9 +2,7 @@ package org.rss.db.rest;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import org.rss.beans.flux.DateTimeZone;
-import org.rss.beans.flux.RssChannel;
-import org.rss.beans.flux.RssItem;
+import org.rss.beans.flux.*;
 import org.rss.beans.param.RssListeUrl;
 import org.rss.beans.param.RssUrl;
 import org.rss.db.dao.*;
@@ -18,9 +16,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Alain on 30/01/2016.
@@ -33,8 +34,6 @@ public class ServiceRestSpring {
 	@Autowired
 	private UrlRssRepository repo;
 
-	/*@Autowired
-	private UrlRepository repository;*/
 	@Autowired
 	private IUrlDao dao_url;
 
@@ -43,6 +42,13 @@ public class ServiceRestSpring {
 
 	@Autowired
 	private UrlService urlService;
+
+	private String idServeur;
+
+	@PostConstruct
+	public void init(){
+		idServeur=""+new Random().nextLong();
+	}
 
 	@RequestMapping("/api3/test1")
 	public String test1(@RequestParam(value="name", defaultValue="World") String name)
@@ -72,16 +78,11 @@ public class ServiceRestSpring {
 		LOGGER.info("liste_url debut");
 
 		liste=new RssListeUrl();
+		liste.setIdServeur(idServeur);
 
 		List<UrlJpa> liste1;
 
-		if(false) {
-			liste1 = repo.getListe();
-		}
-		else
-		{
-			liste1=dao_url.getListeUrl();
-		}
+		liste1=dao_url.getListeUrl();
 
 		if(liste1!=null&&!liste1.isEmpty())
 		{
@@ -228,4 +229,146 @@ public class ServiceRestSpring {
 
 		return liste;
 	}
+
+
+	@RequestMapping("/api3/listeRss")
+	public RssChannel[] listeRss(@RequestParam(value="userId") String userId,
+	                                  @RequestParam(value="type") String type,
+									  @RequestParam(value="id") String id)
+	{
+		List<RssChannel> liste;
+		List<FeedsRssJpa> liste_jpa;
+
+		LOGGER.info("userId="+userId);
+
+		int id2;
+		id2=Integer.parseInt(id);
+
+		liste=Lists.newArrayList();
+
+		liste_jpa=null;
+
+		if(!StringUtils.isEmpty(type)){
+			if(type.equals("categorie")){
+				liste_jpa=dao_url.listeRssCategorie(userId,id2);
+			} else if(type.equals("flux")){
+				liste_jpa=dao_url.listeRssFlux(userId,id2);
+			}
+		}
+
+		if(liste_jpa!=null&&!liste_jpa.isEmpty())
+		{
+			for(FeedsRssJpa tmp:liste_jpa)
+			{
+				RssChannel channel;
+				RssItem item;
+				List<RssItem> liste2;
+
+				Preconditions.checkNotNull(tmp);
+				Preconditions.checkNotNull(tmp.getId());
+
+				channel=new RssChannel();
+				channel.setDescription(tmp.getDescription());
+				channel.setLanguage(tmp.getLanguage());
+				channel.setTitle(tmp.getTitle());
+				channel.setUrl(tmp.getUrl());
+				channel.setId(""+tmp.getId());
+				channel.setName(tmp.getName());
+
+				if(tmp.getListeItem()!=null&&!tmp.getListeItem().isEmpty())
+				{
+					liste2=Lists.newArrayList();
+
+					for(ItemRssJpa tmp2:tmp.getListeItem())
+					{
+						item=new RssItem();
+						item.setDescription(tmp2.getDescription());
+						item.setGuid(tmp2.getGuid());
+						item.setLink(tmp2.getLink());
+						item.setTitle(tmp2.getTitle());
+						item.setPubDate(new DateTimeZone(tmp2.getPubDate()));
+
+						liste2.add(item);
+					}
+
+					channel.setListeItem(liste2);
+				}
+
+				liste.add(channel);
+			}
+		}
+
+		return liste.toArray(new RssChannel[0]);
+	}
+
+
+	@RequestMapping("/api3/listeCategorie")
+	public ListCategories listeCategorie(@RequestParam(value="userId") String userId)
+	{
+		List<RssChannel> liste;
+		List<FeedsRssJpa> liste_jpa;
+		ListCategories res;
+
+		LOGGER.info("userId="+userId);
+
+
+		liste=Lists.newArrayList();
+
+		liste_jpa=null;
+
+		res=dao_url.listeCategorie(userId);
+
+		/*if(StringUtils.isEmpty(type)){
+			if(type.equals("categorie")){
+				liste_jpa=dao_url.listeRssCategorie(userId,id2);
+			} else if(type.equals("flux")){
+				liste_jpa=dao_url.listeRssFlux(userId,id2);
+			}
+		}
+
+		if(liste_jpa!=null&&!liste_jpa.isEmpty())
+		{
+			for(FeedsRssJpa tmp:liste_jpa)
+			{
+				RssChannel channel;
+				RssItem item;
+				List<RssItem> liste2;
+
+				Preconditions.checkNotNull(tmp);
+				Preconditions.checkNotNull(tmp.getId());
+
+				channel=new RssChannel();
+				channel.setDescription(tmp.getDescription());
+				channel.setLanguage(tmp.getLanguage());
+				channel.setTitle(tmp.getTitle());
+				channel.setUrl(tmp.getUrl());
+				channel.setId(""+tmp.getId());
+				channel.setName(tmp.getName());
+
+				if(tmp.getListeItem()!=null&&!tmp.getListeItem().isEmpty())
+				{
+					liste2=Lists.newArrayList();
+
+					for(ItemRssJpa tmp2:tmp.getListeItem())
+					{
+						item=new RssItem();
+						item.setDescription(tmp2.getDescription());
+						item.setGuid(tmp2.getGuid());
+						item.setLink(tmp2.getLink());
+						item.setTitle(tmp2.getTitle());
+						item.setPubDate(new DateTimeZone(tmp2.getPubDate()));
+
+						liste2.add(item);
+					}
+
+					channel.setListeItem(liste2);
+				}
+
+				liste.add(channel);
+			}
+		}*/
+
+		return res;
+	}
+
 }

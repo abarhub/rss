@@ -2,6 +2,8 @@ package org.rss.registry.impl;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
+import org.rss.beans.flux.Categorie;
+import org.rss.beans.flux.ListCategories;
 import org.rss.beans.flux.RssChannel;
 import org.rss.beans.metier.*;
 import org.rss.beans.param.RssListeUrl;
@@ -9,6 +11,7 @@ import org.rss.beans.security.UserInfoDTO;
 import org.rss.registry.IRestDb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -188,6 +191,43 @@ public class RestDb implements IRestDb {
 		ResponseEntity<UserInfoDTO> res = restTemplate.postForEntity(url,userDTO,UserInfoDTO.class);
 
 		return res;
+	}
+
+	@Override
+	public ResponseEntity<ListCategories> listeCategorie(String userId) {
+		String url;
+		RestTemplate restTemplate = getRestTemplate("listeCategorie");
+
+		URI url2;
+		url2=getUri(urlDbServeur+"api3/listeCategorie?userId={userId}",userId);
+
+		UserDTO userDTO=new UserDTO();
+		userDTO.setLogin(userId);
+
+		ResponseEntity<ListCategories> res = restTemplate.getForEntity(url2, ListCategories.class);
+
+		return res;
+	}
+
+
+	public ResponseEntity<RssChannel[]> listeRssCategorie(String idUser,String id) throws UnsupportedEncodingException{
+		URI url=getUri(urlDbServeur+"api3/listeRss?userId={userId}&type=categorie&id={id}",idUser,id);
+
+		RestTemplate restTemplate = getRestTemplate("listeRssCategorie");
+
+		ResponseEntity<RssChannel[]> tmp = restTemplate.getForEntity(url, RssChannel[].class);
+
+		return tmp;
+	}
+
+	public ResponseEntity<RssChannel[]> listeRssFlux(String idUser,String id) throws UnsupportedEncodingException{
+		URI url=getUri(urlDbServeur+"api3/listeRss?userId={userId}&type=flux&id={id}",idUser,id);
+
+		RestTemplate restTemplate = getRestTemplate("listeRssFlux");
+
+		ResponseEntity<RssChannel[]> tmp = restTemplate.getForEntity(url, RssChannel[].class);
+
+		return tmp;
 	}
 
 

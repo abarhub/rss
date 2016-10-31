@@ -19,8 +19,8 @@ public class UrlJpa {
 	@Column(nullable = false,length = 1000)
 	private String url;
 
-	@ManyToOne(fetch = FetchType.LAZY,optional = true,targetEntity = FeedsGenericJpa.class)
-	private FeedsJpa liste_feeds;
+	@ManyToOne(fetch = FetchType.LAZY,optional = true/*,targetEntity = FeedsGenericJpa.class*/)
+	private FeedsRssJpa liste_feeds;
 
 	public UrlJpa() {
 	}
@@ -49,11 +49,11 @@ public class UrlJpa {
 		this.url = url;
 	}
 
-	public FeedsJpa getListe_feeds() {
+	public FeedsRssJpa getListe_feeds() {
 		return liste_feeds;
 	}
 
-	public void setListe_feeds(FeedsJpa liste_feeds) {
+	public void setListe_feeds(FeedsRssJpa liste_feeds) {
 		this.liste_feeds = liste_feeds;
 	}
 

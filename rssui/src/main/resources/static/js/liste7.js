@@ -33,6 +33,8 @@ angular.module('todoApp', ['ngSanitize'])
             todoList.urlAAjouter = undefined;
             todoList.nomAAjouter = undefined;
 
+            todoList.listeCategories=[];
+
             /*todoList.updateList=function() {
                 logMsgInfo($http,"Test1 updateList");
                 $http.get('/liste').then(function(value) {
@@ -140,6 +142,61 @@ angular.module('todoApp', ['ngSanitize'])
                     }, 10*1000);
                 }
             }
+
+            todoList.updateCategorie=function() {
+                logMsgInfo($http,"Test2 updateCategorie");
+                $http.get(todoList.racineUrl+'/listeCategorie').then(function(value) {
+                    logMsgInfo($http,"Ok");
+                    var tmp=value.data;
+                    logMsgInfo($http,"res="+tmp);
+                    //todoList.liste1=tmp.liste_channel;
+                    logMsgInfo($http,"suite");
+                    //todoList.liste_url=tmp.liste_channel;
+                    todoList.listeCategories=tmp.categorieUiList;
+                    logMsgInfo($http,"Fin traitement");
+                }, function(reason) {
+                    logMsgErr($http,"Error : "+reason);
+                }, function(value) {
+                    // notifyCallback
+                });
+            }
+
+            todoList.selectCateg=function(id) {
+                logMsgInfo($http,"Test2 updateMsg:"+id);
+                $http.get(todoList.racineUrl+'/listeMessages2?type=categorie&id='+id).then(function(value) {
+                    logMsgInfo($http,"Ok");
+                    var tmp=value.data;
+                    logMsgInfo($http,"res="+tmp);
+                    //todoList.liste1=tmp.liste_channel;
+                    logMsgInfo($http,"suite");
+                    //todoList.liste_url=tmp.liste_channel;
+                    todoList.liste_item_select=tmp.listeItem;
+                    logMsgInfo($http,"Fin traitement");
+                }, function(reason) {
+                    logMsgErr($http,"Error : "+reason);
+                }, function(value) {
+                    // notifyCallback
+                });
+            }
+
+            todoList.selectFlux=function(id) {
+                logMsgInfo($http,"Test2 updateMsg:"+id);
+                $http.get(todoList.racineUrl+'/listeMessages2?type=flux&id='+id).then(function(value) {
+                    logMsgInfo($http,"Ok");
+                    var tmp=value.data;
+                    logMsgInfo($http,"res="+tmp);
+                    //todoList.liste1=tmp.liste_channel;
+                    logMsgInfo($http,"suite");
+                    //todoList.liste_url=tmp.liste_channel;
+                    todoList.liste_item_select=tmp.listeItem;
+                    logMsgInfo($http,"Fin traitement");
+                }, function(reason) {
+                    logMsgErr($http,"Error : "+reason);
+                }, function(value) {
+                    // notifyCallback
+                });
+            }
+
 
         }]);
 
