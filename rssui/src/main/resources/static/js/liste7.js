@@ -2,9 +2,9 @@
  * Created by Alain on 01/11/2015.
  */
 
-angular.module('todoApp', ['ngSanitize'])
-        .controller('TodoListController', ['$scope', '$http', '$interval',
-                function($scope, $http, $interval) {
+angular.module('todoApp')
+        .controller('TodoListController', ['$scope', '$http', '$interval','logService',
+                function($scope, $http, $interval, logService) {
             var todoList = this;
 
             var stopUpdateDisplay;
@@ -54,55 +54,55 @@ angular.module('todoApp', ['ngSanitize'])
             }*/
 
             todoList.addUrl=function() {
-                logMsgInfo($http,"Test1 addUrl");
+                logService.logMsgInfo("Test1 addUrl");
                 var urlAAjouter=todoList.urlAAjouter;
                 var nomAAjouter=todoList.nomAAjouter;
                 if (typeof urlAAjouter !== 'undefined') {
                     if(typeof nomAAjouter !== 'undefined') {
                         if (stringStartWith(urlAAjouter, "http")) {
                             if(nomAAjouter!='') {
-                                logMsgInfo($http,"URL a ajouter : " + urlAAjouter);
+                                logService.logMsgInfo("URL a ajouter : " + urlAAjouter);
                                 todoList.urlAAjouter = "";
                                 todoList.nomAAjouter = "";
                                 $http.post(todoList.racineUrl+'/add_url?name='+encodeURIComponent(nomAAjouter)+
                                         '&url=' + encodeURIComponent(urlAAjouter))
                                         .then(function (value) {
-                                            logMsgInfo($http,"ok : " + value);
-                                            logMsgInfo($http,"appel updateListFlux ...");
+                                            logService.logMsgInfo("ok : " + value);
+                                            logService.logMsgInfo("appel updateListFlux ...");
                                             todoList.updateListFlux();
-                                            logMsgInfo($http,"appel updateListFlux fin");
+                                            logService.logMsgInfo("appel updateListFlux fin");
                                         }, function (reason) {
-                                            logMsgErr($http,"Error : " + reason);
+                                            logMsgErr("Error : " + reason);
                                         });
                             } else {
-                                logMsgErr($http,"nom vide !");
+                                logService.logMsgErr("nom vide !");
                             }
                         }
                         else {
-                            logMsgErr($http,"url invalide !");
+                            logService.logMsgErr("url invalide !");
                         }
                     } else {
-                        logMsgErr($http,"nom invalide !");
+                        logService.logMsgErr("nom invalide !");
                     }
                 }
-                logMsgInfo($http,"fin methode addUrl !");
+                logService.logMsgInfo("fin methode addUrl !");
             }
 
 
 
             todoList.updateListFlux=function() {
-                logMsgInfo($http,"Test1 updateListFlux");
+                logService.logMsgInfo("Test1 updateListFlux");
                 $http.get(todoList.racineUrl+'/listeUrl').then(function(value) {
-                    logMsgInfo($http,"Ok");
+                    logService.logMsgInfo("Ok");
                     var tmp=value.data;
-                    logMsgInfo($http,"res="+tmp);
+                    logService.logMsgInfo("res="+tmp);
                     //todoList.liste1=tmp.liste_channel;
-                    logMsgInfo($http,"suite");
+                    logService.logMsgInfo("suite");
                     todoList.liste_url=tmp.liste_channel;
                     //todoList.liste_item_select=tmp.liste_channel[0].listeItem;
-                    logMsgInfo($http,"Fin traitement");
+                    logService.logMsgInfo("Fin traitement");
                 }, function(reason) {
-                    logMsgErr($http,"Error : "+reason);
+                    logService.logMsgErr("Error : "+reason);
                 }, function(value) {
                     // notifyCallback
                 });
@@ -110,18 +110,18 @@ angular.module('todoApp', ['ngSanitize'])
 
 
             todoList.updateMsg=function(id) {
-                logMsgInfo($http,"Test2 updateMsg:"+id);
+                logService.logMsgInfo("Test2 updateMsg:"+id);
                 $http.get(todoList.racineUrl+'/listeMessages?id='+id).then(function(value) {
-                    logMsgInfo($http,"Ok");
+                    logService.logMsgInfo("Ok");
                     var tmp=value.data;
-                    logMsgInfo($http,"res="+tmp);
+                    logService.logMsgInfo("res="+tmp);
                     //todoList.liste1=tmp.liste_channel;
-                    logMsgInfo($http,"suite");
+                    logService.logMsgInfo("suite");
                     //todoList.liste_url=tmp.liste_channel;
                     todoList.liste_item_select=tmp.listeItem;
-                    logMsgInfo($http,"Fin traitement");
+                    logService.logMsgInfo("Fin traitement");
                 }, function(reason) {
-                    logMsgErr($http,"Error : "+reason);
+                    logService.logMsgErr("Error : "+reason);
                 }, function(value) {
                     // notifyCallback
                 });
@@ -130,12 +130,12 @@ angular.module('todoApp', ['ngSanitize'])
             todoList.updateAffichage=function() {
                 if ( angular.isDefined(stopUpdateDisplay) ){
                     // arret de l'affichage recurrent
-                    logMsgInfo($http,"arret display");
+                    logService.logMsgInfo("arret display");
                     $interval.cancel(stopUpdateDisplay);
                     stopUpdateDisplay = undefined;
                 } else {
                     // demarrage de l'affichage recurrent
-                    logMsgInfo($http,"demarrage display");
+                    logService.logMsgInfo("demarrage display");
                     //stopUpdateDisplay = $interval(todoList.updateListFlux, 10*1000);
                     stopUpdateDisplay = $interval(function() {
                         todoList.updateListFlux();
@@ -144,54 +144,54 @@ angular.module('todoApp', ['ngSanitize'])
             }
 
             todoList.updateCategorie=function() {
-                logMsgInfo($http,"Test2 updateCategorie");
+                logService.logMsgInfo("Test2 updateCategorie");
                 $http.get(todoList.racineUrl+'/listeCategorie').then(function(value) {
-                    logMsgInfo($http,"Ok");
+                    logService.logMsgInfo("Ok");
                     var tmp=value.data;
-                    logMsgInfo($http,"res="+tmp);
+                    logService.logMsgInfo("res="+tmp);
                     //todoList.liste1=tmp.liste_channel;
-                    logMsgInfo($http,"suite");
+                    logService.logMsgInfo("suite");
                     //todoList.liste_url=tmp.liste_channel;
                     todoList.listeCategories=tmp.categorieUiList;
-                    logMsgInfo($http,"Fin traitement");
+                    logService.logMsgInfo("Fin traitement");
                 }, function(reason) {
-                    logMsgErr($http,"Error : "+reason);
+                    logService.logMsgErr("Error : "+reason);
                 }, function(value) {
                     // notifyCallback
                 });
             }
 
             todoList.selectCateg=function(id) {
-                logMsgInfo($http,"Test2 updateMsg:"+id);
+                logService.logMsgInfo("Test2 updateMsg:"+id);
                 $http.get(todoList.racineUrl+'/listeMessages2?type=categorie&id='+id).then(function(value) {
-                    logMsgInfo($http,"Ok");
+                    logService.logMsgInfo("Ok");
                     var tmp=value.data;
-                    logMsgInfo($http,"res="+tmp);
+                    logService.logMsgInfo("res="+tmp);
                     //todoList.liste1=tmp.liste_channel;
-                    logMsgInfo($http,"suite");
+                    logService.logMsgInfo("suite");
                     //todoList.liste_url=tmp.liste_channel;
                     todoList.liste_item_select=tmp.listeItem;
-                    logMsgInfo($http,"Fin traitement");
+                    logService.logMsgInfo("Fin traitement");
                 }, function(reason) {
-                    logMsgErr($http,"Error : "+reason);
+                    logService.logMsgErr("Error : "+reason);
                 }, function(value) {
                     // notifyCallback
                 });
             }
 
             todoList.selectFlux=function(id) {
-                logMsgInfo($http,"Test2 updateMsg:"+id);
+                logService.logMsgInfo("Test2 updateMsg:"+id);
                 $http.get(todoList.racineUrl+'/listeMessages2?type=flux&id='+id).then(function(value) {
-                    logMsgInfo($http,"Ok");
+                    logService.logMsgInfo("Ok");
                     var tmp=value.data;
-                    logMsgInfo($http,"res="+tmp);
+                    logService.logMsgInfo("res="+tmp);
                     //todoList.liste1=tmp.liste_channel;
-                    logMsgInfo($http,"suite");
+                    logService.logMsgInfo("suite");
                     //todoList.liste_url=tmp.liste_channel;
                     todoList.liste_item_select=tmp.listeItem;
-                    logMsgInfo($http,"Fin traitement");
+                    logService.logMsgInfo("Fin traitement");
                 }, function(reason) {
-                    logMsgErr($http,"Error : "+reason);
+                    logService.logMsgErr("Error : "+reason);
                 }, function(value) {
                     // notifyCallback
                 });
