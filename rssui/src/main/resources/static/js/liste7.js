@@ -3,8 +3,8 @@
  */
 
 angular.module('todoApp')
-        .controller('TodoListController', ['$scope', '$http', '$interval','logService','toolsService',
-                function($scope, $http, $interval, logService, toolsService) {
+        .controller('TodoListController', ['$scope', '$http', '$interval','logService','toolsService', 'restTemplateService',
+                function($scope, $http, $interval, logService, toolsService, restTemplateService) {
             var todoList = this;
 
             var stopUpdateDisplay;
@@ -35,24 +35,6 @@ angular.module('todoApp')
 
             todoList.listeCategories=[];
 
-            /*todoList.updateList=function() {
-                logMsgInfo($http,"Test1 updateList");
-                $http.get('/liste').then(function(value) {
-                    logMsgInfo($http,"Ok");
-                    var tmp=value.data;
-                    logMsgInfo($http,"res="+tmp);
-                    todoList.liste1=tmp.liste_channel;
-                    logMsgInfo($http,"suite");
-                    todoList.liste_url=tmp.liste_channel;
-                    todoList.liste_item_select=tmp.liste_channel[0].listeItem;
-                    logMsgInfo($http,"Fin traitement");
-                }, function(reason) {
-                    logMsgErr($http,"Error : "+reason);
-                }, function(value) {
-                    // notifyCallback
-                });
-            }*/
-
             todoList.addUrl=function() {
                 logService.logMsgInfo("Test1 addUrl");
                 var urlAAjouter=todoList.urlAAjouter;
@@ -64,8 +46,9 @@ angular.module('todoApp')
                                 logService.logMsgInfo("URL a ajouter : " + urlAAjouter);
                                 todoList.urlAAjouter = "";
                                 todoList.nomAAjouter = "";
-                                $http.post(todoList.racineUrl+'/add_url?name='+encodeURIComponent(nomAAjouter)+
-                                        '&url=' + encodeURIComponent(urlAAjouter))
+                                //$http.post(todoList.racineUrl+'/add_url?name='+encodeURIComponent(nomAAjouter)+
+                                //        '&url=' + encodeURIComponent(urlAAjouter))
+                                restTemplateService.ajouteUrl(nomAAjouter,urlAAjouter)
                                         .then(function (value) {
                                             logService.logMsgInfo("ok : " + value);
                                             logService.logMsgInfo("appel updateListFlux ...");
@@ -86,13 +69,14 @@ angular.module('todoApp')
                     }
                 }
                 logService.logMsgInfo("fin methode addUrl !");
-            }
+            };
 
 
 
             todoList.updateListFlux=function() {
                 logService.logMsgInfo("Test1 updateListFlux");
-                $http.get(todoList.racineUrl+'/listeUrl').then(function(value) {
+                //$http.get(todoList.racineUrl+'/listeUrl').then(function(value) {
+                restTemplateService.getListeUrl().then(function(value) {
                     logService.logMsgInfo("Ok");
                     var tmp=value.data;
                     logService.logMsgInfo("res="+tmp);
@@ -106,12 +90,13 @@ angular.module('todoApp')
                 }, function(value) {
                     // notifyCallback
                 });
-            }
+            };
 
 
             todoList.updateMsg=function(id) {
                 logService.logMsgInfo("Test2 updateMsg:"+id);
-                $http.get(todoList.racineUrl+'/listeMessages?id='+id).then(function(value) {
+                //$http.get(todoList.racineUrl+'/listeMessages?id='+id).then(function(value) {
+                restTemplateService.getListeMessages(id).then(function(value) {
                     logService.logMsgInfo("Ok");
                     var tmp=value.data;
                     logService.logMsgInfo("res="+tmp);
@@ -125,7 +110,7 @@ angular.module('todoApp')
                 }, function(value) {
                     // notifyCallback
                 });
-            }
+            };
 
             todoList.updateAffichage=function() {
                 if ( angular.isDefined(stopUpdateDisplay) ){
@@ -141,11 +126,12 @@ angular.module('todoApp')
                         todoList.updateListFlux();
                     }, 10*1000);
                 }
-            }
+            };
 
             todoList.updateCategorie=function() {
                 logService.logMsgInfo("Test2 updateCategorie");
-                $http.get(todoList.racineUrl+'/listeCategorie').then(function(value) {
+                //$http.get(todoList.racineUrl+'/listeCategorie').then(function(value) {
+                restTemplateService.getListeCategories().then(function(value) {
                     logService.logMsgInfo("Ok");
                     var tmp=value.data;
                     logService.logMsgInfo("res="+tmp);
@@ -159,11 +145,12 @@ angular.module('todoApp')
                 }, function(value) {
                     // notifyCallback
                 });
-            }
+            };
 
             todoList.selectCateg=function(id) {
                 logService.logMsgInfo("Test2 updateMsg:"+id);
-                $http.get(todoList.racineUrl+'/listeMessages2?type=categorie&id='+id).then(function(value) {
+                //$http.get(todoList.racineUrl+'/listeMessages2?type=categorie&id='+id).then(function(value) {
+                restTemplateService.getListeUrl2(id).then(function(value) {
                     logService.logMsgInfo("Ok");
                     var tmp=value.data;
                     logService.logMsgInfo("res="+tmp);
@@ -177,11 +164,12 @@ angular.module('todoApp')
                 }, function(value) {
                     // notifyCallback
                 });
-            }
+            };
 
             todoList.selectFlux=function(id) {
                 logService.logMsgInfo("Test2 updateMsg:"+id);
-                $http.get(todoList.racineUrl+'/listeMessages2?type=flux&id='+id).then(function(value) {
+                //$http.get(todoList.racineUrl+'/listeMessages2?type=flux&id='+id).then(function(value) {
+                restTemplateService.getListeMessages2(id).then(function(value) {
                     logService.logMsgInfo("Ok");
                     var tmp=value.data;
                     logService.logMsgInfo("res="+tmp);
@@ -195,7 +183,7 @@ angular.module('todoApp')
                 }, function(value) {
                     // notifyCallback
                 });
-            }
+            };
 
 
         }]);

@@ -13,11 +13,11 @@ angular.module('todoApp')
                     },
 
                     logMsgErr: function (s) {
-                        logMsg2($http, s, 'Erreur');
+                        this.logMsg2($http, s, 'Erreur');
                     },
 
                     logMsgInfo: function (s) {
-                        logMsg2($http, s, 'Info');
+                        this.logMsg2($http, s, 'Info');
                     },
 
                     logMsg2: function (http2, s, niveau) {
