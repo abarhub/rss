@@ -3,8 +3,8 @@
  */
 
 angular.module('todoApp')
-        .controller('TodoListController', ['$scope', '$http', '$interval','logService',
-                function($scope, $http, $interval, logService) {
+        .controller('TodoListController', ['$scope', '$http', '$interval','logService','toolsService',
+                function($scope, $http, $interval, logService, toolsService) {
             var todoList = this;
 
             var stopUpdateDisplay;
@@ -57,9 +57,9 @@ angular.module('todoApp')
                 logService.logMsgInfo("Test1 addUrl");
                 var urlAAjouter=todoList.urlAAjouter;
                 var nomAAjouter=todoList.nomAAjouter;
-                if (typeof urlAAjouter !== 'undefined') {
-                    if(typeof nomAAjouter !== 'undefined') {
-                        if (stringStartWith(urlAAjouter, "http")) {
+                if (angular.isDefined(urlAAjouter)) {
+                    if(angular.isDefined(nomAAjouter)) {
+                        if (toolsService.stringStartWith(urlAAjouter, "http")) {
                             if(nomAAjouter!='') {
                                 logService.logMsgInfo("URL a ajouter : " + urlAAjouter);
                                 todoList.urlAAjouter = "";
