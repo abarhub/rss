@@ -2,9 +2,9 @@
  * Created by Alain on 01/11/2015.
  */
 
-angular.module('todoApp', ['ngSanitize'])
-        .controller('TodoListController', ['$scope', '$http', '$interval',
-                function($scope, $http, $interval) {
+angular.module('todoApp')
+        .controller('TodoListController', ['$scope', '$http', '$interval','logService','toolsService', 'restTemplateService',
+                function($scope, $http, $interval, logService, toolsService, restTemplateService) {
             var todoList = this;
 
             var stopUpdateDisplay;
@@ -33,113 +33,158 @@ angular.module('todoApp', ['ngSanitize'])
             todoList.urlAAjouter = undefined;
             todoList.nomAAjouter = undefined;
 
-            /*todoList.updateList=function() {
-                logMsgInfo($http,"Test1 updateList");
-                $http.get('/liste').then(function(value) {
-                    logMsgInfo($http,"Ok");
-                    var tmp=value.data;
-                    logMsgInfo($http,"res="+tmp);
-                    todoList.liste1=tmp.liste_channel;
-                    logMsgInfo($http,"suite");
-                    todoList.liste_url=tmp.liste_channel;
-                    todoList.liste_item_select=tmp.liste_channel[0].listeItem;
-                    logMsgInfo($http,"Fin traitement");
-                }, function(reason) {
-                    logMsgErr($http,"Error : "+reason);
-                }, function(value) {
-                    // notifyCallback
-                });
-            }*/
+            todoList.listeCategories=[];
 
             todoList.addUrl=function() {
-                logMsgInfo($http,"Test1 addUrl");
+                logService.logMsgInfo("Test1 addUrl");
                 var urlAAjouter=todoList.urlAAjouter;
                 var nomAAjouter=todoList.nomAAjouter;
-                if (typeof urlAAjouter !== 'undefined') {
-                    if(typeof nomAAjouter !== 'undefined') {
-                        if (stringStartWith(urlAAjouter, "http")) {
+                if (angular.isDefined(urlAAjouter)) {
+                    if(angular.isDefined(nomAAjouter)) {
+                        if (toolsService.stringStartWith(urlAAjouter, "http")) {
                             if(nomAAjouter!='') {
-                                logMsgInfo($http,"URL a ajouter : " + urlAAjouter);
+                                logService.logMsgInfo("URL a ajouter : " + urlAAjouter);
                                 todoList.urlAAjouter = "";
                                 todoList.nomAAjouter = "";
-                                $http.post(todoList.racineUrl+'/add_url?name='+encodeURIComponent(nomAAjouter)+
-                                        '&url=' + encodeURIComponent(urlAAjouter))
+                                //$http.post(todoList.racineUrl+'/add_url?name='+encodeURIComponent(nomAAjouter)+
+                                //        '&url=' + encodeURIComponent(urlAAjouter))
+                                restTemplateService.ajouteUrl(nomAAjouter,urlAAjouter)
                                         .then(function (value) {
-                                            logMsgInfo($http,"ok : " + value);
-                                            logMsgInfo($http,"appel updateListFlux ...");
+                                            logService.logMsgInfo("ok : " + value);
+                                            logService.logMsgInfo("appel updateListFlux ...");
                                             todoList.updateListFlux();
-                                            logMsgInfo($http,"appel updateListFlux fin");
+                                            logService.logMsgInfo("appel updateListFlux fin");
                                         }, function (reason) {
-                                            logMsgErr($http,"Error : " + reason);
+                                            logMsgErr("Error : " + reason);
                                         });
                             } else {
-                                logMsgErr($http,"nom vide !");
+                                logService.logMsgErr("nom vide !");
                             }
                         }
                         else {
-                            logMsgErr($http,"url invalide !");
+                            logService.logMsgErr("url invalide !");
                         }
                     } else {
-                        logMsgErr($http,"nom invalide !");
+                        logService.logMsgErr("nom invalide !");
                     }
                 }
-                logMsgInfo($http,"fin methode addUrl !");
-            }
+                logService.logMsgInfo("fin methode addUrl !");
+            };
 
 
 
             todoList.updateListFlux=function() {
-                logMsgInfo($http,"Test1 updateListFlux");
-                $http.get(todoList.racineUrl+'/listeUrl').then(function(value) {
-                    logMsgInfo($http,"Ok");
+                logService.logMsgInfo("Test1 updateListFlux");
+                //$http.get(todoList.racineUrl+'/listeUrl').then(function(value) {
+                restTemplateService.getListeUrl().then(function(value) {
+                    logService.logMsgInfo("Ok");
                     var tmp=value.data;
-                    logMsgInfo($http,"res="+tmp);
+                    logService.logMsgInfo("res="+tmp);
                     //todoList.liste1=tmp.liste_channel;
-                    logMsgInfo($http,"suite");
+                    logService.logMsgInfo("suite");
                     todoList.liste_url=tmp.liste_channel;
                     //todoList.liste_item_select=tmp.liste_channel[0].listeItem;
-                    logMsgInfo($http,"Fin traitement");
+                    logService.logMsgInfo("Fin traitement");
                 }, function(reason) {
-                    logMsgErr($http,"Error : "+reason);
+                    logService.logMsgErr("Error : "+reason);
                 }, function(value) {
                     // notifyCallback
                 });
-            }
+            };
 
 
             todoList.updateMsg=function(id) {
-                logMsgInfo($http,"Test2 updateMsg:"+id);
-                $http.get(todoList.racineUrl+'/listeMessages?id='+id).then(function(value) {
-                    logMsgInfo($http,"Ok");
+                logService.logMsgInfo("Test2 updateMsg:"+id);
+                //$http.get(todoList.racineUrl+'/listeMessages?id='+id).then(function(value) {
+                restTemplateService.getListeMessages(id).then(function(value) {
+                    logService.logMsgInfo("Ok");
                     var tmp=value.data;
-                    logMsgInfo($http,"res="+tmp);
+                    logService.logMsgInfo("res="+tmp);
                     //todoList.liste1=tmp.liste_channel;
-                    logMsgInfo($http,"suite");
+                    logService.logMsgInfo("suite");
                     //todoList.liste_url=tmp.liste_channel;
                     todoList.liste_item_select=tmp.listeItem;
-                    logMsgInfo($http,"Fin traitement");
+                    logService.logMsgInfo("Fin traitement");
                 }, function(reason) {
-                    logMsgErr($http,"Error : "+reason);
+                    logService.logMsgErr("Error : "+reason);
                 }, function(value) {
                     // notifyCallback
                 });
-            }
+            };
 
             todoList.updateAffichage=function() {
                 if ( angular.isDefined(stopUpdateDisplay) ){
                     // arret de l'affichage recurrent
-                    logMsgInfo($http,"arret display");
+                    logService.logMsgInfo("arret display");
                     $interval.cancel(stopUpdateDisplay);
                     stopUpdateDisplay = undefined;
                 } else {
                     // demarrage de l'affichage recurrent
-                    logMsgInfo($http,"demarrage display");
+                    logService.logMsgInfo("demarrage display");
                     //stopUpdateDisplay = $interval(todoList.updateListFlux, 10*1000);
                     stopUpdateDisplay = $interval(function() {
                         todoList.updateListFlux();
                     }, 10*1000);
                 }
-            }
+            };
+
+            todoList.updateCategorie=function() {
+                logService.logMsgInfo("Test2 updateCategorie");
+                //$http.get(todoList.racineUrl+'/listeCategorie').then(function(value) {
+                restTemplateService.getListeCategories().then(function(value) {
+                    logService.logMsgInfo("Ok");
+                    var tmp=value.data;
+                    logService.logMsgInfo("res="+tmp);
+                    //todoList.liste1=tmp.liste_channel;
+                    logService.logMsgInfo("suite");
+                    //todoList.liste_url=tmp.liste_channel;
+                    todoList.listeCategories=tmp.categorieUiList;
+                    logService.logMsgInfo("Fin traitement");
+                }, function(reason) {
+                    logService.logMsgErr("Error : "+reason);
+                }, function(value) {
+                    // notifyCallback
+                });
+            };
+
+            todoList.selectCateg=function(id) {
+                logService.logMsgInfo("Test2 updateMsg:"+id);
+                //$http.get(todoList.racineUrl+'/listeMessages2?type=categorie&id='+id).then(function(value) {
+                restTemplateService.getListeUrl2(id).then(function(value) {
+                    logService.logMsgInfo("Ok");
+                    var tmp=value.data;
+                    logService.logMsgInfo("res="+tmp);
+                    //todoList.liste1=tmp.liste_channel;
+                    logService.logMsgInfo("suite");
+                    //todoList.liste_url=tmp.liste_channel;
+                    todoList.liste_item_select=tmp.listeItem;
+                    logService.logMsgInfo("Fin traitement");
+                }, function(reason) {
+                    logService.logMsgErr("Error : "+reason);
+                }, function(value) {
+                    // notifyCallback
+                });
+            };
+
+            todoList.selectFlux=function(id) {
+                logService.logMsgInfo("Test2 updateMsg:"+id);
+                //$http.get(todoList.racineUrl+'/listeMessages2?type=flux&id='+id).then(function(value) {
+                restTemplateService.getListeMessages2(id).then(function(value) {
+                    logService.logMsgInfo("Ok");
+                    var tmp=value.data;
+                    logService.logMsgInfo("res="+tmp);
+                    //todoList.liste1=tmp.liste_channel;
+                    logService.logMsgInfo("suite");
+                    //todoList.liste_url=tmp.liste_channel;
+                    todoList.liste_item_select=tmp.listeItem;
+                    logService.logMsgInfo("Fin traitement");
+                }, function(reason) {
+                    logService.logMsgErr("Error : "+reason);
+                }, function(value) {
+                    // notifyCallback
+                });
+            };
+
 
         }]);
 

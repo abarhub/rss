@@ -1,5 +1,6 @@
 package org.rss.db.dao;
 
+import org.rss.beans.flux.ListCategories;
 import org.rss.beans.flux.RssChannel;
 import org.rss.beans.param.RssUrl;
 import org.rss.db.dao.jpa.FeedsRssJpa;
@@ -25,4 +26,10 @@ public interface IUrlDao {
 	public boolean isNomExiste(String nom);
 
 	List<FeedsRssJpa> listeRssUser(String userId);
+
+	List<FeedsRssJpa> listeRssCategorie(String userId, int id);
+
+	List<FeedsRssJpa> listeRssFlux(String userId, int id);
+
+	ListCategories listeCategorie(String userId);
 }

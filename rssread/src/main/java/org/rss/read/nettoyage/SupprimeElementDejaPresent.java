@@ -37,4 +37,8 @@ public class SupprimeElementDejaPresent {
 		}
 		return channel;
 	}
+
+	public void clear() {
+		map.clear();
+	}
 }

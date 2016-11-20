@@ -51,6 +51,8 @@ public class TacheLecture {
 	@Autowired
 	private SupprimeElementDejaPresent supprimeElementDejaPresent;
 
+	private String dernierIdServeur;
+
 	//private int nb0;
 	//private int nb2;
 	//private List<String> url_deja_traite=Lists.newArrayList();
@@ -102,7 +104,7 @@ public class TacheLecture {
 	}
 
 	public void lecture_url(RssUrl url) {
-		String res="",url0;
+		String res,url0;
 		Preconditions.checkNotNull(url);
 		url0=url.getUrl();
 		if(url0!=null&&url0.length()>0&&url0.startsWith("http")) {
@@ -197,6 +199,13 @@ public class TacheLecture {
 			{
 				param.setListUrl(res.getListe_url());
 			}
+			if(StringUtils.isEmpty(dernierIdServeur)
+					||StringUtils.isEmpty(res.getIdServeur())
+					||!res.getIdServeur().equals(dernierIdServeur)){
+				LOGGER.info("Serveur Db reinitialise ("+dernierIdServeur+","+res.getIdServeur()+")");
+				reinitCache();
+			}
+			dernierIdServeur=res.getIdServeur();
 		}catch(Exception e){
 			LOGGER.error("Error:"+e.getLocalizedMessage(),e);
 		}
@@ -205,5 +214,11 @@ public class TacheLecture {
 	@Override
 	public String toString() {
 		return "TacheLecture{}";
+	}
+
+	public void reinitCache(){
+		LOGGER.info("Reinitialisation du cache");
+		url_deja_traite.clear();
+		supprimeElementDejaPresent.clear();
 	}
 }

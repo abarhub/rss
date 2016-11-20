@@ -13,7 +13,11 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.min.js"></script>
-    <script src="js/outils.js"></script>
+    <script src="js/toolsService.js"></script>
+    <script src="js/main.js"></script>
+    <!--<script src="js/outils.js"></script>-->
+    <script src="js/logService.js"></script>
+    <script src="js/restTemplateService.js"></script>
     <script src="js/liste7.js"></script>
     <!--<link rel="stylesheet" href="css/todo.css">-->
 </head>
@@ -58,6 +62,9 @@
                 <button ng-click="todoList.updateAffichage()" >
                     Maj Affichage
                 </button>
+                <button ng-click="todoList.updateCategorie()" >
+                    Maj Affichage2
+                </button>
                 <a href="{{todoList.racineUrl}}/logout">Deconnexion</a>
             </div>
             <div class="col-md-4">
@@ -83,6 +90,28 @@
                         id : {{rss1.id}}<br/>
                         nom : {{rss1.name}}<br/>
                     </a>
+                </div>
+
+                <br/><br/><br/>
+                liste_url2<br/>
+
+                <div class="list-group">
+                    <div
+                       ng-repeat="categorie in todoList.listeCategories"
+                       >
+                        <a href="#" class="list-group-item"
+                           ng-click="todoList.selectCateg(categorie.id)"
+                        >
+                        Nom : {{categorie.nom}}<br/>
+                        Id : {{categorie.id}}<br/>
+                        </a>
+                        <a href="#" class="list-group-item"
+                           ng-repeat="rss1 in categorie.fluxUiList"
+                           ng-click="todoList.selectFlux(rss1.id)">
+                            nom : {{rss1.nom}}<br/>
+                            id : {{rss1.id}}<br/>
+                        </a>
+                    </div>
                 </div>
 
             </div>

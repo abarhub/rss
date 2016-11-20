@@ -1,6 +1,9 @@
 package org.rss.db.dao;
 
 import com.google.common.base.Preconditions;
+import org.rss.beans.flux.Categorie;
+import org.rss.beans.flux.ListCategories;
+import org.rss.beans.flux.RssChannel;
 import org.rss.db.dao.jpa.*;
 import org.rss.db.dao.repository.*;
 import org.slf4j.Logger;
@@ -154,6 +157,122 @@ public class UrlDao implements IUrlDao {
 			}
 		}
 		LOGGER.info("L'utilisateur a "+liste.size()+" feeds");
+
+		return liste;
+	}
+
+	@Override
+	public List<FeedsRssJpa> listeRssCategorie(String userId, int id) {
+		List<FeedsRssJpa> liste=new ArrayList<>();
+
+		LOGGER.info("Recuperation des flux rss de l'utilisateur "+userId+" pour la categorie "+id);
+
+		Preconditions.checkNotNull(userId);
+
+		Optional<UserJpa> optUser = userRepository.findByLogin(userId);
+
+		if(optUser.isPresent()){
+			UserJpa user = optUser.get();
+
+			LOGGER.info("L'utilisateur "+userId+" existe");
+			LOGGER.info("Recuperation des categories");
+			CategorieJpa c=categorieRepository.getOne(id);
+			if(c!=null){
+				List<FeedsNameJpa> liste2 = c.getFeeds();
+				if(!CollectionUtils.isEmpty(liste2)){
+					LOGGER.info("La categorie a "+liste2.size()+" feeds");
+					for(FeedsNameJpa f:liste2){
+						if(f.getFeeds()!=null) {
+							Preconditions.checkNotNull(f.getFeeds());
+							Preconditions.checkNotNull(f.getFeeds().getId());
+							/*FeedsJpa tmp = f.getFeeds();
+							FeedsRssJpa f2=new FeedsRssJpa();
+							f2.setName(tmp.getTitle());
+							f2.setDescription(tmp.getDescription());
+							f2.setUrl(tmp.getUrl());
+							liste.add(f2);*/
+							liste.add(f.getFeeds());
+						}
+					}
+				}
+			}
+		}
+		LOGGER.info("L'utilisateur a "+liste.size()+" feeds");
+
+		return liste;
+	}
+
+	@Override
+	public List<FeedsRssJpa> listeRssFlux(String userId, int id) {
+		List<FeedsRssJpa> liste=new ArrayList<>();
+
+		LOGGER.info("Recuperation des flux rss de l'utilisateur "+userId);
+
+		Preconditions.checkNotNull(userId);
+
+		Optional<UserJpa> optUser = userRepository.findByLogin(userId);
+
+		if(optUser.isPresent()){
+			UserJpa user = optUser.get();
+
+			LOGGER.info("L'utilisateur "+userId+" existe");
+			LOGGER.info("Recuperation du flux");
+
+			FeedsNameJpa f = feedsNameRepository.findByIdFeeds(id);
+
+			if(f!=null){
+				if(f.getFeeds()!=null) {
+					Preconditions.checkNotNull(f.getFeeds());
+					liste.add((FeedsRssJpa) f.getFeeds());
+				}
+			}
+		}
+		LOGGER.info("L'utilisateur a "+liste.size()+" feeds");
+
+		return liste;
+	}
+
+	@Override
+	public ListCategories listeCategorie(String userId) {
+		ListCategories liste=new ListCategories();
+		Categorie c2;
+
+		LOGGER.info("Recuperation des catégories de l'utilisateur "+userId);
+
+		Preconditions.checkNotNull(userId);
+
+		Optional<UserJpa> optUser = userRepository.findByLogin(userId);
+
+		if(optUser.isPresent()) {
+			UserJpa user = optUser.get();
+
+			List<CategorieJpa> listeCategorie = categorieRepository.findByUserJpa(user);
+
+			if(!CollectionUtils.isEmpty(listeCategorie)){
+				liste.setCategorieList(new ArrayList<>());
+
+				for(CategorieJpa c:listeCategorie){
+					c2=new Categorie();
+					c2.setId(""+c.getId());
+					c2.setNom(c.getName());
+					c2.setRssChannelList(new ArrayList<>());
+					liste.getCategorieList().add(c2);
+
+					if(!CollectionUtils.isEmpty(c.getFeeds())){
+						for(FeedsNameJpa f:c.getFeeds()){
+							if(f.getFeeds()!=null){
+								FeedsJpa f2 = f.getFeeds();
+								RssChannel r;
+								r=new RssChannel();
+								r.setId(""+f2.getId());
+								r.setName(f2.getTitle());
+								c2.getRssChannelList().add(r);
+							}
+						}
+					}
+				}
+			}
+		}
 
 		return liste;
 	}

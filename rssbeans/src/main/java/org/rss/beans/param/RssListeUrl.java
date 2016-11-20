@@ -9,6 +9,8 @@ public final class RssListeUrl {
 
 	private List<RssUrl> liste_url;
 
+	private String idServeur;
+
 	public RssListeUrl() {
 	}
 
@@ -20,10 +22,19 @@ public final class RssListeUrl {
 		this.liste_url = liste_url;
 	}
 
+	public String getIdServeur() {
+		return idServeur;
+	}
+
+	public void setIdServeur(String idServeur) {
+		this.idServeur = idServeur;
+	}
+
 	@Override
 	public String toString() {
 		return "RssListeUrl{" +
 				"liste_url=" + liste_url +
+				", idServeur='" + idServeur + '\'' +
 				'}';
 	}
 }

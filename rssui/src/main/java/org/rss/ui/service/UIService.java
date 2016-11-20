@@ -160,4 +160,16 @@ public class UIService {
 
 		return c;
 	}
+
+
+	public ChannelUi convertieFlux(RssChannel[] liste_url) {
+		ChannelUi c=null;
+
+		c = getChannelUiTousFlux(liste_url);
+		if(c!=null) {
+			trie(c.getListeItem());
+		}
+
+		return c;
+	}
 }
