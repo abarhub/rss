@@ -7,6 +7,7 @@ angular.module('toolsApp')
                 function($http) {
                     return {
 
+                        // debut de l'url (context)
                         racineUrl: "/web",
 
                         /**
