@@ -64,6 +64,26 @@ angular.module('toolsApp')
                             return $http.get(this.racineUrl+'/listeMessages2?type=flux&id='+id);
                         },
 
+                        searchUser: function (nom) {
+                            return $http.get(this.racineUrl+'/searchUsers?nom='+nom);
+                        },
+
+                        addUser: function (nom,prenom,login,password) {
+                            var req = {
+                                method: 'POST',
+                                url: this.racineUrl+'/addUser',
+                                headers: {
+                                    'Content-Type': 'application/json '//undefined
+                                },
+                                data: { "nom": nom,
+                                    "prenom": prenom,
+                                    "login": login,
+                                    "password": password
+                                }
+                            };
+
+                            return $http(req);
+                        }
 
                     }
                 }
