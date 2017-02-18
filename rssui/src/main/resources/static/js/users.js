@@ -4,9 +4,9 @@
 
 
 
-angular.module('usersApp', ['ngSanitize'])
-        .controller('UsersController', ['$scope', '$http', '$interval',
-            function($scope, $http, $interval) {
+angular.module('usersApp')
+        .controller('UsersController', ['$scope', '$http', '$interval','toolsService', 'restTemplateService','logService',
+            function($scope, $http, $interval, toolsService, restTemplateService, logService) {
                 var usersThis = this;
 
                 usersThis.racineUrl="/web";
@@ -21,20 +21,18 @@ angular.module('usersApp', ['ngSanitize'])
                 usersThis.searchUserText="";
 
                 usersThis.search=function() {
-                  //alert("Coucou");
 
                     var nom=usersThis.searchUserText;
 
                     usersThis.searchUserText="";
-
-                    $http.get(usersThis.racineUrl+'/searchUsers?nom='+nom).then(function(value) {
-                        logMsgInfo($http,"Ok");
+                    console.log("restTemplateService="+Object.keys(restTemplateService));
+                    restTemplateService.searchUser(nom).then(function(value) {
+                        logService.logMsgInfo("Ok");
                         //alert("Debut");
                         var tmp=value.data;
-                        logMsgInfo($http,"res="+tmp);
+                        logService.logMsgInfo("res="+tmp);
                         //alert("suite");
-                        //todoList.liste1=tmp.liste_channel;
-                        logMsgInfo($http,"suite");
+                        logService.logMsgInfo("suite");
                         //alert("res");
                         //todoList.liste_url=tmp.liste_channel;
                         usersThis.listeUsers=tmp.listUserUI;//ListUsersUI
@@ -59,10 +57,10 @@ angular.module('usersApp', ['ngSanitize'])
                             }
                         }*/
                         //todoList.liste_item_select=tmp.liste_channel[0].listeItem;
-                        logMsgInfo($http,"Fin traitement");
+                        logService.logMsgInfo("Fin traitement");
                         //alert("Fin traitement");
                     }, function(reason) {
-                        logMsgErr($http,"Error : "+reason);
+                        logService.logMsgErr("Error : "+reason);
                         //alert("Error : "+reason);
                     }, function(value) {
                         // notifyCallback
@@ -83,7 +81,7 @@ angular.module('usersApp', ['ngSanitize'])
                     var passwordForm=usersThis.addUserForm.password;
 
                     //usersThis.searchUserText="";
-                    var req = {
+                    /*var req = {
                         method: 'POST',
                         url: usersThis.racineUrl+'/addUser',
                         headers: {
@@ -94,13 +92,13 @@ angular.module('usersApp', ['ngSanitize'])
                             "login": loginForm,
                             "password": passwordForm
                         }
-                    }
+                    }*/
 
-                    $http(req).then(function(value) {
-                        logMsgInfo($http,"Ok");
+                    restTemplateService.addUser(nomForm,prenomForm,loginForm,passwordForm).then(function(value) {
+                        logService.logMsgInfo("Ok");
                         //alert("Debut");
                         var tmp=value.data;
-                        logMsgInfo($http,"res="+tmp);
+                        logService.logMsgInfo("res="+tmp);
                         //alert("suite");
                         //todoList.liste1=tmp.liste_channel;
                         //logMsgInfo($http,"suite");
@@ -108,7 +106,7 @@ angular.module('usersApp', ['ngSanitize'])
                         //todoList.liste_url=tmp.liste_channel;
                         //usersThis.listeUsers=tmp.listUserUI;//ListUsersUI
                         //todoList.liste_item_select=tmp.liste_channel[0].listeItem;
-                        logMsgInfo($http,"Fin traitement");
+                        logService.logMsgInfo("Fin traitement");
                         //alert("Fin traitement");
                         usersThis.addUserForm.nom='';
                         usersThis.addUserForm.prenom='';
@@ -116,7 +114,7 @@ angular.module('usersApp', ['ngSanitize'])
                         usersThis.addUserForm.password='';
                         $("#myModal").modal("hide")
                     }, function(reason) {
-                        logMsgErr($http,"Error : "+reason);
+                        logService.logMsgErr("Error : "+reason);
                         //alert("Error : "+reason);
                     }, function(value) {
                         // notifyCallback
