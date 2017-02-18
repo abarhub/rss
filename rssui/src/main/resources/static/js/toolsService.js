@@ -3,7 +3,7 @@
  */
 
 
-angular.module('toolsApp', [])
+angular.module('toolsApp',[])
         .service('toolsService',
                     function() {
                         return {
